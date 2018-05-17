@@ -7,9 +7,9 @@ import {
 
 class Item extends Component {
 
-  static navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.title
-  })
+  // static navigationOptions = ({ navigation }) => ({
+  //   title: navigation.state.params.title
+  // })
 
   render() {
     return (

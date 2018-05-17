@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { View, Text, FlatList, ActivityIndicator } from "react-native";
+import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
 import { List, ListItem, SearchBar } from "react-native-elements";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class ItemList extends Component {
   static navigationOptions = {
@@ -12,8 +13,6 @@ class ItemList extends Component {
     this.state = {
       loading: false,
       data: [],
-      page: 1,
-      seed: 1,
       error: null,
       refreshing: false
     };
@@ -24,7 +23,6 @@ class ItemList extends Component {
   }
 
   makeRemoteRequest = () => {
-    const { page, seed } = this.state;
     const url = `http://our-rent-api.herokuapp.com/api/maintenances`;
     this.setState({ loading: true });
 
@@ -47,8 +45,6 @@ class ItemList extends Component {
   handleRefresh = () => {
     this.setState(
       {
-        page: 1,
-        seed: this.state.seed + 1,
         refreshing: true
       },
       () => {
@@ -93,30 +89,79 @@ class ItemList extends Component {
 
   render() {
     return (
-      <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
-        <FlatList
-          data={this.state.data}
-          renderItem={({ item }) => (
-            <ListItem
-              key={item.id}
-              onPress={() => this.props.navigation.navigate('ObvestilaItem', { title: item.country })}
-              roundAvatar
-              title={`${item.description} ${item.fixingCost}`}
-              subtitle={item.dateReported}
-              // avatar={{ uri: item.picture.thumbnail }}
-              containerStyle={{ borderBottomWidth: 0 }}
-            />
-          )}
-          keyExtractor={item => item.id.toString()}
-          ItemSeparatorComponent={this.renderSeparator}
-          ListHeaderComponent={this.renderHeader}
-          ListFooterComponent={this.renderFooter}
-          onRefresh={this.handleRefresh}
-          refreshing={this.state.refreshing}
-        />
-      </List>
+      <View style={styles.container}>
+        <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila/obvestila</Text>
+        <TouchableOpacity style={styles.TouchableOpacityStyle}>
+          <Text style={styles.textMore}><Icon name="ellipsis-h" size={28} color="black" /></Text>
+        </TouchableOpacity>
+        <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+          <FlatList
+            data={this.state.data}
+            renderItem={({ item }) => (
+              <ListItem
+                key={item.id}
+                onPress={() => this.props.navigation.navigate('ObvestilaItem', { title: item.description })}
+                roundAvatar
+                title={`${item.description} ${item.fixingCost}`}
+                subtitle={item.dateReported}
+                containerStyle={{ borderBottomWidth: 0 }}
+              />
+            )}
+            keyExtractor={item => item.id.toString()}
+            ItemSeparatorComponent={this.renderSeparator}
+            ListFooterComponent={this.renderFooter}
+            onRefresh={this.handleRefresh}
+            refreshing={this.state.refreshing}
+          />
+        </List>
+        <Text style={styles.text}><Icon name="credit-card" size={20} color="black" /> Obveznosti</Text>
+        <TouchableOpacity style={styles.TouchableOpacityStyle}>
+          <Text style={styles.textMore}><Icon name="ellipsis-h" size={28} color="black" /></Text>
+        </TouchableOpacity>
+
+        <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+          <FlatList
+            data={this.state.data}
+            renderItem={({ item }) => (
+              <ListItem
+                key={item.id}
+                onPress={() => this.props.navigation.navigate('ObvestilaItem', { title: item.description })}
+                roundAvatar
+                title={`${item.description} ${item.fixingCost}`}
+                subtitle={item.dateReported}
+                containerStyle={{ borderBottomWidth: 0 }}
+              />
+            )}
+            keyExtractor={item => item.id.toString()}
+            ItemSeparatorComponent={this.renderSeparator}
+            ListFooterComponent={this.renderFooter}
+            onRefresh={this.handleRefresh}
+            refreshing={this.state.refreshing}
+          />
+        </List>
+      </View>
+
     );
   }
 }
 
 export default ItemList;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    padding: 10
+  },
+  text: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: -20
+  },
+  textMore: {
+    textAlign: 'right'
+  },
+  TouchableOpacityStyle: {
+    marginBottom: -20
+  }
+})
