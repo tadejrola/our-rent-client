@@ -5,24 +5,26 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 class ItemList extends Component {
   static navigationOptions = {
-    title: 'Moja obvestila in obveznosti'
+    title: 'Pregled obvestil in obveznosti'
   }
   constructor(props) {
     super(props);
 
     this.state = {
       loading: false,
-      data: [],
+      dataMaintenances: [],
+      dataBills: [],
       error: null,
       refreshing: false
     };
   }
 
   componentDidMount() {
-    this.makeRemoteRequest();
+    this.makeRemoteRequestMaintenances();
+    this.makeRemoteRequestBills();
   }
 
-  makeRemoteRequest = () => {
+  makeRemoteRequestMaintenances = () => {
     const url = `http://our-rent-api.herokuapp.com/api/maintenances`;
     this.setState({ loading: true });
 
@@ -30,12 +32,32 @@ class ItemList extends Component {
       .then(res => res.json())
       .then(res => {
         this.setState({
-          data: res,
+          dataMaintenances: res,
           error: res.error || null,
           loading: false,
           refreshing: false
         });
-        console.log(this.state.data);
+        console.log(this.state.dataMaintenances);
+      })
+      .catch(error => {
+        this.setState({ error, loading: false });
+      });
+  };
+
+  makeRemoteRequestBills = () => {
+    const url = `http://our-rent-api.herokuapp.com/api/utilityBills`;
+    this.setState({ loading: true });
+
+    fetch(url)
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          dataBills: res,
+          error: res.error || null,
+          loading: false,
+          refreshing: false
+        });
+        console.log(this.state.dataBills);
       })
       .catch(error => {
         this.setState({ error, loading: false });
@@ -48,7 +70,8 @@ class ItemList extends Component {
         refreshing: true
       },
       () => {
-        this.makeRemoteRequest();
+        this.makeRemoteRequestMaintenances();
+        this.makeRemoteRequestBills();
       }
     );
   };
@@ -90,55 +113,68 @@ class ItemList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila/obvestila</Text>
-        <TouchableOpacity style={styles.TouchableOpacityStyle}>
-          <Text style={styles.textMore}><Icon name="ellipsis-h" size={28} color="black" /></Text>
-        </TouchableOpacity>
-        <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
-          <FlatList
-            data={this.state.data}
-            renderItem={({ item }) => (
-              <ListItem
-                key={item.id}
-                onPress={() => this.props.navigation.navigate('ObvestilaItem', { title: item.description })}
-                roundAvatar
-                title={`${item.description} ${item.fixingCost}`}
-                subtitle={item.dateReported}
-                containerStyle={{ borderBottomWidth: 0 }}
-              />
-            )}
-            keyExtractor={item => item.id.toString()}
-            ItemSeparatorComponent={this.renderSeparator}
-            ListFooterComponent={this.renderFooter}
-            onRefresh={this.handleRefresh}
-            refreshing={this.state.refreshing}
-          />
-        </List>
-        <Text style={styles.text}><Icon name="credit-card" size={20} color="black" /> Obveznosti</Text>
-        <TouchableOpacity style={styles.TouchableOpacityStyle}>
-          <Text style={styles.textMore}><Icon name="ellipsis-h" size={28} color="black" /></Text>
-        </TouchableOpacity>
+        <View style={styles.containerFilterSort}>
+          <View style={styles.containerFilter}>
+            <Text style={styles.text}><Icon name="filter" size={20} color="black" /> Filter</Text>
 
-        <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
-          <FlatList
-            data={this.state.data}
-            renderItem={({ item }) => (
-              <ListItem
-                key={item.id}
-                onPress={() => this.props.navigation.navigate('ObvestilaItem', { title: item.description })}
-                roundAvatar
-                title={`${item.description} ${item.fixingCost}`}
-                subtitle={item.dateReported}
-                containerStyle={{ borderBottomWidth: 0 }}
-              />
-            )}
-            keyExtractor={item => item.id.toString()}
-            ItemSeparatorComponent={this.renderSeparator}
-            ListFooterComponent={this.renderFooter}
-            onRefresh={this.handleRefresh}
-            refreshing={this.state.refreshing}
-          />
-        </List>
+          </View>
+          <View style={styles.containerSort}>
+            <Text style={styles.text}><Icon name="sort" size={20} color="black" /> Sort</Text>
+          </View>
+        </View>
+        <View style={styles.containerObvestila}>
+          <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila/obvestila</Text>
+          <TouchableOpacity style={styles.TouchableOpacityStyle}>
+            <Text style={styles.textMore}><Icon name="ellipsis-h" size={28} color="black" /></Text>
+          </TouchableOpacity>
+          <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+            <FlatList
+              data={this.state.dataMaintenances}
+              renderItem={({ item }) => (
+                <ListItem
+                  key={item.id}
+                  onPress={() => this.props.navigation.navigate('ObvestilaItem', { title: item.description })}
+                  roundAvatar
+                  title={`${item.description} ${item.fixingCost}`}
+                  subtitle={item.dateReported}
+                  containerStyle={{ borderBottomWidth: 0 }}
+                />
+              )}
+              keyExtractor={item => item.id.toString()}
+              ItemSeparatorComponent={this.renderSeparator}
+              ListFooterComponent={this.renderFooter}
+              onRefresh={this.handleRefresh}
+              refreshing={this.state.refreshing}
+            />
+          </List>
+        </View>
+        <View style={styles.containerObveznosti}>
+          <Text style={styles.text}><Icon name="credit-card" size={20} color="black" /> Obveznosti</Text>
+          <TouchableOpacity style={styles.TouchableOpacityStyle}>
+            <Text style={styles.textMore}><Icon name="ellipsis-h" size={28} color="black" /></Text>
+          </TouchableOpacity>
+
+          <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+            <FlatList
+              data={this.state.dataBills}
+              renderItem={({ item }) => (
+                <ListItem
+                  key={item.id}
+                  onPress={() => this.props.navigation.navigate('ObvestilaItem', { title: item.description })}
+                  roundAvatar
+                  title={`${item.name} ${item.billAmount}`}
+                  subtitle={item.description}
+                  containerStyle={{ borderBottomWidth: 0 }}
+                />
+              )}
+              keyExtractor={item => item.id.toString()}
+              ItemSeparatorComponent={this.renderSeparator}
+              ListFooterComponent={this.renderFooter}
+              onRefresh={this.handleRefresh}
+              refreshing={this.state.refreshing}
+            />
+          </List>
+        </View>
       </View>
 
     );
@@ -149,7 +185,7 @@ export default ItemList;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     padding: 10
   },
   text: {
@@ -163,5 +199,29 @@ const styles = StyleSheet.create({
   },
   TouchableOpacityStyle: {
     marginBottom: -20
+  },
+  containerObvestila: {
+    flex: 3,
+    marginBottom: 25
+  },
+  containerObveznosti: {
+    flex: 3
+  },
+  containerFilterSort: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: -25
+  },
+  containerFilter: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  containerSort: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
