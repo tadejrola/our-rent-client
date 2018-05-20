@@ -7,7 +7,42 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-export default class Logo extends Component {
+export default class SignupForm extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            email: null,
+            password: null,
+            repeatPassword: null
+        }
+    }
+
+    async register() {
+        if (this.state.password === this.state.repeatPassword) {
+            var result = await fetch('http://our-rent-api.herokuapp.com/api/account/register', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: this.state.email,
+                    password: this.state.password
+                }),
+            });
+            var data = await result.json();
+
+            if (data === true) {
+                this.props.navigation.goBack();
+            }
+            else {
+                //registracija neuspesna
+            }
+        }
+        else {
+            //geslo se ne ujema
+        }
+    }
 
     render() {
         return (
@@ -18,6 +53,7 @@ export default class Logo extends Component {
                     placeholderTextColor="#ffffff"
                     selectionColor="#fff"
                     keyboardType="email-address"
+                    onChangeText={(text) => this.setState({ email: text })}
                     onSubmitEditing={() => this.password.focus()}
                 />
                 <TextInput style={styles.inputBox}
@@ -25,9 +61,18 @@ export default class Logo extends Component {
                     placeholder="Password"
                     secureTextEntry={true}
                     placeholderTextColor="#ffffff"
+                    onChangeText={(text) => this.setState({ password: text })}
                     ref={(input) => this.password = input}
                 />
-                <TouchableOpacity style={styles.button}>
+                <TextInput style={styles.inputBox}
+                    underlineColorAndroid='rgba(0,0,0,0)'
+                    placeholder="Repeat password"
+                    secureTextEntry={true}
+                    placeholderTextColor="#ffffff"
+                    onChangeText={(text) => this.setState({ repeatPassword: text })}
+                    ref={(input) => this.password = input}
+                />
+                <TouchableOpacity style={styles.button} onPress={() => this.register()}>
                     <Text style={styles.buttonText}>{this.props.type}</Text>
                 </TouchableOpacity>
             </View>

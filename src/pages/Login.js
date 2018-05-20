@@ -6,20 +6,24 @@ import {
   StatusBar,
   TouchableOpacity
 } from 'react-native';
-
 import Logo from '../components/Login/Logo';
-import Form from '../components/Login/Form';
+import Form from '../components/Login/LoginForm';
 
 export default class Login extends Component {
+  static navigationOptions = {
+    header: null
+  }
 
   render() {
     return (
       <View style={styles.container}>
         <Logo />
-        <Form type="Login" />
+        <Form type="Login" navigation={this.props.navigation} />
         <View style={styles.signupTextCont}>
           <Text style={styles.signupText}>Don't have an account yet?</Text>
-          <TouchableOpacity onPress={this.signup}><Text style={styles.signupButton}> Signup</Text></TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Signup')}>
+            <Text style={styles.signupButton}> Signup</Text>
+          </TouchableOpacity>
         </View>
       </View>
     )

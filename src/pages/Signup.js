@@ -7,18 +7,21 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-import Logo from '../components/Logo';
-import Form from '../components/Form';
+import Logo from '../components/Login/Logo';
+import Form from '../components/Login/SignupForm';
 
 export default class Signup extends Component {
+    static navigationOptions = {
+        header: null
+    }
     render() {
         return (
             <View style={styles.container}>
                 <Logo />
-                <Form type="Signup" />
+                <Form type="Signup" navigation={this.props.navigation} />
                 <View style={styles.signupTextCont}>
                     <Text style={styles.signupText}>Already have an account?</Text>
-                    <TouchableOpacity onPress={this.goBack}><Text style={styles.signupButton}> Sign in</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}><Text style={styles.signupButton}> Login</Text></TouchableOpacity>
                 </View>
             </View>
         )

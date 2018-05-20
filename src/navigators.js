@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 // Navigators
-import { DrawerNavigator, createStackNavigator, TabNavigator } from 'react-navigation'
+import { DrawerNavigator, StackNavigator } from 'react-navigation'
 
 // StackNavigator screens
 import MojeNajemnineList from './components/MojeNajemnine/ItemList'
@@ -18,36 +18,45 @@ import MojeNepremicnineItem from './components/MojeNepremicnine/Item'
 import ObvestilaList from './components/Obvestila/ItemList'
 import ObvestilaItem from './components/Obvestila/Item'
 
-import Login from './pages/Login'
+import LoginScreen from './pages/Login'
+import SignupScreen from './pages/Signup'
 
 import Home from './pages/Home'
 
-export const MojeNepremicnine = createStackNavigator({
+export const MojeNepremicnine = StackNavigator({
   MojeNepremicnineList: { screen: MojeNepremicnineList },
   MojeNepremicnineItem: { screen: MojeNepremicnineItem },
 }, {
     initialRouteName: 'MojeNepremicnineList',
   })
-export const MojeNajemnine = createStackNavigator({
+export const MojeNajemnine = StackNavigator({
   MojeNajemnineList: { screen: MojeNajemnineList },
   MojeNajemnineItem: { screen: MojeNajemnineItem },
 }, {
     initialRouteName: 'MojeNajemnineList',
   })
 
-export const Obvestila = createStackNavigator({
+export const Obvestila = StackNavigator({
   ObvestilaList: { screen: ObvestilaList },
   ObvestilaItem: { screen: ObvestilaItem },
 }, {
     initialRouteName: 'ObvestilaList',
   })
 
+export const Login = StackNavigator({
+  Login: { screen: LoginScreen },
+  Signup: { screen: SignupScreen },
+}, {
+    initialRouteName: 'Login',
+  })
+
 export const Drawer = DrawerNavigator({
   Login: {
     screen: Login,
-    navigationOptions: {
-      title: "Odjava"
-    }
+    navigationOptions: () => ({
+      title: "Odjava",
+      drawerLockMode: 'locked-closed'
+    })
   },
   Home: {
     screen: Home,
