@@ -62,7 +62,7 @@ export const Drawer = DrawerNavigator({
   Obvestila: {
     screen: Obvestila,
     navigationOptions: {
-      title: "Obvestila/dolžnosti"
+      title: "Popravila/obveznosti"
     }
   }
 

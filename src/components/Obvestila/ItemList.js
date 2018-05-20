@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 class ItemList extends Component {
   static navigationOptions = {
-    title: 'Pregled obvestil in obveznosti'
+    title: 'Pregled popravil in obveznosti'
   }
   constructor(props) {
     super(props);
@@ -123,7 +123,7 @@ class ItemList extends Component {
           </View>
         </View>
         <View style={styles.containerObvestila}>
-          <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila/obvestila</Text>
+          <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila</Text>
           <TouchableOpacity style={styles.TouchableOpacityStyle}>
             <Text style={styles.textMore}><Icon name="ellipsis-h" size={28} color="black" /></Text>
           </TouchableOpacity>
