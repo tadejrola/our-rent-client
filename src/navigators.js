@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  AsyncStorage
 } from 'react-native';
 
 // Navigators
@@ -22,6 +23,13 @@ import LoginScreen from './pages/Login'
 import SignupScreen from './pages/Signup'
 
 import Home from './pages/Home'
+
+//toti kurac nekak povezat na logout click
+function logoutUser() {
+  AsyncStorage.removeItem('@UserData:email');
+  AsyncStorage.removeItem('@UserData:password');
+  AsyncStorage.removeItem('@UserData:id');
+}
 
 export const MojeNepremicnine = StackNavigator({
   MojeNepremicnineList: { screen: MojeNepremicnineList },

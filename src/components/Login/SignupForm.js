@@ -4,7 +4,8 @@ import {
     Text,
     View,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert
 } from 'react-native';
 
 export default class SignupForm extends Component {
@@ -33,14 +34,24 @@ export default class SignupForm extends Component {
             var data = await result.json();
 
             if (data === true) {
+                Alert.alert(
+                    'Registration complete',
+                    'You can login now!'
+                );
                 this.props.navigation.goBack();
             }
             else {
-                //registracija neuspesna
+                Alert.alert(
+                    'Registration unsuccessful',
+                    'User with same email already exists!'
+                )
             }
         }
         else {
-            //geslo se ne ujema
+            Alert.alert(
+                'Registration unsuccessful',
+                'Passwords doesnt match!'
+            )
         }
     }
 

@@ -5,25 +5,18 @@ import {
     View,
     TextInput,
     TouchableOpacity,
-    AsyncStorage
+    AsyncStorage,
+    Alert
 } from 'react-native';
 
 export default class LoginForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            email: null,
-            password: null
+            email: this.props.email,
+            password: this.props.password
         }
     }
-
-    /*isLoggedIn() {
-        console.log("get asyncstorage");
-        this.state.email = await AsyncStorage.getItem('@UserData:email');
-        console.log(this.state.email);
-        this.state.password = await AsyncStorage.getItem('@UserData:password');
-        console.log(this.state.password);
-    }*/
 
     async login() {
         var result = await fetch('http://our-rent-api.herokuapp.com/api/account/login', {
@@ -38,7 +31,7 @@ export default class LoginForm extends Component {
             }),
         });
         var data = await result.json();
-        if (!isNaN(data)) {
+        if (!isNaN(data) && data !== false) {
             try {
                 await AsyncStorage.setItem('@UserData:email', this.state.email);
                 await AsyncStorage.setItem('@UserData:password', this.state.password);
@@ -49,13 +42,16 @@ export default class LoginForm extends Component {
             }
         }
         else {
-            //prijava neuspesna
+            Alert.alert(
+                'Login unsuccessful',
+                'Email or password is not correct!'
+            )
         }
     }
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={styles.container} >
                 <TextInput style={styles.inputBox}
                     underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="Email"

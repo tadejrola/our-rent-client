@@ -4,29 +4,55 @@ import {
   Text,
   View,
   StatusBar,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from 'react-native';
 import Logo from '../components/Login/Logo';
 import Form from '../components/Login/LoginForm';
+import Home from './Home';
 
 export default class Login extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      email: null,
+      password: null,
+      id: null
+    }
+  }
+
+  componentWillMount() {
+    AsyncStorage.getItem('@UserData:email').then((value) => {
+      this.setState({ email: value });
+    });
+    AsyncStorage.getItem('@UserData:password').then((value) => {
+      this.setState({ password: value });
+    });
+    AsyncStorage.getItem('@UserData:id').then((value) => {
+      this.setState({ id: value });
+    });
+  }
+
   static navigationOptions = {
     header: null
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        <Logo />
-        <Form type="Login" navigation={this.props.navigation} />
-        <View style={styles.signupTextCont}>
-          <Text style={styles.signupText}>Don't have an account yet?</Text>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Signup')}>
-            <Text style={styles.signupButton}> Signup</Text>
-          </TouchableOpacity>
+    if (this.state.email !== null && this.state.password !== null && this.state.id !== null)
+      return (this.props.navigation.navigate('Home'));
+    else
+      return (
+        <View style={styles.container}>
+          <Logo />
+          <Form type="Login" navigation={this.props.navigation} email={this.state.email} password={this.state.password} />
+          <View style={styles.signupTextCont}>
+            <Text style={styles.signupText}>Don't have an account yet?</Text>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Signup')}>
+              <Text style={styles.signupButton}> Signup</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    )
+      )
   }
 }
 const styles = StyleSheet.create({
