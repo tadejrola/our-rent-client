@@ -6,34 +6,36 @@ import {
 } from 'react-native';
 
 // Navigators
-import { DrawerNavigator, StackNavigator, TabNavigator } from 'react-navigation'
+import { DrawerNavigator, createStackNavigator, TabNavigator } from 'react-navigation'
 
 // StackNavigator screens
-import MojeNajemnineList from './MojeNajemnine/ItemList'
-import MojeNajemnineItem from './MojeNajemnine/Item'
+import MojeNajemnineList from './components/MojeNajemnine/ItemList'
+import MojeNajemnineItem from './components/MojeNajemnine/Item'
 
-import MojeNepremicnineList from './MojeNepremicnine/ItemList'
-import MojeNepremicnineItem from './MojeNepremicnine/Item'
+import MojeNepremicnineList from './components/MojeNepremicnine/ItemList'
+import MojeNepremicnineItem from './components/MojeNepremicnine/Item'
 
-import ObvestilaList from './Obvestila/ItemList'
-import ObvestilaItem from './Obvestila/Item'
+import ObvestilaList from './components/Obvestila/ItemList'
+import ObvestilaItem from './components/Obvestila/Item'
 
-import Home from './Home'
+import Login from './pages/Login'
 
-export const MojeNepremicnine = StackNavigator({
+import Home from './pages/Home'
+
+export const MojeNepremicnine = createStackNavigator({
   MojeNepremicnineList: { screen: MojeNepremicnineList },
   MojeNepremicnineItem: { screen: MojeNepremicnineItem },
 }, {
     initialRouteName: 'MojeNepremicnineList',
   })
-export const MojeNajemnine = StackNavigator({
+export const MojeNajemnine = createStackNavigator({
   MojeNajemnineList: { screen: MojeNajemnineList },
   MojeNajemnineItem: { screen: MojeNajemnineItem },
 }, {
     initialRouteName: 'MojeNajemnineList',
   })
 
-export const Obvestila = StackNavigator({
+export const Obvestila = createStackNavigator({
   ObvestilaList: { screen: ObvestilaList },
   ObvestilaItem: { screen: ObvestilaItem },
 }, {
@@ -41,6 +43,12 @@ export const Obvestila = StackNavigator({
   })
 
 export const Drawer = DrawerNavigator({
+  Login: {
+    screen: Login,
+    navigationOptions: {
+      title: "Odjava"
+    }
+  },
   Home: {
     screen: Home,
     navigationOptions: {
@@ -65,5 +73,4 @@ export const Drawer = DrawerNavigator({
       title: "Popravila/obveznosti"
     }
   }
-
 })
