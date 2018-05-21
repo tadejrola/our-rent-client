@@ -32,8 +32,15 @@ export default class LoginForm extends Component {
             this.setState({ id: value });
         });
         /*if (this.state.email !== null && this.state.password !== null && this.state.id !== null)
-          return (this.props.navigation.navigate('Home'));
-        else*/
+          return (this.props.navigation.navigate('Home'));*/
+    }
+
+    navigateToHomeScreen() {
+        this.login().then(value => {
+            if (value) {
+                this.props.navigation.navigate('Home');
+            }
+        })
     }
 
     async login() {
@@ -45,7 +52,7 @@ export default class LoginForm extends Component {
                 'Login unsuccessful',
                 'No empty fields allowed!'
             );
-            return;
+            return false;
         }
 
         if (isConnected) {
@@ -63,14 +70,10 @@ export default class LoginForm extends Component {
             });
             var data = await result.json();
             if (!isNaN(data) && data !== false && data !== 0) {
-                try {
-                    await AsyncStorage.setItem('@UserData:email', this.state.email);
-                    await AsyncStorage.setItem('@UserData:password', this.state.password);
-                    await AsyncStorage.setItem('@UserData:id', data.toString());
-                    this.props.navigation.navigate('Home');
-                } catch (error) {
-                    console.log(error);
-                }
+                await AsyncStorage.setItem('@UserData:email', this.state.email);
+                await AsyncStorage.setItem('@UserData:password', this.state.password);
+                await AsyncStorage.setItem('@UserData:id', data.toString());
+                return true;
             }
             else {
                 Alert.alert(
@@ -85,6 +88,7 @@ export default class LoginForm extends Component {
                 'Login unsuccessful',
                 'No connection available!'
             );
+        return false;
     }
     render() {
         return (
@@ -106,7 +110,7 @@ export default class LoginForm extends Component {
                     onChangeText={(text) => this.setState({ password: text })}
                     ref={(input) => this.password = input}
                 >{this.state.password}</TextInput>
-                <TouchableOpacity style={styles.button} onPress={() => this.login()}>
+                <TouchableOpacity style={styles.button} onPress={() => this.navigateToHomeScreen()}>
                     <Text style={styles.buttonText}>{this.props.type}</Text>
                 </TouchableOpacity>
                 <ActivityIndicator style={styles.activity} size="large" color="#ffffff" animating={this.state.activityAnimating} />

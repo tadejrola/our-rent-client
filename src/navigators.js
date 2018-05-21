@@ -3,11 +3,12 @@ import {
   StyleSheet,
   Text,
   View,
-  AsyncStorage
+  AsyncStorage,
+  ScrollView
 } from 'react-native';
 
 // Navigators
-import { DrawerNavigator, StackNavigator } from 'react-navigation'
+import { DrawerNavigator, DrawerItems, StackNavigator } from 'react-navigation'
 
 // StackNavigator screens
 import MojeNajemnineList from './components/MojeNajemnine/ItemList'
@@ -23,31 +24,6 @@ import LoginScreen from './pages/Login'
 import SignupScreen from './pages/Signup'
 
 import Home from './pages/Home'
-
-//toti kurac nekak povezat na logout click
-function logoutUser() {
-  AsyncStorage.removeItem('@UserData:email');
-  AsyncStorage.removeItem('@UserData:password');
-  AsyncStorage.removeItem('@UserData:id');
-}
-
-const CustomDrawerContentComponent = (props) => {
-  const nav = props.nav;
-
-  return (<View>
-    <ScrollView>
-      <DrawerItems
-        {...props}
-        onItemPress={
-          ({ route, focused }) => {
-            props.onItemPress({ route, focused })
-            console.log("item pressed");
-          }
-        }
-      />
-    </ScrollView>
-  </View>)
-};
 
 export const MojeNepremicnine = StackNavigator({
   MojeNepremicnineList: { screen: MojeNepremicnineList },
@@ -76,14 +52,7 @@ export const Login = StackNavigator({
     initialRouteName: 'Login',
   })
 
-export const Drawer = DrawerNavigator({
-  Login: {
-    screen: Login,
-    navigationOptions: () => ({
-      title: "Odjava",
-      drawerLockMode: 'locked-closed'
-    })
-  },
+const DrawerRoutes = {
   Home: {
     screen: Home,
     navigationOptions: {
@@ -105,7 +74,47 @@ export const Drawer = DrawerNavigator({
   Obvestila: {
     screen: Obvestila,
     navigationOptions: {
-      title: "Popravila/obveznosti"
+      title: "Popravila/obveznosti",
     }
+  },
+  Login: {
+    screen: Login,
+    navigationOptions: () => ({
+      title: "Odjava",
+      drawerLockMode: 'locked-closed'
+    })
   }
-})
+};
+
+function logoutUser() {
+  AsyncStorage.removeItem('@UserData:email');
+  AsyncStorage.removeItem('@UserData:password');
+  AsyncStorage.removeItem('@UserData:id');
+}
+
+const DrawerContent = (props) => {
+  const nav = props.nav;
+
+  return (
+    <View>
+      <ScrollView>
+        <DrawerItems
+          {...props}
+          onItemPress={
+            ({ route, focused }) => {
+              props.onItemPress({ route, focused })
+              route.key === "Login" ? logoutUser() : null
+            }
+          }
+        />
+      </ScrollView>
+    </View>
+  )
+};
+
+const RouteConfigs = {
+  initialRouteName: 'Login',
+  contentComponent: DrawerContent
+};
+
+export const Drawer = DrawerNavigator(DrawerRoutes, RouteConfigs);
