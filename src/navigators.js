@@ -15,6 +15,7 @@ import MojeNajemnineItem from './components/MojeNajemnine/Item'
 
 import MojeNepremicnineList from './components/MojeNepremicnine/ItemList'
 import MojeNepremicnineItem from './components/MojeNepremicnine/Item'
+import NepremicninaEditor from './components/MojeNepremicnine/NepremicninaEditor'
 
 import ObvestilaList from './components/Obvestila/ItemList'
 import ObvestilaItem from './components/Obvestila/Item'
@@ -34,6 +35,7 @@ function logoutUser() {
 export const MojeNepremicnine = StackNavigator({
   MojeNepremicnineList: { screen: MojeNepremicnineList },
   MojeNepremicnineItem: { screen: MojeNepremicnineItem },
+  MojeNepremicnineEditor: { screen: NepremicninaEditor}
 }, {
     initialRouteName: 'MojeNepremicnineList',
   })
