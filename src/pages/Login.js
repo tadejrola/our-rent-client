@@ -6,9 +6,10 @@ import {
   StatusBar,
   TouchableOpacity
 } from 'react-native';
+
 import Logo from '../components/Login/Logo';
 import Form from '../components/Login/LoginForm';
-import Home from './Home';
+import OfflineNotice from '../components/InternetConnection/OfflineNotice'
 
 export default class Login extends Component {
   static navigationOptions = {
@@ -18,6 +19,7 @@ export default class Login extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <OfflineNotice />
         <Logo />
         <Form type="Login" navigation={this.props.navigation} />
         <View style={styles.signupTextCont}>

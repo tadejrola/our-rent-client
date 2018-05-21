@@ -31,6 +31,24 @@ function logoutUser() {
   AsyncStorage.removeItem('@UserData:id');
 }
 
+const CustomDrawerContentComponent = (props) => {
+  const nav = props.nav;
+
+  return (<View>
+    <ScrollView>
+      <DrawerItems
+        {...props}
+        onItemPress={
+          ({ route, focused }) => {
+            props.onItemPress({ route, focused })
+            console.log("item pressed");
+          }
+        }
+      />
+    </ScrollView>
+  </View>)
+};
+
 export const MojeNepremicnine = StackNavigator({
   MojeNepremicnineList: { screen: MojeNepremicnineList },
   MojeNepremicnineItem: { screen: MojeNepremicnineItem },

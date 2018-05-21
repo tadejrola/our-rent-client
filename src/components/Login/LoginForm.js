@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
     AsyncStorage,
     Alert,
-    Image
+    ActivityIndicator,
+    NetInfo
 } from 'react-native';
 
 export default class LoginForm extends Component {
@@ -15,7 +16,8 @@ export default class LoginForm extends Component {
         super(props)
         this.state = {
             email: this.props.email,
-            password: this.props.password
+            password: this.props.password,
+            activityAnimating: false
         }
     }
 
@@ -35,36 +37,55 @@ export default class LoginForm extends Component {
     }
 
     async login() {
-        var result = await fetch('http://our-rent-api.herokuapp.com/api/account/login', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: this.state.email,
-                password: this.state.password
-            }),
+        var isConnected = NetInfo.isConnected.fetch().then(isConnected => {
+            return isConnected;
         });
-        var data = await result.json();
-        if (!isNaN(data) && data !== false) {
-            try {
-                await AsyncStorage.setItem('@UserData:email', this.state.email);
-                await AsyncStorage.setItem('@UserData:password', this.state.password);
-                await AsyncStorage.setItem('@UserData:id', data.toString());
-                this.props.navigation.navigate('Home');
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        else {
+        if (!this.state.email || !this.state.password) {
             Alert.alert(
                 'Login unsuccessful',
-                'Email or password is not correct!'
-            )
+                'No empty fields allowed!'
+            );
+            return;
         }
+
+        if (isConnected) {
+            this.setState({ activityAnimating: true });
+            var result = await fetch('http://our-rent-api.herokuapp.com/api/account/login', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: this.state.email,
+                    password: this.state.password
+                }),
+            });
+            var data = await result.json();
+            if (!isNaN(data) && data !== false && data !== 0) {
+                try {
+                    await AsyncStorage.setItem('@UserData:email', this.state.email);
+                    await AsyncStorage.setItem('@UserData:password', this.state.password);
+                    await AsyncStorage.setItem('@UserData:id', data.toString());
+                    this.props.navigation.navigate('Home');
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+            else {
+                Alert.alert(
+                    'Login unsuccessful',
+                    'Email or password is not correct!'
+                )
+            }
+            this.setState({ activityAnimating: false });
+        }
+        else
+            Alert.alert(
+                'Login unsuccessful',
+                'No connection available!'
+            );
     }
-    //<Image style={styles.image} source={require('../../images/loading.gif')} />
     render() {
         return (
             <View style={styles.container}>
@@ -88,6 +109,7 @@ export default class LoginForm extends Component {
                 <TouchableOpacity style={styles.button} onPress={() => this.login()}>
                     <Text style={styles.buttonText}>{this.props.type}</Text>
                 </TouchableOpacity>
+                <ActivityIndicator style={styles.activity} size="large" color="#ffffff" animating={this.state.activityAnimating} />
             </View>
         )
     }
@@ -121,11 +143,5 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         color: '#ffffff',
         textAlign: 'center'
-    },
-    image: {
-        position: "absolute",
-        width: 200,
-        height: 200,
-        zIndex: 20,
     }
 });
