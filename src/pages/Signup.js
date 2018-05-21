@@ -9,6 +9,7 @@ import {
 
 import Logo from '../components/Login/Logo';
 import Form from '../components/Login/SignupForm';
+import OfflineNotice from '../components/InternetConnection/OfflineNotice'
 
 export default class Signup extends Component {
     static navigationOptions = {
@@ -17,6 +18,7 @@ export default class Signup extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <OfflineNotice />
                 <Logo />
                 <Form type="Signup" navigation={this.props.navigation} />
                 <View style={styles.signupTextCont}>

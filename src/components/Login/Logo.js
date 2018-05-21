@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         color: 'rgba(255, 255, 255, 0.7)'
     },
     image: {
-        width: 200,
-        height: 100
+        width: 150,
+        height: 150
     }
 });

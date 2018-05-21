@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
     AsyncStorage,
     Alert,
-    Image
+    ActivityIndicator,
+    NetInfo
 } from 'react-native';
 
 export default class LoginForm extends Component {
@@ -15,7 +16,8 @@ export default class LoginForm extends Component {
         super(props)
         this.state = {
             email: this.props.email,
-            password: this.props.password
+            password: this.props.password,
+            activityAnimating: false
         }
     }
 
@@ -30,41 +32,64 @@ export default class LoginForm extends Component {
             this.setState({ id: value });
         });
         /*if (this.state.email !== null && this.state.password !== null && this.state.id !== null)
-          return (this.props.navigation.navigate('Home'));
-        else*/
+          return (this.props.navigation.navigate('Home'));*/
+    }
+
+    navigateToHomeScreen() {
+        this.login().then(value => {
+            if (value) {
+                this.props.navigation.navigate('Home');
+            }
+        })
     }
 
     async login() {
-        var result = await fetch('http://our-rent-api.herokuapp.com/api/account/login', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: this.state.email,
-                password: this.state.password
-            }),
+        var isConnected = NetInfo.isConnected.fetch().then(isConnected => {
+            return isConnected;
         });
-        var data = await result.json();
-        if (!isNaN(data) && data !== false) {
-            try {
+        if (!this.state.email || !this.state.password) {
+            Alert.alert(
+                'Login unsuccessful',
+                'No empty fields allowed!'
+            );
+            return false;
+        }
+
+        if (isConnected) {
+            this.setState({ activityAnimating: true });
+            var result = await fetch('http://our-rent-api.herokuapp.com/api/account/login', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: this.state.email,
+                    password: this.state.password
+                }),
+            });
+            var data = await result.json();
+            if (!isNaN(data) && data !== false && data !== 0) {
                 await AsyncStorage.setItem('@UserData:email', this.state.email);
                 await AsyncStorage.setItem('@UserData:password', this.state.password);
                 await AsyncStorage.setItem('@UserData:id', data.toString());
-                this.props.navigation.navigate('Home');
-            } catch (error) {
-                console.log(error);
+                return true;
             }
+            else {
+                Alert.alert(
+                    'Login unsuccessful',
+                    'Email or password is not correct!'
+                )
+            }
+            this.setState({ activityAnimating: false });
         }
-        else {
+        else
             Alert.alert(
                 'Login unsuccessful',
-                'Email or password is not correct!'
-            )
-        }
+                'No connection available!'
+            );
+        return false;
     }
-    //<Image style={styles.image} source={require('../../images/loading.gif')} />
     render() {
         return (
             <View style={styles.container}>
@@ -85,9 +110,10 @@ export default class LoginForm extends Component {
                     onChangeText={(text) => this.setState({ password: text })}
                     ref={(input) => this.password = input}
                 >{this.state.password}</TextInput>
-                <TouchableOpacity style={styles.button} onPress={() => this.login()}>
+                <TouchableOpacity style={styles.button} onPress={() => this.navigateToHomeScreen()}>
                     <Text style={styles.buttonText}>{this.props.type}</Text>
                 </TouchableOpacity>
+                <ActivityIndicator style={styles.activity} size="large" color="#ffffff" animating={this.state.activityAnimating} />
             </View>
         )
     }
@@ -121,11 +147,5 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         color: '#ffffff',
         textAlign: 'center'
-    },
-    image: {
-        position: "absolute",
-        width: 200,
-        height: 200,
-        zIndex: 20,
     }
 });

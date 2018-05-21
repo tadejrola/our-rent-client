@@ -5,7 +5,9 @@ import {
     View,
     TextInput,
     TouchableOpacity,
-    Alert
+    Alert,
+    ActivityIndicator,
+    NetInfo
 } from 'react-native';
 
 export default class SignupForm extends Component {
@@ -14,45 +16,66 @@ export default class SignupForm extends Component {
         this.state = {
             email: null,
             password: null,
-            repeatPassword: null
+            repeatPassword: null,
+            activityAnimating: false
         }
     }
 
     async register() {
-        if (this.state.password === this.state.repeatPassword) {
-            var result = await fetch('http://our-rent-api.herokuapp.com/api/account/register', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: this.state.email,
-                    password: this.state.password
-                }),
-            });
-            var data = await result.json();
+        var isConnected = NetInfo.isConnected.fetch().then(isConnected => {
+            return isConnected;
+        });
+        if (!this.state.email || !this.state.password || !this.state.repeatPassword) {
+            Alert.alert(
+                'Registration unsuccessful',
+                'No empty fields allowed!'
+            );
+            return;
+        }
 
-            if (data === true) {
-                Alert.alert(
-                    'Registration complete',
-                    'You can login now!'
-                );
-                this.props.navigation.goBack();
+        if (isConnected) {
+            if (this.state.password === this.state.repeatPassword) {
+                this.setState({ activityAnimating: true });
+                var result = await fetch('http://our-rent-api.herokuapp.com/api/account/register', {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: this.state.email,
+                        password: this.state.password
+                    }),
+                });
+                var data = await result.json();
+
+                if (data === true) {
+                    Alert.alert(
+                        'Registration complete',
+                        'You can login now!'
+                    );
+                    this.props.navigation.goBack();
+                }
+                else {
+                    Alert.alert(
+                        'Registration unsuccessful',
+                        'User with same email already exists!'
+                    )
+                }
+                this.setState({ activityAnimating: false });
             }
             else {
                 Alert.alert(
                     'Registration unsuccessful',
-                    'User with same email already exists!'
-                )
+                    'Passwords do not match!'
+                );
             }
         }
-        else {
+        else
             Alert.alert(
                 'Registration unsuccessful',
-                'Passwords doesnt match!'
-            )
-        }
+                'No connection available!'
+            );
     }
 
     render() {
@@ -86,6 +109,7 @@ export default class SignupForm extends Component {
                 <TouchableOpacity style={styles.button} onPress={() => this.register()}>
                     <Text style={styles.buttonText}>{this.props.type}</Text>
                 </TouchableOpacity>
+                <ActivityIndicator style={styles.activity} size="large" color="#ffffff" animating={this.state.activityAnimating} />
             </View>
         )
     }
