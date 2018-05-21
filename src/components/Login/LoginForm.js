@@ -6,7 +6,8 @@ import {
     TextInput,
     TouchableOpacity,
     AsyncStorage,
-    Alert
+    Alert,
+    Image
 } from 'react-native';
 
 export default class LoginForm extends Component {
@@ -16,6 +17,21 @@ export default class LoginForm extends Component {
             email: this.props.email,
             password: this.props.password
         }
+    }
+
+    componentWillMount() {
+        AsyncStorage.getItem('@UserData:email').then((value) => {
+            this.setState({ email: value });
+        });
+        AsyncStorage.getItem('@UserData:password').then((value) => {
+            this.setState({ password: value });
+        });
+        AsyncStorage.getItem('@UserData:id').then((value) => {
+            this.setState({ id: value });
+        });
+        /*if (this.state.email !== null && this.state.password !== null && this.state.id !== null)
+          return (this.props.navigation.navigate('Home'));
+        else*/
     }
 
     async login() {
@@ -48,10 +64,10 @@ export default class LoginForm extends Component {
             )
         }
     }
-
+    //<Image style={styles.image} source={require('../../images/loading.gif')} />
     render() {
         return (
-            <View style={styles.container} >
+            <View style={styles.container}>
                 <TextInput style={styles.inputBox}
                     underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="Email"
@@ -105,5 +121,11 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         color: '#ffffff',
         textAlign: 'center'
+    },
+    image: {
+        position: "absolute",
+        width: 200,
+        height: 200,
+        zIndex: 20,
     }
 });
