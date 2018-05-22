@@ -6,9 +6,9 @@ import {
     TextInput,
     TouchableOpacity,
     Alert,
-    ActivityIndicator,
     NetInfo
 } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class SignupForm extends Component {
     constructor(props) {
@@ -21,21 +21,29 @@ export default class SignupForm extends Component {
         }
     }
 
+    signup() {
+        this.setState({ activityAnimating: true });
+        this.register().then(value => {
+            this.setState({ activityAnimating: false });
+            if (value) {
+                this.props.navigation.goBack();
+            }
+        });
+    }
+
     async register() {
-        var isConnected = NetInfo.isConnected.fetch().then(isConnected => {
-            return isConnected;
+        isConnected = NetInfo.isConnected.fetch().then(value => {
+            return value;
         });
         if (!this.state.email || !this.state.password || !this.state.repeatPassword) {
             Alert.alert(
                 'Registration unsuccessful',
                 'No empty fields allowed!'
             );
-            return;
+            return false;
         }
-
         if (isConnected) {
             if (this.state.password === this.state.repeatPassword) {
-                this.setState({ activityAnimating: true });
                 var result = await fetch('http://our-rent-api.herokuapp.com/api/account/register', {
                     method: 'POST',
                     headers: {
@@ -48,34 +56,36 @@ export default class SignupForm extends Component {
                     }),
                 });
                 var data = await result.json();
-
                 if (data === true) {
                     Alert.alert(
                         'Registration complete',
                         'You can login now!'
                     );
-                    this.props.navigation.goBack();
+                    return true;
                 }
                 else {
                     Alert.alert(
                         'Registration unsuccessful',
                         'User with same email already exists!'
                     )
+                    return false;
                 }
-                this.setState({ activityAnimating: false });
             }
             else {
                 Alert.alert(
                     'Registration unsuccessful',
                     'Passwords do not match!'
                 );
+                return false;
             }
         }
-        else
+        else {
             Alert.alert(
                 'Registration unsuccessful',
                 'No connection available!'
             );
+        }
+        return false;
     }
 
     render() {
@@ -106,10 +116,10 @@ export default class SignupForm extends Component {
                     onChangeText={(text) => this.setState({ repeatPassword: text })}
                     ref={(input) => this.password = input}
                 />
-                <TouchableOpacity style={styles.button} onPress={() => this.register()}>
+                <TouchableOpacity style={styles.button} onPress={() => this.signup()}>
                     <Text style={styles.buttonText}>{this.props.type}</Text>
                 </TouchableOpacity>
-                <ActivityIndicator style={styles.activity} size="large" color="#ffffff" animating={this.state.activityAnimating} />
+                <Spinner visible={this.state.activityAnimating} cancelable={true} />
             </View>
         )
     }

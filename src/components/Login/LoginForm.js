@@ -7,9 +7,9 @@ import {
     TouchableOpacity,
     AsyncStorage,
     Alert,
-    ActivityIndicator,
     NetInfo
 } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class LoginForm extends Component {
     constructor(props) {
@@ -31,27 +31,21 @@ export default class LoginForm extends Component {
                 this.setState({ id: data.id });
             }
         });
-        //to nekaj ne dela
-        /*if (this.state.email !== null && this.state.password !== null && this.state.id !== null) {
-            console.log(this.state.email);
-            console.log(this.state.email);
-            console.log(this.state.email);
-            return (this.props.navigation.navigate('Home'));
-        }*/
-
     }
 
     navigateToHomeScreen() {
+        this.setState({ activityAnimating: true });
         this.login().then(value => {
+            this.setState({ activityAnimating: false });
             if (value) {
                 this.props.navigation.navigate('Home');
             }
-        })
+        });
     }
 
     async login() {
-        var isConnected = NetInfo.isConnected.fetch().then(isConnected => {
-            return isConnected;
+        isConnected = NetInfo.isConnected.fetch().then(value => {
+            return value;
         });
         if (!this.state.email || !this.state.password) {
             Alert.alert(
@@ -60,9 +54,7 @@ export default class LoginForm extends Component {
             );
             return false;
         }
-
         if (isConnected) {
-            this.setState({ activityAnimating: true });
             var result = await fetch('http://our-rent-api.herokuapp.com/api/account/login', {
                 method: 'POST',
                 headers: {
@@ -75,12 +67,6 @@ export default class LoginForm extends Component {
                 }),
             });
             var data = await result.json();
-
-
-            console.log(data);
-            //preglej kaj se preveri
-
-
             if (!isNaN(data.id) && data !== false && data.id !== 0) {
                 await AsyncStorage.setItem('@UserData:data', JSON.stringify(data));
                 return true;
@@ -91,13 +77,13 @@ export default class LoginForm extends Component {
                     'Email or password is not correct!'
                 )
             }
-            this.setState({ activityAnimating: false });
         }
-        else
+        else {
             Alert.alert(
                 'Login unsuccessful',
                 'No connection available!'
             );
+        }
         return false;
     }
     render() {
@@ -123,7 +109,7 @@ export default class LoginForm extends Component {
                 <TouchableOpacity style={styles.button} onPress={() => this.navigateToHomeScreen()}>
                     <Text style={styles.buttonText}>{this.props.type}</Text>
                 </TouchableOpacity>
-                <ActivityIndicator style={styles.activity} size="large" color="#ffffff" animating={this.state.activityAnimating} />
+                <Spinner visible={this.state.activityAnimating} cancelable={true} />
             </View>
         )
     }
