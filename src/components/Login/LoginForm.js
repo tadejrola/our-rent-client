@@ -54,7 +54,7 @@ export default class LoginForm extends Component {
             );
             return false;
         }
-        if (isConnected) {
+        if (isConnected === true) {
             var result = await fetch('http://our-rent-api.herokuapp.com/api/account/login', {
                 method: 'POST',
                 headers: {

@@ -42,7 +42,7 @@ export default class SignupForm extends Component {
             );
             return false;
         }
-        if (isConnected) {
+        if (isConnected === true) {
             if (this.state.password === this.state.repeatPassword) {
                 var result = await fetch('http://our-rent-api.herokuapp.com/api/account/register', {
                     method: 'POST',
