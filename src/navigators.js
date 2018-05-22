@@ -29,7 +29,7 @@ import Home from './pages/Home'
 export const MojeNepremicnine = StackNavigator({
   MojeNepremicnineList: { screen: MojeNepremicnineList },
   MojeNepremicnineItem: { screen: MojeNepremicnineItem },
-  MojeNepremicnineEditor: { screen: NepremicninaEditor}
+  MojeNepremicnineEditor: { screen: NepremicninaEditor }
 }, {
     initialRouteName: 'MojeNepremicnineList',
   })
@@ -89,9 +89,7 @@ const DrawerRoutes = {
 };
 
 function logoutUser() {
-  AsyncStorage.removeItem('@UserData:email');
-  AsyncStorage.removeItem('@UserData:password');
-  AsyncStorage.removeItem('@UserData:id');
+  AsyncStorage.removeItem('@UserData:data');
 }
 
 const DrawerContent = (props) => {

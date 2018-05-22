@@ -15,24 +15,30 @@ export default class LoginForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            email: this.props.email,
-            password: this.props.password,
+            email: null,
+            password: null,
+            id: null,
             activityAnimating: false
         }
     }
 
     componentWillMount() {
-        AsyncStorage.getItem('@UserData:email').then((value) => {
-            this.setState({ email: value });
+        AsyncStorage.getItem('@UserData:data').then((value) => {
+            var data = JSON.parse(value);
+            if (data !== null) {
+                this.setState({ email: data.email });
+                this.setState({ password: data.password });
+                this.setState({ id: data.id });
+            }
         });
-        AsyncStorage.getItem('@UserData:password').then((value) => {
-            this.setState({ password: value });
-        });
-        AsyncStorage.getItem('@UserData:id').then((value) => {
-            this.setState({ id: value });
-        });
-        /*if (this.state.email !== null && this.state.password !== null && this.state.id !== null)
-          return (this.props.navigation.navigate('Home'));*/
+        //to nekaj ne dela
+        /*if (this.state.email !== null && this.state.password !== null && this.state.id !== null) {
+            console.log(this.state.email);
+            console.log(this.state.email);
+            console.log(this.state.email);
+            return (this.props.navigation.navigate('Home'));
+        }*/
+
     }
 
     navigateToHomeScreen() {
@@ -69,10 +75,14 @@ export default class LoginForm extends Component {
                 }),
             });
             var data = await result.json();
-            if (!isNaN(data) && data !== false && data !== 0) {
-                await AsyncStorage.setItem('@UserData:email', this.state.email);
-                await AsyncStorage.setItem('@UserData:password', this.state.password);
-                await AsyncStorage.setItem('@UserData:id', data.toString());
+
+
+            console.log(data);
+            //preglej kaj se preveri
+
+
+            if (!isNaN(data.id) && data !== false && data.id !== 0) {
+                await AsyncStorage.setItem('@UserData:data', JSON.stringify(data));
                 return true;
             }
             else {
