@@ -121,7 +121,7 @@ class ItemList extends Component {
           </List>
         </View>
         <View style={styles.containerPregledMape}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('MojeNepremicnineZemljevid')}>
             <Text style={styles.text}><Icon name="location-arrow" size={24} color="black" /> Iskanje na zemljevidu</Text>
           </TouchableOpacity>
         </View>
