@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity, Alert, AsyncStorage } from "react-native";
 import { List, ListItem, SearchBar } from "react-native-elements";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -11,6 +11,7 @@ class ItemList extends Component {
     super(props);
 
     this.state = {
+      id: null, 
       loading: false,
       dataObjects: [],
       dataBills: [],
@@ -20,11 +21,19 @@ class ItemList extends Component {
   }
 
   componentDidMount() {
-    this.makeRemoteRequestObjects();
+    AsyncStorage.getItem('@UserData:data').then((value) => {
+      var data = JSON.parse(value);
+      if (data !== null) {
+          this.setState({ id: data.id });
+          this.makeRemoteRequestObjects(); 
+      }
+     });
   }
 
   makeRemoteRequestObjects = () => {
-    const url = `http://our-rent-api.herokuapp.com/api/objects`;
+    //Alert.alert(this.state.id.toString());
+    const url = 'http://our-rent-api.herokuapp.com/api/objects/';//+this.state.id.toString();
+    Alert.alert(url);
     this.setState({ loading: true });
 
     fetch(url)
