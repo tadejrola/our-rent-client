@@ -5,6 +5,7 @@ import {
     StyleSheet,
 } from 'react-native'
 import MapView from 'react-native-maps';
+import { Marker } from 'react-native-maps';
 
 class MojeNepremicnineZemljevid extends Component {
 
@@ -17,15 +18,41 @@ class MojeNepremicnineZemljevid extends Component {
         this.state = {
             latitude: 0,
             longitude: 0,
+            markers: null,
             error: null,
         };
     }
     componentWillMount() {
+        const placesArray = [];
+        placesArray.push({
+            latitude: 45,
+            longitude: 15,
+            id: "1",
+            title: "test1",
+            description: "test1 desc"
+        });
+        placesArray.push({
+            latitude: 46,
+            longitude: 15,
+            id: "2",
+            title: "test3",
+            description: "test3 desc"
+        });
+        placesArray.push({
+            latitude: 47,
+            longitude: 15,
+            id: "3",
+            title: "test2",
+            description: "test2 desc"
+        });
+
+        const usersMarkers = placesArray.map(userPlace => <MapView.Marker coordinate={userPlace} key={userPlace.id} />);
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.setState({
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude,
+                    markers: usersMarkers,
                     error: null,
                 });
             },
@@ -39,6 +66,7 @@ class MojeNepremicnineZemljevid extends Component {
         return (
             <View style={styles.container}>
                 <MapView
+
                     style={styles.map}
                     region={{
                         latitude: this.state.latitude,
@@ -46,7 +74,8 @@ class MojeNepremicnineZemljevid extends Component {
                         latitudeDelta: 0.016,
                         longitudeDelta: 0.0121,
                     }}
-                >
+
+                >{this.state.markers}
                 </MapView>
             </View>
         );
@@ -58,8 +87,6 @@ export default MojeNepremicnineZemljevid
 const styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
-        height: 400,
-        width: 400,
         justifyContent: 'flex-end',
         alignItems: 'center',
     },
