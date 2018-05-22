@@ -6,7 +6,8 @@ import {
   TextInput, 
   Picker, 
   ScrollView, 
-  Alert
+  Alert, 
+  AsyncStorage
 } from 'react-native'
 
 import { Button } from 'react-native-elements'
@@ -20,139 +21,57 @@ class NepremicninaEditor extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
+    this.state = { 
+        id: null, 
         description: null,
         category: null,
-        adress: null, 
+        address: null, 
         houseNumber: null, 
         city: null, 
         zip: null, 
         country: null
     }
   }
+
+  componentWillMount() {
+    AsyncStorage.getItem('@UserData:data').then((value) => {
+        var data = JSON.parse(value);
+        if (data !== null) {
+            this.setState({ id: data.id });
+        }
+    });
+  }
   
-  saveBtnClick(){
-   /* var result = await fetch('http://our-rent-api.herokuapp.com/api/countries/', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                country: this.state.country
-            }),
-        });
-        var data = await result.json();
-        if (!isNaN(data) && data !== false) {
-          var result2 = await fetch('http://our-rent-api.herokuapp.com/api/cities/', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                city: this.state.city, 
-                zip: this.state.zip,
-                fkcountry: 1
-            }),
-          });
-          var data1 = await result.json();
-          if (!isNaN(data1) && data1 !== false) {
-            var result3 = await fetch('http://our-rent-api.herokuapp.com/api/addresses/', {
-              method: 'POST',
-              headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                  adress: this.state.adress, 
-                  houseNumber: this.state.houseNumber,
-                  fkcity: 2
-              }),
-            });
-            var data2 = await result.json();
-            if (!isNaN(data2) && data2 !== false) {
-              var result4 = await fetch('http://our-rent-api.herokuapp.com/api/addresses/', {
-              method: 'POST',
-              headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                  description: this.state.description, 
-                  category: this.state.category,
-                  image: "pod to neke slike",
-                  address_id: 1,
-                  user_id: 1
-              }),
-            });
-            var data3 = await result.json();
-            if (!isNaN(data3) && data3 !== false) {
-
-            }
-            }
-          }
-        }*/
-
-        var result = fetch('http://our-rent-api.herokuapp.com/api/countries/', {
-          method: 'POST',
-          headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              country: this.state.country
-          }),
+  async saveBtnClick(){
+    
+    var combinedAddress = this.state.address.concat(",", this.state.houseNumber, ",", this.state.zip, ",", this.state.city, ",", this.state.country);
+    Alert.alert(combinedAddress);
+    var result = await fetch('http://our-rent-api.herokuapp.com/api/objects/', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+         description: this.state.description, 
+         category: this.state.category,
+         image: "pod to neke slike",
+         address: combinedAddress,
+         user_id: this.state.id
+        }),
       });
-        var result2 =  fetch('http://our-rent-api.herokuapp.com/api/cities/', {
-          method: 'POST',
-          headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              city: this.state.city, 
-              zip: this.state.zip,
-              country_id: 1
-          }),
-        });
-      
-          var result3 =  fetch('http://our-rent-api.herokuapp.com/api/addresses/', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                address: this.state.adress, 
-                housenumber: this.state.houseNumber,
-                fkcity: 1
-            }),
-          });
-          
-
-            var result4 =  fetch('http://our-rent-api.herokuapp.com/api/objects/', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                description: this.state.description, 
-                category: this.state.category,
-                image: "pod to neke slike",
-                address_id: 1,
-                user_id: 1
-            }),
-          });
-
-          Alert.alert(result3.json);
-          
+      var data = await result.json();
+      if (!isNaN(data) && data !== false) {
+        Alert.alert("Nepremičnina je bila shranjena");
+      }
+      else {
+        Alert.alert("Nepremičnina ni bila shranjena. Preveri vpisane podatke. ");
+      }
   }
 
   render() {
     return (
-      <ScrollView style={styles.container}>
+     <ScrollView style={styles.container}>
         <Text style = {styles.text}>Opis</Text>
          <TextInput
           style={styles.input}
@@ -175,8 +94,8 @@ class NepremicninaEditor extends Component {
         <Text style = {styles.text}>Naslov</Text>
          <TextInput
           style={styles.input}
-          value={this.state.adress}
-          onChangeText={adress => this.setState({adress})}
+          value={this.state.address}
+          onChangeText={address => this.setState({address})}
           placeholder="Naslov"
           autoCapitalize="words"
           keyboardType="default"
@@ -279,4 +198,4 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(111, 202, 186, 1)', 
     borderRadius: 10
   }
-})
+});
