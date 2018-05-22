@@ -4,7 +4,9 @@ import {
   Text,
   View,
   AsyncStorage,
-  ScrollView
+  ScrollView,
+  Image,
+  TouchableOpacity
 } from 'react-native';
 
 // Navigators
@@ -27,6 +29,8 @@ import SignupScreen from './pages/Signup'
 
 import Home from './pages/Home'
 
+import Settings from './components/UserSettings/Settings'
+
 export const MojeNepremicnine = StackNavigator({
   MojeNepremicnineList: { screen: MojeNepremicnineList },
   MojeNepremicnineItem: { screen: MojeNepremicnineItem },
@@ -35,6 +39,7 @@ export const MojeNepremicnine = StackNavigator({
 }, {
     initialRouteName: 'MojeNepremicnineList',
   })
+
 export const MojeNajemnine = StackNavigator({
   MojeNajemnineList: { screen: MojeNajemnineList },
   MojeNajemnineItem: { screen: MojeNajemnineItem },
@@ -81,6 +86,12 @@ const DrawerRoutes = {
       title: "Popravila/obveznosti",
     }
   },
+  Settings: {
+    screen: Settings,
+    navigationOptions: {
+      title: "Nastavitve profila"
+    }
+  },
   Login: {
     screen: Login,
     navigationOptions: () => ({
@@ -93,26 +104,61 @@ const DrawerRoutes = {
 function logoutUser() {
   AsyncStorage.removeItem('@UserData:data');
 }
+function userSettings() {
+  //TODO: implementirat navigacijo na SETTINGS!!
+}
 
 const DrawerContent = (props) => {
   const nav = props.nav;
 
   return (
-    <View>
-      <ScrollView>
+    <ScrollView>
+      <View style={styles.container}>
+        <TouchableOpacity
+          onPress={() => userSettings()}
+          style={styles.imageContainer}
+        >
+          <Image style={styles.image} source={require('./images/defaultProfile.png')} />
+        </TouchableOpacity>
         <DrawerItems
           {...props}
+          style={styles.drawerItems}
           onItemPress={
             ({ route, focused }) => {
-              props.onItemPress({ route, focused })
-              route.key === "Login" ? logoutUser() : null
+              props.onItemPress({ route, focused });
+              route.key === "Login" ? logoutUser() : null;
             }
           }
         />
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   )
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
+  image: {
+    width: 150,
+    height: 150
+  },
+  drawerItems: {
+    alignSelf: 'stretch',
+  },
+  imageContainer: {
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 150,
+    height: 150,
+    backgroundColor: '#fff',
+    borderRadius: 100,
+  }
+});
 
 const RouteConfigs = {
   initialRouteName: 'Login',

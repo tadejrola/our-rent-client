@@ -17,18 +17,15 @@ export default class LoginForm extends Component {
         this.state = {
             email: null,
             password: null,
-            id: null,
             activityAnimating: false
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         AsyncStorage.getItem('@UserData:data').then((value) => {
             var data = JSON.parse(value);
-            if (data !== null) {
-                this.setState({ email: data.email });
-                this.setState({ password: data.password });
-                this.setState({ id: data.id });
+            if (data !== null && data.email !== null && data.password !== null && data.id !== null) {
+                this.props.navigation.navigate('Home');
             }
         });
     }
@@ -44,9 +41,6 @@ export default class LoginForm extends Component {
     }
 
     async login() {
-        isConnected = NetInfo.isConnected.fetch().then(value => {
-            return value;
-        });
         if (!this.state.email || !this.state.password) {
             Alert.alert(
                 'Login unsuccessful',
@@ -54,7 +48,8 @@ export default class LoginForm extends Component {
             );
             return false;
         }
-        if (isConnected === true) {
+
+        if (await NetInfo.isConnected.fetch()) {
             var result = await fetch('http://our-rent-api.herokuapp.com/api/account/login', {
                 method: 'POST',
                 headers: {

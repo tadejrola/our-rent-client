@@ -32,9 +32,6 @@ export default class SignupForm extends Component {
     }
 
     async register() {
-        isConnected = NetInfo.isConnected.fetch().then(value => {
-            return value;
-        });
         if (!this.state.email || !this.state.password || !this.state.repeatPassword) {
             Alert.alert(
                 'Registration unsuccessful',
@@ -42,7 +39,7 @@ export default class SignupForm extends Component {
             );
             return false;
         }
-        if (isConnected === true) {
+        if (await NetInfo.isConnected.fetch()) {
             if (this.state.password === this.state.repeatPassword) {
                 var result = await fetch('http://our-rent-api.herokuapp.com/api/account/register', {
                     method: 'POST',
