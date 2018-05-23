@@ -43,6 +43,7 @@ export default class CustomDrawer extends Component {
             <ScrollView>
                 <View style={styles.container}>
                     <TouchableOpacity
+                        onPress={() => this.props.navigation.navigation.navigate('Settings')}
                         style={styles.imageContainer}>
                         <UserImage />
                     </TouchableOpacity>
