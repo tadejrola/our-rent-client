@@ -10,7 +10,9 @@ import {
 } from 'react-native';
 
 // Navigators
-import { DrawerNavigator, DrawerItems, StackNavigator } from 'react-navigation'
+import { DrawerNavigator, StackNavigator } from 'react-navigation'
+
+import CustomDrawer from './components/Drawer/CustomDrawer'
 
 // StackNavigator screens
 import MojeNajemnineList from './components/MojeNajemnine/ItemList'
@@ -101,68 +103,11 @@ const DrawerRoutes = {
   }
 };
 
-function logoutUser() {
-  AsyncStorage.removeItem('@UserData:data');
-}
-function userSettings() {
-  //TODO: implementirat navigacijo na SETTINGS!!
-}
-
-const DrawerContent = (props) => {
-  const nav = props.nav;
-
-  return (
-    <ScrollView>
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => userSettings()}
-          style={styles.imageContainer}
-        >
-          <Image style={styles.image} source={require('./images/defaultProfile.png')} />
-        </TouchableOpacity>
-        <DrawerItems
-          {...props}
-          style={styles.drawerItems}
-          onItemPress={
-            ({ route, focused }) => {
-              props.onItemPress({ route, focused });
-              route.key === "Login" ? logoutUser() : null;
-            }
-          }
-        />
-      </View>
-    </ScrollView>
-  )
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center'
-  },
-  image: {
-    width: 150,
-    height: 150
-  },
-  drawerItems: {
-    alignSelf: 'stretch',
-  },
-  imageContainer: {
-    borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 150,
-    height: 150,
-    backgroundColor: '#fff',
-    borderRadius: 100,
-  }
-});
-
 const RouteConfigs = {
   initialRouteName: 'Login',
-  contentComponent: DrawerContent
+  contentComponent: (props) => {
+    return <CustomDrawer navigation={props} />
+  }
 };
 
 export const Drawer = DrawerNavigator(DrawerRoutes, RouteConfigs);
