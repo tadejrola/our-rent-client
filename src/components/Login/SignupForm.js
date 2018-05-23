@@ -23,11 +23,8 @@ export default class SignupForm extends Component {
 
     signup() {
         this.setState({ activityAnimating: true });
-        this.register().then(value => {
+        this.register().then(() => {
             this.setState({ activityAnimating: false });
-            if (value) {
-                this.props.navigation.goBack();
-            }
         });
     }
 
@@ -37,52 +34,68 @@ export default class SignupForm extends Component {
                 'Registration unsuccessful',
                 'No empty fields allowed!'
             );
-            return false;
         }
-        if (await NetInfo.isConnected.fetch()) {
-            if (this.state.password === this.state.repeatPassword) {
-                var result = await fetch('http://our-rent-api.herokuapp.com/api/account/register', {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email: this.state.email,
-                        password: this.state.password
-                    }),
-                });
-                var data = await result.json();
-                if (data === true) {
-                    Alert.alert(
-                        'Registration complete',
-                        'You can login now!'
-                    );
-                    return true;
+        else {
+            NetInfo.isConnected.fetch().then((value) => {
+                if (value) {
+                    if (this.state.password === this.state.repeatPassword) {
+                        fetch('http://our-rent-api.herokuapp.com/api/account/register', {
+                            method: 'POST',
+                            headers: {
+                                Accept: 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                email: this.state.email,
+                                password: this.state.password
+                            }),
+                        }).then((value) => {
+                            value.json().then((value) => {
+                                if (value === true) {
+                                    Alert.alert(
+                                        'Registration complete',
+                                        'You can login now!'
+                                    );
+                                    this.props.navigation.goBack();
+                                }
+                                else
+                                    Alert.alert(
+                                        'Registration unsuccessful',
+                                        'User with same email already exists!'
+                                    )
+                            }, (reason) => {
+                                Alert.alert(
+                                    'Registration unsuccessful',
+                                    reason
+                                );
+                            });
+                        }, (reason) => {
+                            Alert.alert(
+                                'Registration unsuccessful',
+                                reason
+                            );
+                        });
+                    }
+                    else {
+                        Alert.alert(
+                            'Registration unsuccessful',
+                            'Passwords do not match!'
+                        );
+                    }
                 }
                 else {
                     Alert.alert(
                         'Registration unsuccessful',
-                        'User with same email already exists!'
-                    )
-                    return false;
+                        'No connection available!'
+                    );
                 }
-            }
-            else {
+            }, (reason) => {
                 Alert.alert(
                     'Registration unsuccessful',
-                    'Passwords do not match!'
+                    reason
                 );
-                return false;
-            }
+            });
         }
-        else {
-            Alert.alert(
-                'Registration unsuccessful',
-                'No connection available!'
-            );
-        }
-        return false;
     }
 
     render() {
@@ -116,7 +129,7 @@ export default class SignupForm extends Component {
                 <TouchableOpacity style={styles.button} onPress={() => this.signup()}>
                     <Text style={styles.buttonText}>{this.props.type}</Text>
                 </TouchableOpacity>
-                <Spinner visible={this.state.activityAnimating} cancelable={true} />
+                <Spinner visible={this.state.activityAnimating} />
             </View>
         )
     }

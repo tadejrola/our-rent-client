@@ -11,7 +11,7 @@ class ItemList extends Component {
     super(props);
 
     this.state = {
-      id: null, 
+      id: null,
       loading: false,
       dataObjects: [],
       dataBills: [],
@@ -24,10 +24,11 @@ class ItemList extends Component {
     AsyncStorage.getItem('@UserData:data').then((value) => {
       var data = JSON.parse(value);
       if (data !== null) {
-          this.setState({ id: data.id });
-          this.makeRemoteRequestObjects(); 
+        this.setState({ id: data.id });
+        this.makeRemoteRequestObjects();
       }
-     });
+    });
+
   }
 
   makeRemoteRequestObjects = () => {

@@ -10,6 +10,9 @@ export default class OfflineNotice extends PureComponent {
     };
 
     componentDidMount() {
+        NetInfo.isConnected.fetch().then((value) => {
+            value === true ? this.setState({ isConnected: true }) : this.setState({ isConnected: false })
+        });
         NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange);
     }
 

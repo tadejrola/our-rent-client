@@ -32,13 +32,11 @@ export default class LoginForm extends Component {
 
     navigateToHomeScreen() {
         this.setState({ activityAnimating: true });
-        this.login().then(value => {
+        this.login().then(() => {
             this.setState({ activityAnimating: false });
-            if (value) {
-                this.props.navigation.navigate('Home');
-            }
         });
     }
+
 
     async login() {
         if (!this.state.email || !this.state.password) {
@@ -46,41 +44,65 @@ export default class LoginForm extends Component {
                 'Login unsuccessful',
                 'No empty fields allowed!'
             );
-            return false;
-        }
-
-        if (await NetInfo.isConnected.fetch()) {
-            var result = await fetch('http://our-rent-api.herokuapp.com/api/account/login', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: this.state.email,
-                    password: this.state.password
-                }),
-            });
-            var data = await result.json();
-            if (!isNaN(data.id) && data !== false && data.id !== 0) {
-                await AsyncStorage.setItem('@UserData:data', JSON.stringify(data));
-                return true;
-            }
-            else {
-                Alert.alert(
-                    'Login unsuccessful',
-                    'Email or password is not correct!'
-                )
-            }
         }
         else {
-            Alert.alert(
-                'Login unsuccessful',
-                'No connection available!'
-            );
+            NetInfo.isConnected.fetch().then((value) => {
+                if (value) {
+                    fetch('http://our-rent-api.herokuapp.com/api/account/login', {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            email: this.state.email,
+                            password: this.state.password
+                        }),
+                    }).then((value) => {
+                        value.json().then((value) => {
+                            if (!isNaN(value.id) && value !== false && value.id !== 0) {
+                                AsyncStorage.setItem('@UserData:data', JSON.stringify(value)).then((value) => {
+                                    this.props.navigation.navigate('Home');
+                                }, (reason) => {
+                                    Alert.alert(
+                                        'Login unsuccessful',
+                                        reason
+                                    );
+                                });
+                            }
+                            else
+                                Alert.alert(
+                                    'Login unsuccessful',
+                                    'Password or email is not correct!'
+                                );
+                        }, (reason) => {
+                            Alert.alert(
+                                'Login unsuccessful',
+                                reason
+                            );
+                        });
+                    }, (reason) => {
+                        Alert.alert(
+                            'Login unsuccessful',
+                            reason
+                        );
+                    });
+                }
+                else {
+                    Alert.alert(
+                        'Login unsuccessful',
+                        'No connection available!'
+                    );
+                }
+            }, (reason) => {
+                Alert.alert(
+                    'Login unsuccessful',
+                    reason
+                );
+            });
         }
-        return false;
     }
+
     render() {
         return (
             <View style={styles.container}>
@@ -104,7 +126,7 @@ export default class LoginForm extends Component {
                 <TouchableOpacity style={styles.button} onPress={() => this.navigateToHomeScreen()}>
                     <Text style={styles.buttonText}>{this.props.type}</Text>
                 </TouchableOpacity>
-                <Spinner visible={this.state.activityAnimating} cancelable={true} />
+                <Spinner visible={this.state.activityAnimating} />
             </View>
         )
     }
