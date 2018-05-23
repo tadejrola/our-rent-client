@@ -66,13 +66,13 @@ export default class SignupForm extends Component {
                             }, (reason) => {
                                 Alert.alert(
                                     'Registration unsuccessful',
-                                    reason
+                                    'Converting to json error!'
                                 );
                             });
                         }, (reason) => {
                             Alert.alert(
                                 'Registration unsuccessful',
-                                reason
+                                'Fetching data error!'
                             );
                         });
                     }
@@ -92,7 +92,7 @@ export default class SignupForm extends Component {
             }, (reason) => {
                 Alert.alert(
                     'Registration unsuccessful',
-                    reason
+                    'NetInfo module error!'
                 );
             });
         }

@@ -66,7 +66,7 @@ export default class LoginForm extends Component {
                                 }, (reason) => {
                                     Alert.alert(
                                         'Login unsuccessful',
-                                        reason
+                                        'Saving data error!'
                                     );
                                 });
                             }
@@ -78,13 +78,13 @@ export default class LoginForm extends Component {
                         }, (reason) => {
                             Alert.alert(
                                 'Login unsuccessful',
-                                reason
+                                'Converting to json error!'
                             );
                         });
                     }, (reason) => {
                         Alert.alert(
                             'Login unsuccessful',
-                            reason
+                            'Fetching data error!'
                         );
                     });
                 }
@@ -97,7 +97,7 @@ export default class LoginForm extends Component {
             }, (reason) => {
                 Alert.alert(
                     'Login unsuccessful',
-                    reason
+                    'NetInfo module error!'
                 );
             });
         }

@@ -9,7 +9,9 @@ import {
     AsyncStorage,
     Image,
     Button,
-    CheckBox
+    CheckBox,
+    NetInfo,
+    Alert
 } from 'react-native';
 import OfflineNotice from '../InternetConnection/OfflineNotice'
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -75,11 +77,15 @@ export default class Settings extends Component {
                         address: this.state.address
                     }),
                 }).then((value) => {
-
+                    console.log(value);
+                    Alert.alert(
+                        'Post successful',
+                        'Data saved!'
+                    );
                 }, (reason) => {
                     Alert.alert(
                         'Post unsuccessful',
-                        reason
+                        'Fetch error!'
                     );
                 });
             }
@@ -92,7 +98,7 @@ export default class Settings extends Component {
         }, (reason) => {
             Alert.alert(
                 'Post unsuccessful',
-                reason
+                'NetInfo module error!'
             );
         });
     }
@@ -100,110 +106,107 @@ export default class Settings extends Component {
     //TODO: CHECKBOX NE DELA
     render() {
         return (
-            <View>
+            <ScrollView style={styles.container}>
                 <OfflineNotice />
-                <ScrollView style={styles.container}>
 
-                    <Image style={styles.image} source={this.state.image !== null ?
-                        { uri: this.state.image } : require('../../images/defaultProfile.png')} />
-                    <TextInput
-                        style={styles.input}
-                        value={this.state.firstName}
-                        onChangeText={firstName => this.setState({ firstName })}
-                        placeholder="Ime"
-                        autoCapitalize="words"
-                        keyboardType="default"
-                        onSubmitEditing={this._next}
-                        blurOnSubmit={false}
-                    />
-                    <Text style={styles.text}>Ime</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={this.state.firstName}
-                        onChangeText={firstName => this.setState({ firstName })}
-                        placeholder="Ime"
-                        autoCapitalize="words"
-                        keyboardType="default"
-                        onSubmitEditing={this._next}
-                        blurOnSubmit={false}
-                    />
-                    <Text style={styles.text}>Priimek</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={this.state.firstName}
-                        onChangeText={firstName => this.setState({ firstName })}
-                        placeholder="Priimek"
-                        autoCapitalize="words"
-                        keyboardType="default"
-                        onSubmitEditing={this._next}
-                        blurOnSubmit={false}
-                    />
-                    <Text style={styles.text}>Naslov</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={this.state.address}
-                        onChangeText={address => this.setState({ address })}
-                        placeholder="Naslov"
-                        autoCapitalize="words"
-                        keyboardType="default"
-                        onSubmitEditing={this._next}
-                        blurOnSubmit={false}
-                    />
-                    <Text style={styles.text}>Telefon</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={this.state.phoneNumber}
-                        onChangeText={phoneNumber => this.setState({ phoneNumber })}
-                        placeholder="Telefon"
-                        autoCapitalize="words"
-                        keyboardType="default"
-                        onSubmitEditing={this._next}
-                        blurOnSubmit={false}
-                    />
-                    <Text style={styles.text}>Izobrazba</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={this.state.education}
-                        onChangeText={education => this.setState({ education })}
-                        placeholder="Izobrazba"
-                        autoCapitalize="words"
-                        keyboardType="default"
-                        onSubmitEditing={this._next}
-                        blurOnSubmit={false}
-                    />
-                    <View>
-                        <Text style={styles.text}>Kadilec</Text>
+                <Image style={styles.image} source={this.state.image !== null ?
+                    { uri: this.state.image } : require('../../images/defaultProfile.png')} />
+                <TextInput
+                    editable={false}
+                    style={styles.input}
+                    value={this.state.image}
+                    placeholder="Image url"
+                    autoCapitalize="words"
+                    keyboardType="default"
+                    onSubmitEditing={this._next}
+                    blurOnSubmit={false}
+                />
+                <Text style={styles.text}>Ime</Text>
+                <TextInput
+                    style={styles.input}
+                    value={this.state.firstName}
+                    onChangeText={firstName => this.setState({ firstName })}
+                    placeholder="Ime"
+                    autoCapitalize="words"
+                    keyboardType="default"
+                    onSubmitEditing={this._next}
+                    blurOnSubmit={false}
+                />
+                <Text style={styles.text}>Priimek</Text>
+                <TextInput
+                    style={styles.input}
+                    value={this.state.lastName}
+                    onChangeText={lastName => this.setState({ lastName })}
+                    placeholder="Priimek"
+                    autoCapitalize="words"
+                    keyboardType="default"
+                    onSubmitEditing={this._next}
+                    blurOnSubmit={false}
+                />
+                <Text style={styles.text}>Naslov</Text>
+                <TextInput
+                    style={styles.input}
+                    value={this.state.address}
+                    onChangeText={address => this.setState({ address })}
+                    placeholder="Naslov"
+                    autoCapitalize="words"
+                    keyboardType="default"
+                    onSubmitEditing={this._next}
+                    blurOnSubmit={false}
+                />
+                <Text style={styles.text}>Telefon</Text>
+                <TextInput
+                    style={styles.input}
+                    value={this.state.phoneNumber}
+                    onChangeText={phoneNumber => this.setState({ phoneNumber })}
+                    placeholder="Telefon"
+                    autoCapitalize="words"
+                    keyboardType="default"
+                    onSubmitEditing={this._next}
+                    blurOnSubmit={false}
+                />
+                <Text style={styles.text}>Izobrazba</Text>
+                <TextInput
+                    style={styles.input}
+                    value={this.state.education}
+                    onChangeText={education => this.setState({ education })}
+                    placeholder="Izobrazba"
+                    autoCapitalize="words"
+                    keyboardType="default"
+                    onSubmitEditing={this._next}
+                    blurOnSubmit={false}
+                />
+                <View>
+                    <Text style={styles.text}>Kadilec</Text>
 
-                        <CheckBox
-                            onValueChange={() => this.setState({ smoker: !this.state.smoker })}
-                            style={styles.checkbox}
-                            checked={this.state.smoker}
-                        />
-                    </View>
-
-                    <Text style={styles.text}>Email</Text>
-                    <TextInput
-                        editable={false}
-                        style={styles.input}
-                        value={this.state.email}
-                        onChangeText={email => this.setState({ email })}
-                        placeholder="Email"
-                        autoCapitalize="words"
-                        keyboardType="default"
-                        onSubmitEditing={this._next}
-                        blurOnSubmit={false}
+                    <CheckBox
+                        onValueChange={() => this.setState({ smoker: !this.state.smoker })}
+                        style={styles.checkbox}
+                        checked={this.state.smoker}
                     />
-                    <View style={styles.buttonContainer}>
-                        <Button
-                            large
-                            icon={{ name: 'plus', type: 'octicon' }}
-                            buttonStyle={styles.addButton}
-                            title='Shrani'
-                            onPress={() => this.saveData()} />
-                    </View>
-                    <Spinner visible={this.state.activityAnimating} />
-                </ScrollView >
-            </View>
+                </View>
+
+                <Text style={styles.text}>Email</Text>
+                <TextInput
+                    editable={false}
+                    style={styles.input}
+                    value={this.state.email}
+                    placeholder="Email"
+                    autoCapitalize="words"
+                    keyboardType="default"
+                    onSubmitEditing={this._next}
+                    blurOnSubmit={false}
+                />
+                <View style={styles.buttonContainer}>
+                    <Button
+                        large
+                        icon={{ name: 'plus', type: 'octicon' }}
+                        buttonStyle={styles.addButton}
+                        title='Shrani'
+                        onPress={() => this.saveData()} />
+                </View>
+                <Spinner visible={this.state.activityAnimating} />
+            </ScrollView >
         )
     }
 }
