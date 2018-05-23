@@ -34,7 +34,7 @@ class ItemList extends Component {
   makeRemoteRequestObjects = () => {
     //Alert.alert(this.state.id.toString());
     const url = 'http://our-rent-api.herokuapp.com/api/objects/';//+this.state.id.toString();
-    Alert.alert(url);
+    // Alert.alert(url);
     this.setState({ loading: true });
 
     fetch(url)
