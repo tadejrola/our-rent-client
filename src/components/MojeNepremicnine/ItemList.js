@@ -32,9 +32,7 @@ class ItemList extends Component {
   }
 
   makeRemoteRequestObjects = () => {
-    //Alert.alert(this.state.id.toString());
-    const url = 'http://our-rent-api.herokuapp.com/api/objects/';//+this.state.id.toString();
-    // Alert.alert(url);
+    const url = 'http://our-rent-api.herokuapp.com/api/objects/userObjects/'+this.state.id.toString();
     this.setState({ loading: true });
 
     fetch(url)
@@ -113,7 +111,7 @@ class ItemList extends Component {
               renderItem={({ item }) => (
                 <ListItem
                   key={item.id}
-                  onPress={() => this.props.navigation.navigate('MojeNepremicnineItem', { title: item.description })}
+                  onPress={() => this.props.navigation.navigate('MojeNepremicnineItem', item)}
                   // roundAvatar
                   avatar={{ uri: item.image }}
                   title={`${item.description}`}
