@@ -9,6 +9,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { DrawerItems } from 'react-navigation'
+import UserImage from '../UserSettings/UserImage';
 
 export default class CustomDrawer extends Component {
     constructor(props) {
@@ -43,8 +44,7 @@ export default class CustomDrawer extends Component {
                 <View style={styles.container}>
                     <TouchableOpacity
                         style={styles.imageContainer}>
-                        <Image style={styles.image} source={this.state.image !== null ?
-                            { uri: this.state.image } : require('../../images/defaultProfile.png')} />
+                        <UserImage />
                     </TouchableOpacity>
                     <DrawerItems
                         {...this.props.navigation}
@@ -68,21 +68,10 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center'
     },
-    image: {
-        width: 150,
-        height: 150
-    },
     drawerItems: {
         alignSelf: 'stretch',
     },
     imageContainer: {
-        borderWidth: 1,
-        borderColor: 'rgba(0,0,0,0.2)',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 150,
-        height: 150,
-        backgroundColor: '#fff',
-        borderRadius: 100,
+        padding: 10
     }
 });

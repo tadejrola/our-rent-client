@@ -7,14 +7,15 @@ import {
     Picker,
     ScrollView,
     AsyncStorage,
-    Image,
     Button,
     CheckBox,
     NetInfo,
-    Alert
+    Alert,
+    TouchableOpacity
 } from 'react-native';
-import OfflineNotice from '../InternetConnection/OfflineNotice'
+import Camera from 'react-native-camera';
 import Spinner from 'react-native-loading-spinner-overlay';
+import UserImage from './UserImage';
 
 export default class Settings extends Component {
     constructor(props) {
@@ -25,12 +26,18 @@ export default class Settings extends Component {
             lastName: '',
             phoneNumber: '',
             education: '',
-            smoker: false,
             image: null,
             email: '',
+            job: '',
             address: '',
             activityAnimating: false
         }
+    }
+
+    takePicture() {
+        this.Camera.capture()
+            .then((data) => console.log(data))
+            .catch(err => console.error(err));
     }
 
     componentWillMount() {
@@ -62,7 +69,7 @@ export default class Settings extends Component {
         NetInfo.isConnected.fetch().then((value) => {
             if (value) {
                 fetch('http://our-rent-api.herokuapp.com/api/users/' + this.state.id, {
-                    method: 'POST',
+                    method: 'PUT',
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/json',
@@ -77,50 +84,39 @@ export default class Settings extends Component {
                         address: this.state.address
                     }),
                 }).then((value) => {
-                    console.log(value);
                     Alert.alert(
-                        'Post successful',
+                        'Update successful',
                         'Data saved!'
                     );
                 }, (reason) => {
                     Alert.alert(
-                        'Post unsuccessful',
+                        'Update unsuccessful',
                         'Fetch error!'
                     );
                 });
             }
             else {
                 Alert.alert(
-                    'Post unsuccessful',
+                    'Update unsuccessful',
                     'No connection available!'
                 );
             }
         }, (reason) => {
             Alert.alert(
-                'Post unsuccessful',
+                'Update unsuccessful',
                 'NetInfo module error!'
             );
         });
     }
 
-    //TODO: CHECKBOX NE DELA
     render() {
         return (
             <ScrollView style={styles.container}>
-                <OfflineNotice />
-
-                <Image style={styles.image} source={this.state.image !== null ?
-                    { uri: this.state.image } : require('../../images/defaultProfile.png')} />
-                <TextInput
-                    editable={false}
-                    style={styles.input}
-                    value={this.state.image}
-                    placeholder="Image url"
-                    autoCapitalize="words"
-                    keyboardType="default"
-                    onSubmitEditing={this._next}
-                    blurOnSubmit={false}
-                />
+                <TouchableOpacity
+                    onPress={() => this.takePicture()}
+                    style={styles.imageContainer}>
+                    <UserImage />
+                </TouchableOpacity>
                 <Text style={styles.text}>Ime</Text>
                 <TextInput
                     style={styles.input}
@@ -176,16 +172,17 @@ export default class Settings extends Component {
                     onSubmitEditing={this._next}
                     blurOnSubmit={false}
                 />
-                <View>
-                    <Text style={styles.text}>Kadilec</Text>
-
-                    <CheckBox
-                        onValueChange={() => this.setState({ smoker: !this.state.smoker })}
-                        style={styles.checkbox}
-                        checked={this.state.smoker}
-                    />
-                </View>
-
+                <Text style={styles.text}>Sluzba</Text>
+                <TextInput
+                    style={styles.input}
+                    value={this.state.job}
+                    onChangeText={job => this.setState({ job })}
+                    placeholder="Sluzba"
+                    autoCapitalize="words"
+                    keyboardType="default"
+                    onSubmitEditing={this._next}
+                    blurOnSubmit={false}
+                />
                 <Text style={styles.text}>Email</Text>
                 <TextInput
                     editable={false}
@@ -213,7 +210,8 @@ export default class Settings extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: 'white',
     },
     text: {
         marginTop: 10,
@@ -239,18 +237,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(111, 202, 186, 1)',
         borderRadius: 10
     },
-    image: {
-        width: 100,
-        height: 100
-    },
-    checkbox: {
-        marginTop: 10,
-        margin: 20,
-        marginBottom: 0,
-        height: 44,
-        paddingHorizontal: 10,
-        borderRadius: 4,
-        borderColor: '#ccc',
-        borderWidth: 1
+    imageContainer: {
+        padding: 5,
+        top: 5,
+        justifyContent: 'flex-end',
+        alignItems: 'center'
     }
 });
