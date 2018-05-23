@@ -74,6 +74,7 @@ export default class Settings extends Component {
                         education: this.state.education,
                         smoker: this.state.smoker,
                         image: this.state.image,
+                        job: this.state.job,
                         address: this.state.address
                     }),
                 }).then((value) => {
