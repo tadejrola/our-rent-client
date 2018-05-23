@@ -23,6 +23,8 @@ class MojeNepremicnineZemljevid extends Component {
         };
     }
     componentWillMount() {
+
+        //TEST DATA
         const placesArray = [];
         placesArray.push({
             latitude: 45,
@@ -45,8 +47,34 @@ class MojeNepremicnineZemljevid extends Component {
             title: "test2",
             description: "test2 desc"
         });
-
         const usersMarkers = placesArray.map(userPlace => <MapView.Marker coordinate={userPlace} key={userPlace.id} />);
+
+        //REAL DATA
+        const placesArrayReal = [];
+        fetch("https://our-rent-api.herokuapp.com/api/objects")
+            .then(function (response) {
+                response.json().then(function (objects) {
+                    var index = 0;
+                    for (let item of objects) {
+                        fetch("https://maps.google.com/maps/api/geocode/json?key=AIzaSyCIGc4fL0PJv0smNrtUsHylALwAeoygHnI&address=" + item.address).then(function (coordinates) {
+                            coordinates.json().then(function (data) {
+                                var location = data.results[0].geometry.location;
+                                index = index + 1;
+                                placesArrayReal.push({
+                                    latitude: location.lat,
+                                    longitude: location.lng,
+                                    id: index.toString(),
+                                    title: "test" + index.toString(),
+                                    description: "test" + index.toString()
+                                });
+                            })
+
+                        })
+                    }
+                })
+            })
+        console.log(placesArray);
+        console.log(placesArrayReal);
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.setState({
@@ -71,8 +99,8 @@ class MojeNepremicnineZemljevid extends Component {
                     region={{
                         latitude: this.state.latitude,
                         longitude: this.state.longitude,
-                        latitudeDelta: 0.016,
-                        longitudeDelta: 0.0121,
+                        latitudeDelta: 0.1,
+                        longitudeDelta: 0.1,
                     }}
 
                 >{this.state.markers}
