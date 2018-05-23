@@ -13,7 +13,6 @@ import {
     Alert,
     TouchableOpacity
 } from 'react-native';
-import Camera from 'react-native-camera';
 import Spinner from 'react-native-loading-spinner-overlay';
 import UserImage from './UserImage';
 
@@ -32,12 +31,6 @@ export default class Settings extends Component {
             address: '',
             activityAnimating: false
         }
-    }
-
-    takePicture() {
-        this.Camera.capture()
-            .then((data) => console.log(data))
-            .catch(err => console.error(err));
     }
 
     componentWillMount() {
@@ -113,7 +106,6 @@ export default class Settings extends Component {
         return (
             <ScrollView style={styles.container}>
                 <TouchableOpacity
-                    onPress={() => this.takePicture()}
                     style={styles.imageContainer}>
                     <UserImage />
                 </TouchableOpacity>
