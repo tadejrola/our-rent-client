@@ -43,7 +43,7 @@ class NepremicninaEditor extends Component {
   }
 
   async saveBtnClick() {
-    var combinedAddress = this.state.address.concat(",", this.state.houseNumber, ",", this.state.zip, ",", this.state.city, ",", this.state.country);
+    var combinedAddress = this.state.address.concat(", ", this.state.houseNumber, ", ", this.state.zip, ", ", this.state.city, ", ", this.state.country);
     var result = await fetch('http://our-rent-api.herokuapp.com/api/objects/', {
       method: 'POST',
       headers: {

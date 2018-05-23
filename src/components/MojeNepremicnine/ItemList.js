@@ -32,7 +32,7 @@ class ItemList extends Component {
   }
 
   makeRemoteRequestObjects = () => {
-    const url = 'http://our-rent-api.herokuapp.com/api/objects/userObjects/'+this.state.id.toString();
+    const url = 'http://our-rent-api.herokuapp.com/api/objects/userObjects/' + this.state.id.toString();
     this.setState({ loading: true });
 
     fetch(url)
@@ -115,7 +115,7 @@ class ItemList extends Component {
                   // roundAvatar
                   avatar={{ uri: item.image }}
                   title={`${item.description}`}
-                  subtitle={item.category}
+                  subtitle={item.address}
                   containerStyle={{ borderBottomWidth: 0 }}
                 />
               )}
