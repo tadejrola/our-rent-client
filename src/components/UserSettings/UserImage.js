@@ -9,7 +9,7 @@ export default class UserImage extends Component {
         }
     }
 
-    componentDidMount() {
+    componentDidUpdate() {
         this.updateImage();
     }
 
