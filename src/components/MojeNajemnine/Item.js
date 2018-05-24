@@ -3,18 +3,59 @@ import {
   View,
   Text,
   StyleSheet,
+  TouchableOpacity,
+  Alert
 } from 'react-native'
+
+import { Button } from 'react-native-elements'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Item extends Component {
 
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.title
+    title: navigation.state.params.description
   })
+
+  onRemoveBtnPressed() {
+    Alert.alert(
+      'Ali želiš izbrisati nepremičnino.',
+      'Haa?',
+      [
+        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        { text: 'OK', onPress: () => this.deleteObject() },
+      ],
+      { cancelable: false })
+  }
+
+  async deleteObject() {
+    var objectID = this.props.navigation.state.params.id.toString();
+    var result = await fetch('http://our-rent-api.herokuapp.com/api/objects/' + objectID, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+    if (result.status == 200) {
+      this.props.navigation.navigate('MojeNepremicnineList');
+    }
+    else {
+      Alert.alert("Nepremičnine ni bilo mogoče odstraniti.");
+    }
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>{`${this.props.navigation.state.params.title}`}</Text>
+        <View style={styles.informationContainer}>
+          <Text style={styles.title}>Podatki o nepremičnini</Text>
+          <Text style={styles.informationTitle}>Opis</Text>
+          <Text style={styles.text}>{`${this.props.navigation.state.params.description}`}</Text>
+          <Text style={styles.informationTitle}>Kategorija nepremičnine</Text>
+          <Text style={styles.text}>{`${this.props.navigation.state.params.category}`}</Text>
+          <Text style={styles.informationTitle}>Naslov</Text>
+          <Text style={styles.text}>{`${this.props.navigation.state.params.address}`}</Text>
+        </View>
       </View>
     )
   }
@@ -25,14 +66,41 @@ export default Item
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 10
+  },
+
+  containerButtonComponent: {
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#c0392b',
-    padding: 20,
+    justifyContent: 'center'
+  },
+  containerSort: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  title: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
+  topButtonContainer: {
+    flex: 1
+  },
+  informationContainer: {
+    flex: 6
+  },
+  informationTitle: {
+    fontSize: 17,
+    marginLeft: 5,
+    padding: 5,
+    color: 'black',
+    fontWeight: 'bold',
   },
   text: {
-    color: 'white',
-    fontSize: 40,
-    fontWeight: 'bold',
+    fontSize: 15,
+    marginLeft: 5,
+    padding: 5,
+    color: 'black'
   }
 })
