@@ -44,6 +44,11 @@ class NepremicninaEditor extends Component {
 
   async saveBtnClick() {
     var combinedAddress = this.state.address.concat(", ", this.state.houseNumber, ", ", this.state.zip, ", ", this.state.city, ", ", this.state.country);
+    if (this.state.category == null || this.state.category == "")
+    {
+      this.state.category = "Blok";
+    }
+   
     var result = await fetch('http://our-rent-api.herokuapp.com/api/objects/', {
       method: 'POST',
       headers: {
@@ -58,8 +63,7 @@ class NepremicninaEditor extends Component {
         user_id: this.state.id
       }),
     });
-    var data = await result.json();
-    if (!isNaN(data) && data !== false) {
+    if (result.status == 200) {
       Alert.alert("Nepremičnina je bila shranjena");
     }
     else {
