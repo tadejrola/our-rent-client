@@ -17,6 +17,7 @@ import CustomDrawer from './components/Drawer/CustomDrawer'
 // StackNavigator screens
 import MojeNajemnineList from './components/MojeNajemnine/ItemList'
 import MojeNajemnineItem from './components/MojeNajemnine/Item'
+import MojeNajemnineZemljevid from './components/MojeNajemnine/MojeNajemnineZemljevid'
 
 import MojeNepremicnineList from './components/MojeNepremicnine/ItemList'
 import MojeNepremicnineItem from './components/MojeNepremicnine/Item'
@@ -45,6 +46,7 @@ export const MojeNepremicnine = StackNavigator({
 export const MojeNajemnine = StackNavigator({
   MojeNajemnineList: { screen: MojeNajemnineList },
   MojeNajemnineItem: { screen: MojeNajemnineItem },
+  MojeNajemnineZemljevid: { screen: MojeNajemnineZemljevid },
 }, {
     initialRouteName: 'MojeNajemnineList',
   })
