@@ -7,14 +7,16 @@ import {
     Picker,
     ScrollView,
     AsyncStorage,
-    Button,
     CheckBox,
     NetInfo,
     Alert,
     TouchableOpacity
+
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import UserImage from './UserImage';
+import { Button } from 'react-native-elements'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class Settings extends Component {
     constructor(props) {
@@ -44,6 +46,7 @@ export default class Settings extends Component {
                 this.setState({ education: data.education });
                 this.setState({ smoker: data.smoker });
                 this.setState({ image: data.image });
+                this.setState({ job: data.job });
                 this.setState({ email: data.email });
                 this.setState({ address: data.address });
             }
@@ -106,10 +109,12 @@ export default class Settings extends Component {
     render() {
         return (
             <ScrollView style={styles.container}>
-                <TouchableOpacity
-                    style={styles.imageContainer}>
-                    <UserImage />
-                </TouchableOpacity>
+                <View style={styles.imageBox}>
+                    <TouchableOpacity
+                        style={styles.imageContainer}>
+                        <UserImage />
+                    </TouchableOpacity>
+                </View>
                 <Text style={styles.text}>Ime</Text>
                 <TextInput
                     style={styles.input}
@@ -118,8 +123,7 @@ export default class Settings extends Component {
                     placeholder="Ime"
                     autoCapitalize="words"
                     keyboardType="default"
-                    onSubmitEditing={this._next}
-                    blurOnSubmit={false}
+                    onSubmitEditing={() => this.lastName.focus()}
                 />
                 <Text style={styles.text}>Priimek</Text>
                 <TextInput
@@ -129,8 +133,8 @@ export default class Settings extends Component {
                     placeholder="Priimek"
                     autoCapitalize="words"
                     keyboardType="default"
-                    onSubmitEditing={this._next}
-                    blurOnSubmit={false}
+                    onSubmitEditing={() => this.address.focus()}
+                    ref={(input) => this.lastName = input}
                 />
                 <Text style={styles.text}>Naslov</Text>
                 <TextInput
@@ -140,8 +144,8 @@ export default class Settings extends Component {
                     placeholder="Naslov"
                     autoCapitalize="words"
                     keyboardType="default"
-                    onSubmitEditing={this._next}
-                    blurOnSubmit={false}
+                    onSubmitEditing={() => this.phoneNumber.focus()}
+                    ref={(input) => this.address = input}
                 />
                 <Text style={styles.text}>Telefon</Text>
                 <TextInput
@@ -151,8 +155,8 @@ export default class Settings extends Component {
                     placeholder="Telefon"
                     autoCapitalize="words"
                     keyboardType="default"
-                    onSubmitEditing={this._next}
-                    blurOnSubmit={false}
+                    onSubmitEditing={() => this.education.focus()}
+                    ref={(input) => this.phoneNumber = input}
                 />
                 <Text style={styles.text}>Izobrazba</Text>
                 <TextInput
@@ -162,8 +166,8 @@ export default class Settings extends Component {
                     placeholder="Izobrazba"
                     autoCapitalize="words"
                     keyboardType="default"
-                    onSubmitEditing={this._next}
-                    blurOnSubmit={false}
+                    onSubmitEditing={() => this.job.focus()}
+                    ref={(input) => this.education = input}
                 />
                 <Text style={styles.text}>Sluzba</Text>
                 <TextInput
@@ -172,20 +176,13 @@ export default class Settings extends Component {
                     onChangeText={job => this.setState({ job })}
                     placeholder="Sluzba"
                     autoCapitalize="words"
-                    keyboardType="default"
-                    onSubmitEditing={this._next}
-                    blurOnSubmit={false}
+                    ref={(input) => this.job = input}
                 />
                 <Text style={styles.text}>Email</Text>
                 <TextInput
                     editable={false}
                     style={styles.input}
                     value={this.state.email}
-                    placeholder="Email"
-                    autoCapitalize="words"
-                    keyboardType="default"
-                    onSubmitEditing={this._next}
-                    blurOnSubmit={false}
                 />
                 <View style={styles.buttonContainer}>
                     <Button
@@ -231,9 +228,11 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     imageContainer: {
-        padding: 5,
-        top: 5,
+        padding: 10,
         justifyContent: 'flex-end',
         alignItems: 'center'
+    },
+    imageBox: {
+        backgroundColor: 'rgba(111, 202, 186, 1)'
     }
 });

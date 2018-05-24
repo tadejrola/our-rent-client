@@ -42,11 +42,13 @@ export default class CustomDrawer extends Component {
         return (
             <ScrollView>
                 <View style={styles.container}>
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.navigation.navigate('Settings')}
-                        style={styles.imageContainer}>
-                        <UserImage />
-                    </TouchableOpacity>
+                    <View style={styles.imageBox}>
+                        <TouchableOpacity
+                            onPress={() => this.props.navigation.navigation.navigate('Settings')}
+                            style={styles.imageContainer}>
+                            <UserImage />
+                        </TouchableOpacity>
+                    </View>
                     <DrawerItems
                         {...this.props.navigation}
                         style={styles.drawerItems}
@@ -73,6 +75,12 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
     },
     imageContainer: {
-        padding: 10
+        padding: 10,
+        backgroundColor: 'rgba(111, 202, 186, 1)',
+    },
+    imageBox: {
+        alignSelf: 'stretch',
+        backgroundColor: 'rgba(111, 202, 186, 1)',
+        alignItems: 'center'
     }
 });

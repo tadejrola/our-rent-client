@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: 150,
         height: 150,
-        backgroundColor: '#fff',
+        backgroundColor: 'rgba(111, 202, 186, 1)',
         borderRadius: 100
     }
 });

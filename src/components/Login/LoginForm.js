@@ -115,7 +115,8 @@ export default class LoginForm extends Component {
                     onChangeText={(text) => this.setState({ email: text })}
                     onSubmitEditing={() => this.password.focus()}
                 >{this.state.email}</TextInput>
-                <TextInput style={styles.inputBox}
+                <TextInput
+                    style={styles.inputBox}
                     underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="Password"
                     secureTextEntry={true}
