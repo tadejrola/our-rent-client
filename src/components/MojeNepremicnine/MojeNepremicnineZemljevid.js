@@ -34,21 +34,25 @@ class MojeNepremicnineZemljevid extends Component {
             fetch('http://our-rent-api.herokuapp.com/api/objects/userObjects/' + this.state.id.toString())
                 .then(res => res.json())
                 .then(async (objects) => {
-                    let index = 0;
-                    for (let item of objects) {
-                        const res = await fetch(`https://maps.google.com/maps/api/geocode/json?key=AIzaSyCIGc4fL0PJv0smNrtUsHylALwAeoygHnI&address=${item.address}`);
-                        const data = await res.json();
-                        index++;
-                        const location = data.results[0].geometry.location;
-                        placesArrayReal.push({
-                            latitude: location.lat,
-                            longitude: location.lng,
-                            id: index + '',
-                            title: 'Title ' + index,
-                            description: 'Descr ' + index
-                        });
+                    console.log(objects);
+                    if (objects.length > 0) {
+                        let index = 0;
+                        for (let item of objects) {
+                            const res = await fetch(`https://maps.google.com/maps/api/geocode/json?key=AIzaSyCIGc4fL0PJv0smNrtUsHylALwAeoygHnI&address=${item.address}`);
+                            const data = await res.json();
+                            index++;
+                            const location = data.results[0].geometry.location;
+                            placesArrayReal.push({
+                                latitude: location.lat,
+                                longitude: location.lng,
+                                id: index + '',
+                                title: 'Title ' + index,
+                                description: 'Descr ' + index
+                            });
+                        }
+                        resolve(placesArrayReal);
                     }
-                    resolve(placesArrayReal);
+
                 });
         });
 
