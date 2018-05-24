@@ -29,7 +29,8 @@ class NepremicninaEditor extends Component {
       houseNumber: null,
       city: null,
       zip: null,
-      country: null
+      country: null,
+      image: null
     }
   }
 
@@ -44,11 +45,20 @@ class NepremicninaEditor extends Component {
 
   async saveBtnClick() {
     var combinedAddress = this.state.address.concat(", ", this.state.houseNumber, ", ", this.state.zip, ", ", this.state.city, ", ", this.state.country);
-    if (this.state.category == null || this.state.category == "")
-    {
-      this.state.category = "Blok";
+    if (this.state.category == null || this.state.category == "") {
+      await this.setState({ category: "Stanovanje" })
     }
-   
+
+    if (this.state.category == "Stanovanje") {
+      await this.setState({ image: "https://cdn4.iconfinder.com/data/icons/eldorado-building/40/apartment-512.png" })
+    }
+    else if (this.state.category == "Hiša") {
+      await this.setState({ image: "https://cdn4.iconfinder.com/data/icons/icon-flat-icon-set/50/home-512.png" })
+    }
+    else if (this.state.category == "Garaža") {
+      await this.setState({ image: "http://icons.iconarchive.com/icons/icons8/windows-8/512/Household-Garage-icon.png" })
+    }
+
     var result = await fetch('http://our-rent-api.herokuapp.com/api/objects/', {
       method: 'POST',
       headers: {
@@ -58,7 +68,7 @@ class NepremicninaEditor extends Component {
       body: JSON.stringify({
         description: this.state.description,
         category: this.state.category,
-        image: "pod to neke slike",
+        image: this.state.image,
         address: combinedAddress,
         user_id: this.state.id
       }),
@@ -90,7 +100,7 @@ class NepremicninaEditor extends Component {
           selectedValue={this.state.category}
           style={styles.picker}
           onValueChange={(itemValue, itemIndex) => this.setState({ category: itemValue })}>
-          <Picker.Item label="Blok" value="Blok" />
+          <Picker.Item label="Stanovanje" value="Stanovanje" />
           <Picker.Item label="Hiša" value="Hiša" />
           <Picker.Item label="Garaža" value="Garaža" />
         </Picker>
