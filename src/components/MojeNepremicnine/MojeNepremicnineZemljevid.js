@@ -3,6 +3,7 @@ import {
     View,
     Text,
     StyleSheet,
+    AsyncStorage
 } from 'react-native'
 import MapView from 'react-native-maps';
 import { Marker } from 'react-native-maps';
@@ -16,17 +17,21 @@ class MojeNepremicnineZemljevid extends Component {
         super(props);
 
         this.state = {
-            latitude: 0,
-            longitude: 0,
+            id: this.props.navigation.state.params.user_id,
+            latitude: 45,
+            longitude: 15,
             markers: null,
             error: null,
         };
     }
+
+
     componentWillMount() {
 
         const getData = () => new Promise(resolve => {
             const placesArrayReal = [];
-            fetch('https://our-rent-api.herokuapp.com/api/objects')
+            console.log(this.state.id);
+            fetch('http://our-rent-api.herokuapp.com/api/objects/userObjects/' + this.state.id.toString())
                 .then(res => res.json())
                 .then(async (objects) => {
                     let index = 0;
