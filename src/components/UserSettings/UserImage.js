@@ -9,7 +9,11 @@ export default class UserImage extends Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
+        this.updateImage();
+    }
+
+    updateImage() {
         AsyncStorage.getItem('@UserData:data').then((value) => {
             var data = JSON.parse(value);
             if (data !== null) {

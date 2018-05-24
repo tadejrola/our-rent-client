@@ -31,25 +31,47 @@ export default class Settings extends Component {
             email: '',
             job: '',
             address: '',
+            data: {},
             activityAnimating: false
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         AsyncStorage.getItem('@UserData:data').then((value) => {
             var data = JSON.parse(value);
             if (data !== null) {
-                this.setState({ id: data.id });
-                this.setState({ firstName: data.firstName });
-                this.setState({ lastName: data.lastName });
-                this.setState({ phoneNumber: data.phoneNumber });
-                this.setState({ education: data.education });
-                this.setState({ smoker: data.smoker });
-                this.setState({ image: data.image });
-                this.setState({ job: data.job });
-                this.setState({ email: data.email });
-                this.setState({ address: data.address });
+                this.setState({
+                    id: data.id,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    phoneNumber: data.phoneNumber,
+                    education: data.education,
+                    smoker: data.smoker,
+                    image: data.image,
+                    job: data.job,
+                    email: data.email,
+                    address: data.address,
+                    data: data,
+                });
             }
+        });
+    }
+
+    saveToStorage() {
+        var data = this.state.data;
+        data.firstName = this.state.firstName;
+        data.lastName = this.state.lastName;
+        data.phoneNumber = this.state.phoneNumber;
+        data.education = this.state.education;
+        data.smoker = this.state.smoker;
+        data.image = this.state.image;
+        data.job = this.state.job;
+        data.address = this.state.address;
+        AsyncStorage.setItem('@UserData:data', JSON.stringify(data)).then((data) => {
+            Alert.alert(
+                'Update successful',
+                'Data saved!'
+            );
         });
     }
 
@@ -81,10 +103,7 @@ export default class Settings extends Component {
                         address: this.state.address
                     }),
                 }).then((value) => {
-                    Alert.alert(
-                        'Update successful',
-                        'Data saved!'
-                    );
+                    this.saveToStorage();
                 }, (reason) => {
                     Alert.alert(
                         'Update unsuccessful',
