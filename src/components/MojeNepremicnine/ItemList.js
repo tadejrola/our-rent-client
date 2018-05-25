@@ -44,7 +44,6 @@ class ItemList extends Component {
           loading: false,
           refreshing: false
         });
-        console.log(this.state.dataObjects);
       })
       .catch(error => {
         this.setState({ error, loading: false });
