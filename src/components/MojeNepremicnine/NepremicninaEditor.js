@@ -22,7 +22,7 @@ class NepremicninaEditor extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      id: null,
+      userId: null,
       description: null,
       category: null,
       address: null,
@@ -30,7 +30,9 @@ class NepremicninaEditor extends Component {
       city: null,
       zip: null,
       country: null,
-      image: null
+      image: null,
+      isEditing: false, 
+      objectID: null
     }
   }
 
@@ -38,9 +40,28 @@ class NepremicninaEditor extends Component {
     AsyncStorage.getItem('@UserData:data').then((value) => {
       var data = JSON.parse(value);
       if (data !== null) {
-        this.setState({ id: data.id });
+        this.setState({ userId: data.id });
       }
     });
+  }
+
+  componentDidMount(){
+   if('id' in this.props.navigation.state.params){
+      var combinedAddress = this.props.navigation.state.params.address.split(", ");
+      this.setState({
+        userId: this.props.navigation.state.params.user_id,
+        description: this.props.navigation.state.params.description,
+        category: this.props.navigation.state.params.category,
+        address:combinedAddress[0],
+        houseNumber: combinedAddress[1],
+        zip: combinedAddress[2],
+        city: combinedAddress[3],
+        country: combinedAddress[4],
+        image: this.props.navigation.state.params.image,
+        objectID: this.props.navigation.state.params.id,
+        isEditing: true
+      });
+    }
   }
 
   async saveBtnClick() {
@@ -58,26 +79,45 @@ class NepremicninaEditor extends Component {
     else if (this.state.category == "Garaža") {
       await this.setState({ image: "http://icons.iconarchive.com/icons/icons8/windows-8/512/Household-Garage-icon.png" })
     }
-
-    var result = await fetch('http://our-rent-api.herokuapp.com/api/objects/', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        description: this.state.description,
-        category: this.state.category,
-        image: this.state.image,
-        address: combinedAddress,
-        user_id: this.state.id
-      }),
+    var dataBody = JSON.stringify({
+      description: this.state.description,
+      category: this.state.category,
+      image: this.state.image,
+      address: combinedAddress,
+      user_id: this.state.userId
     });
-    if (result.status == 200) {
-      Alert.alert("Nepremičnina je bila shranjena");
+
+    if (this.state.isEditing) {
+      var result = await fetch('http://our-rent-api.herokuapp.com/api/objects/'+this.state.objectID, {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: dataBody,
+      });
+      if (result.status == 200) {
+        Alert.alert("Nepremičnina je bila posodobljena");
+      }
+      else {
+        Alert.alert("Nepremičnina ni bila posodobljena. ");
+      }
     }
     else {
-      Alert.alert("Nepremičnina ni bila shranjena. Preveri vpisane podatke. ");
+      var result = await fetch('http://our-rent-api.herokuapp.com/api/objects/', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: dataBody
+      });
+      if (result.status == 200) {
+        Alert.alert("Nepremičnina je bila shranjena");
+      }
+      else {
+        Alert.alert("Nepremičnina ni bila shranjena. Preveri vpisane podatke. ");
+      }
     }
   }
 

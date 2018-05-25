@@ -59,7 +59,7 @@ class Item extends Component {
   }
 
   onEditButtonPressed(){
-    Alert.alert("Edit");
+    this.props.navigation.navigate('MojeNepremicnineEditor', this.props.navigation.state.params);
   }
 
   onUsersButtonPressed(){
@@ -105,7 +105,7 @@ class Item extends Component {
   }
 
   makeRemoteRequestMaintenances = () => {
-    const url = `http://our-rent-api.herokuapp.com/api/maintenances`;
+    const url = 'http://our-rent-api.herokuapp.com/api/maintenances/objectMaintenance/'+ this.props.navigation.state.params.id;
     this.setState({ loading: true });
 
     fetch(url)
@@ -125,7 +125,7 @@ class Item extends Component {
   };
 
   makeRemoteRequestBills = () => {
-    const url = `http://our-rent-api.herokuapp.com/api/utilityBills`;
+    const url = 'http://our-rent-api.herokuapp.com/api/utilityBills/objectUtilityBill/'+ this.props.navigation.state.params.id;
     this.setState({ loading: true });
 
     fetch(url)

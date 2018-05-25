@@ -102,7 +102,7 @@ class ItemList extends Component {
       <View style={styles.container}>
         <View style={styles.containerMojeNepremicnine}>
           <Text style={styles.text}><Icon name="home" size={24} color="black" /> Moje nepremičnine</Text>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('MojeNepremicnineEditor')}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('MojeNepremicnineEditor', {isEditing: false})}>
             <Text style={styles.text}><Icon name="plus" size={24} />Dodaj</Text>
           </TouchableOpacity>
           <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
