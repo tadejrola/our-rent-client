@@ -3,13 +3,13 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity, 
-  Alert, 
-  FlatList, 
+  TouchableOpacity,
+  Alert,
+  FlatList,
   ActivityIndicator
 } from 'react-native'
 
-import { Button, List, ListItem} from 'react-native-elements'
+import { Button, List, ListItem } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Item extends Component {
@@ -30,18 +30,18 @@ class Item extends Component {
     };
   }
 
-  onRemoveBtnPressed(){
+  onRemoveBtnPressed() {
     Alert.alert(
       'Ali želiš izbrisati nepremičnino.',
       'Haa?',
       [
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'OK', onPress: () => this.deleteObject()},
+        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        { text: 'OK', onPress: () => this.deleteObject() },
       ],
       { cancelable: false })
   }
 
-  async deleteObject(){
+  async deleteObject() {
     var objectID = this.props.navigation.state.params.id.toString();
     var result = await fetch('http://our-rent-api.herokuapp.com/api/objects/' + objectID, {
       method: 'DELETE',
@@ -58,12 +58,12 @@ class Item extends Component {
     }
   }
 
-  onEditButtonPressed(){
+  onEditButtonPressed() {
     Alert.alert("Edit");
   }
 
-  onUsersButtonPressed(){
-    //tomi tu dodaj svojo kodo noter
+  onUsersButtonPressed() {
+    this.props.navigation.navigate('Tenants')
   }
 
   renderSeparator = () => {
@@ -146,21 +146,21 @@ class Item extends Component {
 
   render() {
     return (
-      <View style = {styles.container}>
-        <View style = {styles.topButtonContainer}>
+      <View style={styles.container}>
+        <View style={styles.topButtonContainer}>
           <View style={styles.containerFilterSort}>
-            <TouchableOpacity  style={styles.containerButtonComponent}  onPress={() => this.onEditButtonPressed()}>
+            <TouchableOpacity style={styles.containerButtonComponent} onPress={() => this.onEditButtonPressed()}>
               <Text style={styles.text}><Icon name="edit" size={30} color="black" /></Text>
             </TouchableOpacity>
-            <TouchableOpacity  style={styles.containerButtonComponent}  onPress={() => this.onUsersButtonPressed()}>
+            <TouchableOpacity style={styles.containerButtonComponent} onPress={() => this.props.navigation.navigate('Tenants', this.props.navigation.state.params)}>
               <Text style={styles.text}><Icon name="users" size={30} color="black" /></Text>
             </TouchableOpacity>
-            <TouchableOpacity  style={styles.containerButtonComponent}  onPress={() => this.onRemoveBtnPressed()}>
+            <TouchableOpacity style={styles.containerButtonComponent} onPress={() => this.onRemoveBtnPressed()}>
               <Text style={styles.text}><Icon name="remove" size={35} color="black" /></Text>
             </TouchableOpacity>
-          </View>  
-        </View>  
-        <View style = {styles.informationContainer}>
+          </View>
+        </View>
+        <View style={styles.informationContainer}>
           <View style={styles.containerObvestila}>
             <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila</Text>
             <TouchableOpacity>
@@ -233,7 +233,7 @@ export default Item
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
+    flex: 1,
     padding: 10
   },
   containerFilterSort: {
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold'
   },
-  topButtonContainer:{
+  topButtonContainer: {
     flex: 1
   },
   informationContainer: {
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
   },
-  text:{
+  text: {
     fontSize: 15,
     marginLeft: 5,
     padding: 5,
