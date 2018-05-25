@@ -117,7 +117,6 @@ class Item extends Component {
           loading: false,
           refreshing: false
         });
-        console.log(this.state.dataMaintenances);
       })
       .catch(error => {
         this.setState({ error, loading: false });
@@ -137,7 +136,6 @@ class Item extends Component {
           loading: false,
           refreshing: false
         });
-        console.log(this.state.dataBills);
       })
       .catch(error => {
         this.setState({ error, loading: false });
