@@ -97,7 +97,7 @@ class NepremicninaEditor extends Component {
         body: dataBody,
       });
       if (result.status == 200) {
-        Alert.alert("Nepremičnina je bila posodobljena");
+        this.showAlert('posodobljena');
       }
       else {
         Alert.alert("Nepremičnina ni bila posodobljena. ");
@@ -113,12 +113,22 @@ class NepremicninaEditor extends Component {
         body: dataBody
       });
       if (result.status == 200) {
-        Alert.alert("Nepremičnina je bila shranjena");
+        this.showAlert("shranjena");
       }
       else {
         Alert.alert("Nepremičnina ni bila shranjena. Preveri vpisane podatke. ");
       }
     }
+  }
+
+  showAlert(about){
+    Alert.alert(
+      'Nepremičnina je bila '+about,
+      '',
+      [
+        {text: 'OK', onPress: () => this.props.navigation.navigate('MojeNepremicnineList')}
+      ],
+      { cancelable: false })
   }
 
   render() {
