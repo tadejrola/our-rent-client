@@ -30,11 +30,9 @@ class MojeNepremicnineZemljevid extends Component {
 
         const getData = () => new Promise(resolve => {
             const placesArrayReal = [];
-            console.log(this.state.id);
             fetch('http://our-rent-api.herokuapp.com/api/objects/userObjects/' + this.state.id.toString())
                 .then(res => res.json())
                 .then(async (objects) => {
-                    console.log(objects);
                     if (objects.length > 0) {
                         let index = 0;
                         for (let item of objects) {

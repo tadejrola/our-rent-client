@@ -36,17 +36,18 @@ class ItemList extends Component {
       const placesArrayReal = [];
       fetch('https://our-rent-api.herokuapp.com/api/tenancyAgreements/userTenancies/' + this.state.id.toString())
         .then(res => res.json())
-        .then(async (objects) => {
-          console.log(objects);
-          if (objects.length > 0) {
+        .then(async (agreements) => {
+          if (agreements.length > 0) {
             let index = 0;
-            for (let item of objects) {
-
-              const res = await fetch(`https://our-rent-api.herokuapp.com/api/objects/${item.id}`);
+            for (let item of agreements) {
+              const res = await fetch(`https://our-rent-api.herokuapp.com/api/objects/${item.object_id}`);
               const data = await res.json();
-              index++;
-              console.log(data);
-              placesArrayReal.push(data);
+              //Preverimo, da nima user sklenjene pogodbe samim s seboj
+              if (this.state.id.toString() != data.user_id.toString()) {
+                index++;
+                placesArrayReal.push(data);
+              }
+
 
             }
             resolve(placesArrayReal);
