@@ -40,15 +40,19 @@ class MojeNepremicnineZemljevid extends Component {
                         for (let item of objects) {
                             const res = await fetch(`https://maps.google.com/maps/api/geocode/json?key=AIzaSyCIGc4fL0PJv0smNrtUsHylALwAeoygHnI&address=${item.address}`);
                             const data = await res.json();
-                            index++;
-                            const location = data.results[0].geometry.location;
-                            placesArrayReal.push({
-                                latitude: location.lat,
-                                longitude: location.lng,
-                                id: index + '',
-                                title: 'Title ' + index,
-                                description: 'Descr ' + index
-                            });
+
+                            if (data.results.length > 0) {
+                                index++;
+                                const location = data.results[0].geometry.location;
+                                placesArrayReal.push({
+                                    latitude: location.lat,
+                                    longitude: location.lng,
+                                    id: index + '',
+                                    title: 'Title ' + index,
+                                    description: 'Descr ' + index
+                                });
+                            }
+
                         }
                         resolve(placesArrayReal);
                     }
