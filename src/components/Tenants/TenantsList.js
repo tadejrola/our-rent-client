@@ -4,7 +4,8 @@ import {
     Text,
     StyleSheet,
     FlatList,
-    ActivityIndicator
+    ActivityIndicator,
+    Alert
 } from 'react-native'
 import { List, ListItem, SearchBar } from "react-native-elements";
 
@@ -38,6 +39,7 @@ export default class TenantsList extends Component {
                     loading: false,
                     refreshing: false
                 });
+                console.log(this.state.dataObjects);
             })
             .catch(error => {
                 this.setState({ error, loading: false });
@@ -99,11 +101,10 @@ export default class TenantsList extends Component {
                         renderItem={({ item }) => (
                             <ListItem
                                 key={item.id}
-                                onPress={() => null/*this.props.navigation.navigate('MojeNepremicnineItem')*/}
-                                // roundAvatar
-                                avatar={{ uri: item.image }}
-                                title={`${item.firstName}`}
-                                subtitle={item.lastName}
+                                onPress={() => Alert.alert("User clicked.")}
+                                avatar={item.image !== null ? { uri: this.state.image } : require('../../images/defaultProfile.png')}
+                                title={`${item.firstName + " " + item.lastName}`}
+                                subtitle={item.email}
                                 containerStyle={{ borderBottomWidth: 0 }}
                             />
                         )}

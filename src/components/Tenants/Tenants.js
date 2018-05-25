@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     },
     headContainer: {
         alignItems: 'center',
-        padding: 10
+        padding: 10,
     },
     objectName: {
         fontWeight: 'bold',
