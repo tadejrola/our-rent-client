@@ -145,135 +145,97 @@ class Item extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.topButtonContainer}>
-          <View style={styles.containerFilterSort}>
-            <TouchableOpacity style={styles.containerButtonComponent} onPress={() => this.onEditButtonPressed()}>
-              <Text style={styles.text}><Icon name="edit" size={30} color="black" /></Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.containerButtonComponent} onPress={() => this.props.navigation.navigate('Tenants', this.props.navigation.state.params)}>
-              <Text style={styles.text}><Icon name="users" size={30} color="black" /></Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.containerButtonComponent} onPress={() => this.onRemoveBtnPressed()}>
-              <Text style={styles.text}><Icon name="remove" size={35} color="black" /></Text>
-            </TouchableOpacity>
+        <View style={styles.containerButtons}>
+          <View style={styles.containerEdit}>
+            <Text style={styles.text} onPress={() => this.onEditButtonPressed()}><Icon name="edit" size={30} color="black" /></Text>
+
+          </View>
+
+          <View style={styles.containerTenants}>
+            <Text style={styles.text} onPress={() => this.props.navigation.navigate('Tenants', this.props.navigation.state.params)}><Icon name="users" size={30} color="black" /></Text>
+
+          </View>
+          <View style={styles.containerRemove}>
+            <Text style={styles.text} onPress={() => this.onRemoveBtnPressed()}><Icon name="remove" size={30} color="black" /></Text>
           </View>
         </View>
-        <View style={styles.informationContainer}>
-          <View style={styles.containerObvestila}>
-            <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila</Text>
-            <TouchableOpacity>
-              <Text style={styles.textMore}><Icon name="ellipsis-h" size={28} color="black" /></Text>
-            </TouchableOpacity>
-            <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
-              <FlatList
-                data={this.state.dataMaintenances}
-                renderItem={({ item }) => (
-                  <ListItem
-                    key={item.id}
-                    onPress={() => this.props.navigation.navigate('ObvestilaItem', { title: item.description })}
-                    roundAvatar
-                    title={`${item.description} ${item.fixingCost}`}
-                    subtitle={item.dateReported}
-                    containerStyle={{ borderBottomWidth: 0 }}
-                  />
-                )}
-                keyExtractor={item => item.id.toString()}
-                ItemSeparatorComponent={this.renderSeparator}
-                ListFooterComponent={this.renderFooter}
-                onRefresh={this.handleRefresh}
-                refreshing={this.state.refreshing}
-              />
-            </List>
-          </View>
-          <View style={styles.containerObveznosti}>
-            <Text style={styles.text}><Icon name="credit-card" size={20} color="black" /> Obveznosti</Text>
-            <TouchableOpacity >
-              <Text style={styles.textMore}><Icon name="ellipsis-h" size={28} color="black" /></Text>
-            </TouchableOpacity>
+        <View style={styles.containerObvestila}>
+          <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila</Text>
+          <TouchableOpacity style={styles.TouchableOpacityStyle}>
+            <Text style={styles.textMore}><Icon name="ellipsis-h" size={28} color="black" /></Text>
+          </TouchableOpacity>
+          <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+            <FlatList
+              data={this.state.dataMaintenances}
+              renderItem={({ item }) => (
+                <ListItem
+                  key={item.id}
+                  onPress={() => this.props.navigation.navigate('ObvestilaItem', { title: item.description })}
+                  roundAvatar
+                  title={`${item.description} ${item.fixingCost}`}
+                  subtitle={item.dateReported}
+                  containerStyle={{ borderBottomWidth: 0 }}
+                />
+              )}
+              keyExtractor={item => item.id.toString()}
+              ItemSeparatorComponent={this.renderSeparator}
+              ListFooterComponent={this.renderFooter}
+              onRefresh={this.handleRefresh}
+              refreshing={this.state.refreshing}
+            />
+          </List>
+        </View>
+        <View style={styles.containerObveznosti}>
+          <Text style={styles.text}><Icon name="credit-card" size={20} color="black" /> Obveznosti</Text>
+          <TouchableOpacity style={styles.TouchableOpacityStyle}>
+            <Text style={styles.textMore}><Icon name="ellipsis-h" size={28} color="black" /></Text>
+          </TouchableOpacity>
 
-            <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
-              <FlatList
-                data={this.state.dataBills}
-                renderItem={({ item }) => (
-                  <ListItem
-                    key={item.id}
-                    onPress={() => this.props.navigation.navigate('ObvestilaItem', { title: item.description })}
-                    roundAvatar
-                    title={`${item.name} ${item.billAmount}`}
-                    subtitle={item.description}
-                    containerStyle={{ borderBottomWidth: 0 }}
-                  />
-                )}
-                keyExtractor={item => item.id.toString()}
-                ItemSeparatorComponent={this.renderSeparator}
-                ListFooterComponent={this.renderFooter}
-                onRefresh={this.handleRefresh}
-                refreshing={this.state.refreshing}
-              />
-            </List>
-          </View>
+          <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+            <FlatList
+              data={this.state.dataBills}
+              renderItem={({ item }) => (
+                <ListItem
+                  key={item.id}
+                  onPress={() => this.props.navigation.navigate('ObvestilaItem', { title: item.description })}
+                  roundAvatar
+                  title={`${item.name} ${item.billAmount}`}
+                  subtitle={item.description}
+                  containerStyle={{ borderBottomWidth: 0 }}
+                />
+              )}
+              keyExtractor={item => item.id.toString()}
+              ItemSeparatorComponent={this.renderSeparator}
+              ListFooterComponent={this.renderFooter}
+              onRefresh={this.handleRefresh}
+              refreshing={this.state.refreshing}
+            />
+          </List>
         </View>
       </View>
     )
   }
 }
-/*
-<View style = {styles.informationContainer}>
-          <Text style = {styles.title}>Podatki o nepremičnini</Text>
-          <Text style = {styles.informationTitle}>Opis</Text>
-          <Text style = {styles.text}>{`${this.props.navigation.state.params.description}`}</Text>
-          <Text style = {styles.informationTitle}>Kategorija nepremičnine</Text>
-          <Text style = {styles.text}>{`${this.props.navigation.state.params.category}`}</Text>
-          <Text style = {styles.informationTitle}>Naslov</Text>
-          <Text style = {styles.text}>{`${this.props.navigation.state.params.address}`}</Text>
-        </View> */
+
 export default Item
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // backgroundColor: 'white',
     padding: 10
   },
-  containerFilterSort: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: -25
-  },
-  containerButtonComponent: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  containerSort: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  title: {
+  text: {
     color: 'black',
     fontSize: 20,
-    fontWeight: 'bold'
-  },
-  topButtonContainer: {
-    flex: 1
-  },
-  informationContainer: {
-    flex: 6
-  },
-  informationTitle: {
-    fontSize: 17,
-    marginLeft: 5,
-    padding: 5,
-    color: 'black',
     fontWeight: 'bold',
+    marginBottom: -20
   },
-  text: {
-    fontSize: 15,
-    marginLeft: 5,
-    padding: 5,
-    color: 'black'
+  textMore: {
+    textAlign: 'right'
+  },
+  TouchableOpacityStyle: {
+    marginBottom: -20
   },
   containerObvestila: {
     flex: 3,
@@ -282,7 +244,26 @@ const styles = StyleSheet.create({
   containerObveznosti: {
     flex: 3
   },
-  textMore: {
-    textAlign: 'right'
+  containerButtons: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: -25
+  },
+  containerRemove: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  containerTenants: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  containerEdit: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
