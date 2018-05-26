@@ -107,6 +107,7 @@ export default class SignupForm extends Component {
                     placeholderTextColor="#ffffff"
                     selectionColor="#fff"
                     keyboardType="email-address"
+                    autoCapitalize="none"
                     onChangeText={(text) => this.setState({ email: text })}
                     onSubmitEditing={() => this.password.focus()}
                 />
@@ -115,6 +116,7 @@ export default class SignupForm extends Component {
                     placeholder="Password"
                     secureTextEntry={true}
                     placeholderTextColor="#ffffff"
+                    autoCapitalize="none"
                     onChangeText={(text) => this.setState({ password: text })}
                     ref={(input) => this.password = input}
                 />
@@ -123,6 +125,7 @@ export default class SignupForm extends Component {
                     placeholder="Repeat password"
                     secureTextEntry={true}
                     placeholderTextColor="#ffffff"
+                    autoCapitalize="none"
                     onChangeText={(text) => this.setState({ repeatPassword: text })}
                     ref={(input) => this.password = input}
                 />

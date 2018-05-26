@@ -2,37 +2,11 @@ import React, { Component } from 'react';
 import { Image, AsyncStorage, StyleSheet, View, Text } from 'react-native';
 
 export default class UserImage extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            firstName: null,
-            lastName: null,
-            email: null
-        }
-    }
-
-    componentDidUpdate() {
-        this.update();
-    }
-
-    update() {
-        AsyncStorage.getItem('@UserData:data').then((value) => {
-            var data = JSON.parse(value);
-            if (data !== null) {
-                this.setState({
-                    firstName: data.firstName,
-                    lastName: data.lastName,
-                    email: data.email
-                });
-            }
-        });
-    }
-
     render() {
         return (
             <View style={styles.loggedInUser}>
-                <Text>{this.state.firstName} {this.state.lastName}</Text>
-                <Text>{this.state.email}</Text>
+                <Text>{this.props.user.firstName} {this.props.user.lastName}</Text>
+                <Text>{this.props.user.email}</Text>
             </View>
         )
     }

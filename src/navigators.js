@@ -36,7 +36,8 @@ import SignupScreen from './pages/Signup'
 
 import Home from './pages/Home'
 
-import Settings from './components/UserSettings/Settings'
+import SettingsScreen from './components/User/Settings'
+import SettingsEditScreen from './components/User/SettingsEdit'
 
 export const MojeNepremicnine = StackNavigator({
   MojeNepremicnineList: { screen: MojeNepremicnineList },
@@ -72,6 +73,13 @@ export const Login = StackNavigator({
     initialRouteName: 'Login',
   })
 
+export const Settings = StackNavigator({
+  Settings: { screen: SettingsScreen },
+  SettingsEdit: { screen: SettingsEditScreen }
+}, {
+    initialRouteName: 'Settings',
+  })
+
 const DrawerRoutes = {
   Home: {
     screen: Home,
@@ -100,7 +108,7 @@ const DrawerRoutes = {
   Settings: {
     screen: Settings,
     navigationOptions: {
-      title: "Nastavitve profila"
+      title: "Nastavitve profila",
     }
   },
   Login: {

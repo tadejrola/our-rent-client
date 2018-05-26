@@ -111,6 +111,7 @@ export default class LoginForm extends Component {
                     placeholder="Email"
                     placeholderTextColor="#ffffff"
                     selectionColor="#fff"
+                    autoCapitalize="none"
                     keyboardType="email-address"
                     onChangeText={(text) => this.setState({ email: text })}
                     onSubmitEditing={() => this.password.focus()}
@@ -120,6 +121,7 @@ export default class LoginForm extends Component {
                     underlineColorAndroid='rgba(0,0,0,0)'
                     placeholder="Password"
                     secureTextEntry={true}
+                    autoCapitalize="none"
                     placeholderTextColor="#ffffff"
                     onChangeText={(text) => this.setState({ password: text })}
                     ref={(input) => this.password = input}

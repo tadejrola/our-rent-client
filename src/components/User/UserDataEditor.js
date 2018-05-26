@@ -11,14 +11,11 @@ import {
     NetInfo,
     Alert,
     TouchableOpacity
-
 } from 'react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
-import UserImage from './UserImage';
 import { Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class Settings extends Component {
+export default class UserDataEditor extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -27,50 +24,42 @@ export default class Settings extends Component {
             lastName: '',
             phoneNumber: '',
             education: '',
-            image: null,
             email: '',
             job: '',
-            address: '',
-            data: {},
-            activityAnimating: false
+            address: ''
         }
     }
 
     componentDidMount() {
-        AsyncStorage.getItem('@UserData:data').then((value) => {
-            var data = JSON.parse(value);
-            if (data !== null) {
-                this.setState({
-                    id: data.id,
-                    firstName: data.firstName,
-                    lastName: data.lastName,
-                    phoneNumber: data.phoneNumber,
-                    education: data.education,
-                    smoker: data.smoker,
-                    image: data.image,
-                    job: data.job,
-                    email: data.email,
-                    address: data.address,
-                    data: data,
-                });
-            }
+        console.log(this.props);
+        this.setState({
+            id: this.props.user.id,
+            firstName: this.props.user.firstName,
+            lastName: this.props.user.lastName,
+            phoneNumber: this.props.user.phoneNumber,
+            education: this.props.user.education,
+            email: this.props.user.email,
+            job: this.props.user.job,
+            address: this.props.user.address
         });
     }
 
-    saveToStorage() {
-        var data = this.state.data;
+    updateLocalStorage() {
+        var data = this.props.user;
         data.firstName = this.state.firstName;
         data.lastName = this.state.lastName;
         data.phoneNumber = this.state.phoneNumber;
         data.education = this.state.education;
-        data.smoker = this.state.smoker;
-        data.image = this.state.image;
         data.job = this.state.job;
         data.address = this.state.address;
         AsyncStorage.setItem('@UserData:data', JSON.stringify(data)).then((data) => {
             Alert.alert(
                 'Update successful',
-                'Data saved!'
+                'Data saved!',
+                [
+                    { text: 'OK', onPress: () => this.props.navigation.goBack() },
+                ],
+                { cancelable: false }
             );
         });
     }
@@ -97,13 +86,11 @@ export default class Settings extends Component {
                         lastName: this.state.lastName,
                         phoneNumber: this.state.phoneNumber,
                         education: this.state.education,
-                        smoker: this.state.smoker,
-                        image: this.state.image,
                         job: this.state.job,
                         address: this.state.address
                     }),
                 }).then((value) => {
-                    this.saveToStorage();
+                    this.updateLocalStorage();
                 }, (reason) => {
                     Alert.alert(
                         'Update unsuccessful',
@@ -127,13 +114,7 @@ export default class Settings extends Component {
 
     render() {
         return (
-            <ScrollView style={styles.container}>
-                <View style={styles.imageBox}>
-                    <TouchableOpacity
-                        style={styles.imageContainer}>
-                        <UserImage />
-                    </TouchableOpacity>
-                </View>
+            <View>
                 <Text style={styles.text}>Ime</Text>
                 <TextInput
                     style={styles.input}
@@ -142,6 +123,7 @@ export default class Settings extends Component {
                     placeholder="Ime"
                     autoCapitalize="words"
                     keyboardType="default"
+                    underlineColorAndroid='rgba(0,0,0,0)'
                     onSubmitEditing={() => this.lastName.focus()}
                 />
                 <Text style={styles.text}>Priimek</Text>
@@ -152,6 +134,7 @@ export default class Settings extends Component {
                     placeholder="Priimek"
                     autoCapitalize="words"
                     keyboardType="default"
+                    underlineColorAndroid='rgba(0,0,0,0)'
                     onSubmitEditing={() => this.address.focus()}
                     ref={(input) => this.lastName = input}
                 />
@@ -163,6 +146,7 @@ export default class Settings extends Component {
                     placeholder="Naslov"
                     autoCapitalize="words"
                     keyboardType="default"
+                    underlineColorAndroid='rgba(0,0,0,0)'
                     onSubmitEditing={() => this.phoneNumber.focus()}
                     ref={(input) => this.address = input}
                 />
@@ -174,6 +158,7 @@ export default class Settings extends Component {
                     placeholder="Telefon"
                     autoCapitalize="words"
                     keyboardType="default"
+                    underlineColorAndroid='rgba(0,0,0,0)'
                     onSubmitEditing={() => this.education.focus()}
                     ref={(input) => this.phoneNumber = input}
                 />
@@ -185,6 +170,7 @@ export default class Settings extends Component {
                     placeholder="Izobrazba"
                     autoCapitalize="words"
                     keyboardType="default"
+                    underlineColorAndroid='rgba(0,0,0,0)'
                     onSubmitEditing={() => this.job.focus()}
                     ref={(input) => this.education = input}
                 />
@@ -195,6 +181,7 @@ export default class Settings extends Component {
                     onChangeText={job => this.setState({ job })}
                     placeholder="Sluzba"
                     autoCapitalize="words"
+                    underlineColorAndroid='rgba(0,0,0,0)'
                     ref={(input) => this.job = input}
                 />
                 <Text style={styles.text}>Email</Text>
@@ -202,6 +189,7 @@ export default class Settings extends Component {
                     editable={false}
                     style={styles.input}
                     value={this.state.email}
+                    underlineColorAndroid='rgba(0,0,0,0)'
                 />
                 <View style={styles.buttonContainer}>
                     <Button
@@ -211,17 +199,12 @@ export default class Settings extends Component {
                         title='Shrani'
                         onPress={() => this.saveData()} />
                 </View>
-                <Spinner visible={this.state.activityAnimating} />
-            </ScrollView >
+            </View >
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white',
-    },
     text: {
         marginTop: 10,
         marginLeft: 20,
@@ -245,13 +228,5 @@ const styles = StyleSheet.create({
     addButton: {
         backgroundColor: 'rgba(111, 202, 186, 1)',
         borderRadius: 10
-    },
-    imageContainer: {
-        padding: 10,
-        justifyContent: 'flex-end',
-        alignItems: 'center'
-    },
-    imageBox: {
-        backgroundColor: 'rgba(111, 202, 186, 1)'
     }
 });

@@ -9,10 +9,38 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { DrawerItems } from 'react-navigation'
-import UserImage from '../UserSettings/UserImage';
+import UserImage from '../User/UserImage';
 import CurrentUser from './CurrentUser';
 
 export default class CustomDrawer extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            image: null,
+            firstName: null,
+            lastName: null,
+            email: null
+        }
+    }
+
+    componentDidUpdate() {
+        this.update();
+    }
+
+    update() {
+        AsyncStorage.getItem('@UserData:data').then((value) => {
+            var data = JSON.parse(value);
+            if (data !== null) {
+                this.setState({
+                    image: data.image,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    email: data.email
+                });
+            }
+        });
+    }
+
     logoutUser() {
         AsyncStorage.removeItem('@UserData:data');
     }
@@ -25,9 +53,13 @@ export default class CustomDrawer extends Component {
                         <TouchableOpacity
                             onPress={() => this.props.navigation.navigation.navigate('Settings')}
                             style={styles.imageContainer}>
-                            <UserImage />
+                            <UserImage user={{ image: this.state.image }} />
                         </TouchableOpacity>
-                        <CurrentUser />
+                        <CurrentUser user={{
+                            firstName: this.state.firstName,
+                            lastName: this.state.lastName,
+                            email: this.state.email
+                        }} />
                     </View>
                     <DrawerItems
                         {...this.props.navigation}

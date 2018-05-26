@@ -39,7 +39,6 @@ export default class TenantsList extends Component {
                     loading: false,
                     refreshing: false
                 });
-                console.log(this.state.dataObjects);
             })
             .catch(error => {
                 this.setState({ error, loading: false });
@@ -61,14 +60,7 @@ export default class TenantsList extends Component {
 
     renderSeparator = () => {
         return (
-            <View
-                style={{
-                    height: 1,
-                    width: "86%",
-                    backgroundColor: "#CED0CE",
-                    marginLeft: "14%"
-                }}
-            />
+            <View style={styles.seperator} />
         );
     };
 
@@ -77,16 +69,10 @@ export default class TenantsList extends Component {
     };
 
     renderFooter = () => {
-        if (!this.state.loading) return null;
-
+        if (!this.state.loading)
+            return null;
         return (
-            <View
-                style={{
-                    paddingVertical: 20,
-                    borderTopWidth: 1,
-                    borderColor: "#CED0CE"
-                }}
-            >
+            <View style={styles.footer}>
                 <ActivityIndicator animating size="large" />
             </View>
         );
@@ -102,7 +88,7 @@ export default class TenantsList extends Component {
                             <ListItem
                                 key={item.id}
                                 onPress={() => Alert.alert("User clicked.")}
-                                avatar={item.image !== null ? { uri: this.state.image } : require('../../images/defaultProfile.png')}
+                                avatar={item.image !== null ? { uri: item.image } : require('../../images/defaultProfile.png')}
                                 title={`${item.firstName + " " + item.lastName}`}
                                 subtitle={item.email}
                                 containerStyle={{ borderBottomWidth: 0 }}
@@ -122,4 +108,15 @@ export default class TenantsList extends Component {
 }
 
 const styles = StyleSheet.create({
+    footer: {
+        paddingVertical: 20,
+        borderTopWidth: 1,
+        borderColor: "#CED0CE"
+    },
+    seperator: {
+        height: 1,
+        width: "86%",
+        backgroundColor: "#CED0CE",
+        marginLeft: "14%"
+    }
 });
