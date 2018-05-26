@@ -87,5 +87,6 @@ const styles = StyleSheet.create({
         borderColor: '#ccc',
         borderWidth: 1,
         fontSize: 16,
+        color: 'black'
     }
 });

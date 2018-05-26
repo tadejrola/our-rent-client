@@ -24,7 +24,7 @@ export default class Tenants extends Component {
         return {
             title: 'Pregled najemnikov',
             headerRight: <TouchableOpacity
-                style={styles.addUser}
+                style={styles.add}
                 onPress={() => params.handleAdd && params.handleAdd()}>
                 <Text>
                     <Icon name="plus" size={30} color="black" />
@@ -54,14 +54,14 @@ export default class Tenants extends Component {
                     <Text style={styles.objectName}>{this.state.description}</Text>
                     <Text style={styles.objectAddress}>{this.state.address}</Text>
                 </View>
-                <TenantsList objectId={this.props.navigation.state.params.id} />
+                <TenantsList objectId={this.props.navigation.state.params.id} navigation={this.props.navigation} />
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    addUser: {
+    add: {
         paddingRight: 10
     },
     headContainer: {

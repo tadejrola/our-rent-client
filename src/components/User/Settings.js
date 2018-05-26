@@ -80,6 +80,7 @@ export default class Settings extends Component {
                     education: this.state.education,
                     job: this.state.job,
                     address: this.state.address,
+                    email: this.state.email
                 }} />
             </ScrollView >
         )

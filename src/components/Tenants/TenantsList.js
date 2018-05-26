@@ -87,7 +87,7 @@ export default class TenantsList extends Component {
                         renderItem={({ item }) => (
                             <ListItem
                                 key={item.id}
-                                onPress={() => Alert.alert("User clicked.")}
+                                onPress={() => this.props.navigation.navigate("TenantOverview", { user: item })}
                                 avatar={item.image !== null ? { uri: item.image } : require('../../images/defaultProfile.png')}
                                 title={`${item.firstName + " " + item.lastName}`}
                                 subtitle={item.email}

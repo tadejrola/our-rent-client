@@ -31,7 +31,6 @@ export default class UserDataEditor extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props);
         this.setState({
             id: this.props.user.id,
             firstName: this.props.user.firstName,

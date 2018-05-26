@@ -16,10 +16,6 @@ export default class SettingsEdit extends Component {
         header: null
     }
 
-    componentWillMount() {
-        console.log(this.props.navigation.state.params.user);
-    }
-
     render() {
         return (
             <ScrollView style={styles.container}>
