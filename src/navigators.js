@@ -28,6 +28,9 @@ import MojeNepremicnineList from './components/MojeNepremicnine/ItemList'
 import MojeNepremicnineItem from './components/MojeNepremicnine/Item'
 import NepremicninaEditor from './components/MojeNepremicnine/NepremicninaEditor'
 import MojeNepremicnineZemljevid from './components/MojeNepremicnine/MojeNepremicnineZemljevid'
+import MojeNepremicnineObveznostiList from './components/MojeNepremicnine/MojeNepremicnineObveznosti/ItemList'
+import MojeNepremicnineObveznostiItem from './components/MojeNepremicnine/MojeNepremicnineObveznosti/Item'
+import MojeNepremicnineObveznostEditor from './components/MojeNepremicnine/MojeNepremicnineObveznosti/ObveznostiEditor'
 
 import ObvestilaList from './components/Obvestila/ItemList'
 import ObvestilaItem from './components/Obvestila/Item'
@@ -46,7 +49,10 @@ export const MojeNepremicnine = StackNavigator({
   MojeNepremicnineEditor: { screen: NepremicninaEditor },
   Tenants: { screen: Tenants },
   TenantOverview: { screen: TenantOverview },
-  MojeNepremicnineZemljevid: { screen: MojeNepremicnineZemljevid }
+  MojeNepremicnineZemljevid: { screen: MojeNepremicnineZemljevid },
+  MojeNepremicnineObveznostiList: { screen: MojeNepremicnineObveznostiList },
+  MojeNepremicnineObveznostiItem: { screen: MojeNepremicnineObveznostiItem },
+  MojeNepremicnineObveznostEditor: { screen: MojeNepremicnineObveznostEditor }
 }, {
     initialRouteName: 'MojeNepremicnineList',
   })
