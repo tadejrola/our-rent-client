@@ -11,6 +11,7 @@ import {
 import { DrawerItems } from 'react-navigation'
 import UserImage from '../User/UserImage';
 import CurrentUser from './CurrentUser';
+import { NavigationActions } from 'react-navigation'
 
 export default class CustomDrawer extends Component {
     constructor(props) {
@@ -66,8 +67,11 @@ export default class CustomDrawer extends Component {
                         style={styles.drawerItems}
                         onItemPress={
                             ({ route, focused }) => {
-                                this.props.navigation.onItemPress({ route, focused });
                                 route.key === "Login" ? this.logoutUser() : null;
+                                () => this.props.navigation.navigation.dispatch(NavigationActions.reset({
+                                    index: 0,
+                                }));
+                                this.props.navigation.onItemPress({ route, focused });
                             }
                         }
                     />
