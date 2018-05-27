@@ -28,6 +28,7 @@ export default class TenantOverview extends Component {
     };
 
     addAgreement() {
+        //TODO: implement
         Alert.alert("ADD aggrfghfsdr lol");
     }
 

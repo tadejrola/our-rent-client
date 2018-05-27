@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
     },
     footer: {
         paddingVertical: 20,
-        borderTopWidth: 1,
         backgroundColor: "white",
     },
     seperator: {

@@ -35,6 +35,7 @@ export default class Tenants extends Component {
     };
 
     addUser() {
+        //TODO: implement
         Alert.alert("ADD TENANT lol");
     }
 

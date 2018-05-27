@@ -6,12 +6,28 @@ import {
     TextInput,
     AsyncStorage,
     ScrollView,
-    Image,
     TouchableOpacity,
-    Alert
+    Alert,
+    Modal,
+    Image
 } from 'react-native';
 import { Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ImageViewer from 'react-native-image-zoom-viewer';
+
+const images = [{
+    // Simplest usage.
+    url: 'https://avatars2.githubusercontent.com/u/7970947?v=3&s=460',
+    // You can pass props to <Image />.
+    props: {
+        // headers: ...
+    }
+}, {
+    props: {
+        // Or you can set source directory.
+        source: require('../../images/tenancyImg.png')
+    }
+}]
 
 export default class TenancyAgreementOverview extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -38,8 +54,13 @@ export default class TenancyAgreementOverview extends Component {
                 paymentInterval: null,
                 paymentAmount: null,
                 currency: null
-            }
+            },
+            modalOpen: false
         }
+    }
+
+    changeModalState() {
+        this.setState({ modalOpen: !this.state.modalOpen });
     }
 
     editAgreement() {
@@ -105,10 +126,31 @@ export default class TenancyAgreementOverview extends Component {
                     underlineColorAndroid='rgba(0,0,0,0)'
                 />
                 <View style={styles.imageContainer}>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => this.changeModalState()}
+                    >
                         <Image style={styles.image} source={this.state.tenancyAgreement.image !== null ?
                             { uri: this.state.tenancyAgreement.image } : require('../../images/tenancyImg.png')} />
                     </TouchableOpacity>
+                    <Modal
+                        visible={this.state.modalOpen}
+                        transparent={true}
+                        onRequestClose={() => this.changeModalState()}
+                    >
+                        <ImageViewer imageUrls={this.state.tenancyAgreement.image !== null ?
+                            [{
+                                url: this.state.tenancyAgreement.image,
+                                props: {
+
+                                }
+                            }] :
+                            [{
+                                props:
+                                    {
+                                        source: require('../../images/tenancyImg.png')
+                                    }
+                            }]} />
+                    </Modal>
                 </View>
             </ScrollView >
         )
