@@ -28,7 +28,7 @@ class NepremicninaEditor extends Component {
       dueDate: new Date(),
       billAmount: null,
       image: null,
-      paid: 0, 
+      paid: false, 
       objectID: null, 
       tenancyAgreement_id: 1, 
       isEditing: false
@@ -166,7 +166,7 @@ class NepremicninaEditor extends Component {
                 marginLeft: 36
               }
           }}
-          dueDate={(dueDate) => {this.setState({dueDate: dueDate})}}
+          onDateChange={(dueDate) => {this.setState({dueDate: dueDate})}}
           />
         <Text style={styles.text}>Je obveznost poravnana?</Text>
         <CheckBox 
