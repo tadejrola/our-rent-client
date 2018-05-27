@@ -80,14 +80,19 @@ export default class TenantsList extends Component {
 
     render() {
         return (
-            <View>
+            <View style={styles.container}>
                 <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
                     <FlatList
                         data={this.state.dataObjects}
                         renderItem={({ item }) => (
                             <ListItem
                                 key={item.id}
-                                onPress={() => this.props.navigation.navigate("TenantOverview", { user: item })}
+                                onPress={() => this.props.navigation.navigate("TenantOverview", {
+                                    user: item,
+                                    objectId: this.props.objectId,
+                                    objectDescription: this.props.objectDescription,
+                                    objectAddress: this.props.objectAddress
+                                })}
                                 avatar={item.image !== null ? { uri: item.image } : require('../../images/defaultProfile.png')}
                                 title={`${item.firstName + " " + item.lastName}`}
                                 subtitle={item.email}
@@ -108,15 +113,18 @@ export default class TenantsList extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'white'
+    },
     footer: {
         paddingVertical: 20,
         borderTopWidth: 1,
-        borderColor: "#CED0CE"
+        backgroundColor: "white",
     },
     seperator: {
         height: 1,
         width: "86%",
-        backgroundColor: "#CED0CE",
+        backgroundColor: "white",
         marginLeft: "14%"
     }
 });

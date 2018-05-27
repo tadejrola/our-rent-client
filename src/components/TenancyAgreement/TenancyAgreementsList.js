@@ -22,7 +22,6 @@ export default class TenancyAgreementsList extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.user.tenancyAgreements);
         this.setState({
             objectId: this.props.user.objectId,
             dataObjects: this.props.user.tenancyAgreements
@@ -90,10 +89,15 @@ export default class TenancyAgreementsList extends Component {
                         renderItem={({ item }) => (
                             <ListItem
                                 key={item.id}
-                                onPress={() => this.props.navigation.navigate("TenantOverview", { tenancyAgreement: item })}
-                                avatar={item.scan !== null ? { uri: item.scan } : require('../../images/tenancyImg.jpg')}
-                                title={`${"Valid to: " + item.validTo}`}
-                                subtitle={"Valid from: " + item.validFrom}
+                                onPress={() => this.props.navigation.navigate("TenancyAgreementOverview", {
+                                    tenancyAgreement: item,
+                                    objectId: this.props.objectId,
+                                    objectDescription: this.props.objectDescription,
+                                    objectAddress: this.props.objectAddress
+                                })}
+                                avatar={item.image !== null ? { uri: item.image } : require('../../images/tenancyImg.png')}
+                                title={`${item.name}`}
+                                subtitle={"Valid to: " + item.validTo}
                                 containerStyle={{ borderBottomWidth: 0 }}
                             />
                         )}

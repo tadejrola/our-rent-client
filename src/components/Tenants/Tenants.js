@@ -22,7 +22,7 @@ export default class Tenants extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params } = navigation.state;
         return {
-            title: 'Pregled najemnikov',
+            title: 'Seznam najemnikov',
             headerRight: <TouchableOpacity
                 style={styles.add}
                 onPress={() => params.handleAdd && params.handleAdd()}>
@@ -54,7 +54,12 @@ export default class Tenants extends Component {
                     <Text style={styles.objectName}>{this.state.description}</Text>
                     <Text style={styles.objectAddress}>{this.state.address}</Text>
                 </View>
-                <TenantsList objectId={this.props.navigation.state.params.id} navigation={this.props.navigation} />
+                <TenantsList
+                    objectId={this.props.navigation.state.params.id}
+                    objectDescription={this.props.navigation.state.params.description}
+                    objectAddress={this.props.navigation.state.params.address}
+                    navigation={this.props.navigation}
+                />
             </View>
         )
     }
@@ -66,13 +71,16 @@ const styles = StyleSheet.create({
     },
     headContainer: {
         alignItems: 'center',
-        padding: 10,
+        paddingTop: 10,
+        backgroundColor: 'white'
     },
     objectName: {
         fontWeight: 'bold',
-        fontSize: 20
+        fontSize: 20,
+        color: 'black'
     },
     objectAddress: {
-        fontSize: 16
+        fontSize: 16,
+        color: 'black'
     }
 });
