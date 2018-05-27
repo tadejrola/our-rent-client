@@ -10,6 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import UserImage from '../User/UserImage';
 import UserData from '../User/UserData';
+import TenancyAgreementsList from '../TenancyAgreement/TenancyAgreementsList';
 
 export default class TenantOverview extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -54,6 +55,11 @@ export default class TenantOverview extends Component {
                         address: this.props.navigation.state.params.user.address,
                         email: this.props.navigation.state.params.user.email,
                     }} />
+                <TenancyAgreementsList
+                    user={this.props.navigation.state.params.user}
+                    navigation={this.props.navigation}
+                />
+
             </ScrollView >
         )
     }
