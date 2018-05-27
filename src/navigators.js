@@ -20,6 +20,9 @@ import MojeNajemnineItem from './components/MojeNajemnine/Item'
 import MojeNajemnineZemljevid from './components/MojeNajemnine/MojeNajemnineZemljevid'
 import MojeNajemnineItemZemljevid from './components/MojeNajemnine/MojeNajemnineItemZemljevid'
 import MojeNajemnineItemPogodba from './components/MojeNajemnine/MojeNajemnineItemPogodba'
+import MojeNajemninePopravilaList from './components/MojeNajemnine/MojeNajemninePopravila/ItemList'
+import MojeNajemninePopravilaItem from './components/MojeNajemnine/MojeNajemninePopravila/Item'
+import MojeNajemninePopravilaEditor from './components/MojeNajemnine/MojeNajemninePopravila/PopravilaEditor'
 
 //import TenancyAgreementEditor from './components/TenancyAgreement/TenancyAgreementEditor'
 import Tenants from './components/Tenants/Tenants'
@@ -65,6 +68,10 @@ export const MojeNajemnine = StackNavigator({
   MojeNajemnineZemljevid: { screen: MojeNajemnineZemljevid },
   MojeNajemnineItemZemljevid: { screen: MojeNajemnineItemZemljevid },
   MojeNajemnineItemPogodba: { screen: MojeNajemnineItemPogodba },
+  MojeNajemninePopravilaList: { screen: MojeNajemninePopravilaList },
+  MojeNajemninePopravilaItem: { screen: MojeNajemninePopravilaItem },
+  MojeNajemninePopravilaEditor: { screen: MojeNajemninePopravilaEditor }
+
 }, {
     initialRouteName: 'MojeNajemnineList',
   })

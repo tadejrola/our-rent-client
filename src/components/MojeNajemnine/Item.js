@@ -122,8 +122,8 @@ class Item extends Component {
         </View>
         <View style={styles.containerObvestila}>
           <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila</Text>
-          <TouchableOpacity style={styles.TouchableOpacityStyle}>
-            <Text style={styles.textMore}><Icon name="plus" size={28} color="black" /></Text>
+          <TouchableOpacity style={styles.TouchableOpacityStyle} onPress={() => this.props.navigation.navigate('MojeNajemninePopravilaList', { object_id: this.props.navigation.state.params.id })} >
+            <Text style={styles.textMore}><Icon name="ellipsis-h" size={28} color="black" /> </Text>
           </TouchableOpacity>
           <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
             <FlatList
@@ -131,7 +131,7 @@ class Item extends Component {
               renderItem={({ item }) => (
                 <ListItem
                   key={item.id}
-                  onPress={() => this.props.navigation.navigate('ObvestilaItem', { title: item.description })}
+                  onPress={() => this.props.navigation.navigate('MojeNajemninePopravilaItem', { title: item.description })}
                   roundAvatar
                   title={`${item.description} ${item.fixingCost}`}
                   subtitle={item.dateReported}
@@ -156,7 +156,7 @@ class Item extends Component {
               renderItem={({ item }) => (
                 <ListItem
                   key={item.id}
-                  onPress={() => this.props.navigation.navigate('ObvestilaItem', { title: item.description })}
+                  onPress={() => this.props.navigation.navigate('MojeNepremicnineObvestilaItem', { title: item.description })}
                   roundAvatar
                   title={`${item.name} ${item.billAmount}`}
                   subtitle={item.description}
