@@ -24,7 +24,7 @@ export default class CustomDrawer extends Component {
         }
     }
 
-    componentDidUpdate() {
+    componentDidMount() {
         this.update();
     }
 
