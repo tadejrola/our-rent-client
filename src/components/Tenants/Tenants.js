@@ -34,13 +34,16 @@ export default class Tenants extends Component {
 
     };
 
-    addUser() {
-        //TODO: implement
-        Alert.alert("ADD TENANT lol");
-    }
-
     componentDidMount() {
-        this.props.navigation.setParams({ handleAdd: () => this.addUser() });
+        this.props.navigation.setParams({
+            handleAdd: () => this.props.navigation.navigate("AddTenant",
+                {
+                    objectId: this.state.id,
+                    objectDescription: this.state.description,
+                    objectAddress: this.state.address
+                }
+            )
+        });
         this.setState({
             id: this.props.navigation.state.params.id,
             address: this.props.navigation.state.params.address,

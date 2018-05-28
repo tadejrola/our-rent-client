@@ -32,10 +32,6 @@ export default class TenantOverview extends Component {
         Alert.alert("ADD aggrfghfsdr lol");
     }
 
-    componentWillMount() {
-        console.log(this.props.navigation.state.params);
-    }
-
     componentDidMount() {
         this.props.navigation.setParams({ handleAdd: () => this.addAgreement() });
     }

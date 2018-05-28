@@ -4,7 +4,6 @@ import {
     Text,
     StyleSheet,
     TextInput,
-    Picker,
     ScrollView,
     AsyncStorage,
     CheckBox,

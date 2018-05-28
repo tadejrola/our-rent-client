@@ -114,7 +114,7 @@ export default class TenantsList extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white'
+        backgroundColor: 'white',
     },
     footer: {
         paddingVertical: 20,
