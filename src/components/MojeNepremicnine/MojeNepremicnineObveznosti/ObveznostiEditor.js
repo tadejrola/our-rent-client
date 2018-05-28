@@ -50,13 +50,20 @@ class NepremicninaEditor extends Component {
         name: this.props.navigation.state.params.name,
         description: this.props.navigation.state.params.description,
         dueDate: this.props.navigation.state.params.dueDate,
-        billAmount: this.props.navigation.state.params.billAmount,
+        billAmount: this.props.navigation.state.params.billAmount.toString(),
         paid: this.props.navigation.state.params.paid,
         image: this.props.navigation.state.params.image,
         objectID: this.props.navigation.state.params.id,
         tenancyAgreement_id: this.props.navigation.state.params.tenancyAgreement_id,
         isEditing: true
       });
+
+      if (this.state.paid == 1){
+        this.setState({paid: true});
+      }
+      else {
+        this.setState({paid: false});
+      }
     }
     else{
       this.setState({
@@ -154,7 +161,7 @@ class NepremicninaEditor extends Component {
             style={styles.datePicker}
             date={this.state.dueDate}
             mode="date"
-            format="DD-MM-YYYY"
+            format="YYYY-MM-DD"
             customStyles={{
                dateIcon: {
                 position: 'absolute',
