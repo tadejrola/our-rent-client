@@ -11,7 +11,8 @@ import {
     Modal,
     Image
 } from 'react-native';
-import { Button } from 'react-native-elements'
+
+import DatePicker from 'react-native-datepicker'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ImageViewer from 'react-native-image-zoom-viewer';
 
@@ -35,8 +36,8 @@ export default class TenancyAgreementOverview extends Component {
         this.state = {
             tenancyAgreement: {
                 name: null,
-                validTo: null,
-                validFrom: null,
+                validTo: new Date(),
+                validFrom: new Date(),
                 paymentInterval: null,
                 paymentAmount: null,
                 currency: null
@@ -50,15 +51,24 @@ export default class TenancyAgreementOverview extends Component {
     }
 
     editAgreement() {
-        this.props.navigation.navigate("TenancyAgreementEditor", { tenancyAgreement: this.state.tenancyAgreement });
+        this.props.navigation.navigate("TenancyAgreementEditor", {
+            tenancyAgreement: this.state.tenancyAgreement,
+            user: null,
+            objectDescription: this.props.navigation.state.params.objectDescription,
+            objectAddress: this.props.navigation.state.params.objectAddress,
+        });
     }
 
     componentDidMount() {
         this.props.navigation.setParams({ handleAdd: () => this.editAgreement() });
         var data = this.props.navigation.state.params.tenancyAgreement;
         data.paymentAmount = data.paymentAmount === null ? data.paymentAmount = null : data.paymentAmount.toString();
+        if (data.validTo !== null)
+            data.validTo = data.validTo.substring(0, 10);
+        if (data.validFrom !== null)
+            data.validFrom = data.validFrom.substring(0, 10);
         this.setState({
-            tenancyAgreement: data
+            tenancyAgreement: data,
         });
     }
 
@@ -76,20 +86,48 @@ export default class TenancyAgreementOverview extends Component {
                     value={this.state.tenancyAgreement.name}
                     underlineColorAndroid='rgba(0,0,0,0)'
                 />
-                <Text style={styles.text}>Veljavno do</Text>
-                <TextInput
-                    editable={false}
-                    style={styles.input}
-                    value={this.state.tenancyAgreement.validTo}
-                    underlineColorAndroid='rgba(0,0,0,0)'
-                />
-                <Text style={styles.text}>Veljavno od</Text>
-                <TextInput
-                    editable={false}
-                    style={styles.input}
-                    value={this.state.tenancyAgreement.validFrom}
-                    underlineColorAndroid='rgba(0,0,0,0)'
-                />
+                <View style={styles.datePickerContainer}>
+                    <View>
+                        <Text style={styles.text}>Veljavno od</Text>
+                        <DatePicker
+                            style={styles.datePicker}
+                            date={this.state.tenancyAgreement.validFrom}
+                            mode="date"
+                            format="YYYY-MM-DD"
+                            customStyles={{
+                                dateIcon: {
+                                    position: 'absolute',
+                                    left: 0,
+                                    top: 4,
+                                    marginLeft: 0
+                                },
+                                dateInput: {
+                                    marginLeft: 36
+                                }
+                            }}
+                        />
+                    </View>
+                    <View>
+                        <Text style={styles.text}>Veljavno do</Text>
+                        <DatePicker
+                            style={styles.datePicker}
+                            date={this.state.tenancyAgreement.validTo}
+                            mode="date"
+                            format="YYYY-MM-DD"
+                            customStyles={{
+                                dateIcon: {
+                                    position: 'absolute',
+                                    left: 0,
+                                    top: 4,
+                                    marginLeft: 0
+                                },
+                                dateInput: {
+                                    marginLeft: 36,
+                                }
+                            }}
+                        />
+                    </View>
+                </View>
                 <Text style={styles.text}>Plačilo do dneva</Text>
                 <TextInput
                     editable={false}
@@ -192,4 +230,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
     },
+    datePicker: {
+        flex: 1,
+    },
+    datePickerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        margin: 20,
+    }
 });
