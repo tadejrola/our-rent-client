@@ -3,22 +3,18 @@ import {
     View,
     Text,
     StyleSheet,
-    TextInput,
-    Picker,
-    ScrollView,
-    Alert,
-    AsyncStorage
 } from 'react-native'
 
 export default class TenancyAgreementEditor extends Component {
 
     static navigationOptions = {
-        title: 'Dodajanje pogodbe',
+        title: 'Dodajanje/urejanje pogodbe',
     };
 
     constructor(props) {
         super(props)
         this.state = {
+
         }
     }
 

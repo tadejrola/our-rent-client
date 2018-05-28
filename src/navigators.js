@@ -24,7 +24,7 @@ import MojeNajemninePopravilaList from './components/MojeNajemnine/MojeNajemnine
 import MojeNajemninePopravilaItem from './components/MojeNajemnine/MojeNajemninePopravila/Item'
 import MojeNajemninePopravilaEditor from './components/MojeNajemnine/MojeNajemninePopravila/PopravilaEditor'
 
-//import TenancyAgreementEditor from './components/TenancyAgreement/TenancyAgreementEditor'
+import TenancyAgreementEditor from './components/TenancyAgreement/TenancyAgreementEditor'
 import Tenants from './components/Tenants/Tenants'
 import AddTenant from './components/Tenants/AddTenant'
 import TenantOverview from './components/Tenants/TenantOverview'
@@ -56,6 +56,7 @@ export const MojeNepremicnine = StackNavigator({
   TenantOverview: { screen: TenantOverview },
   AddTenant: { screen: AddTenant },
   TenancyAgreementOverview: { screen: TenancyAgreementOverview },
+  TenancyAgreementEditor: { screen: TenancyAgreementEditor },
   MojeNepremicnineZemljevid: { screen: MojeNepremicnineZemljevid },
   MojeNepremicnineObveznostiList: { screen: MojeNepremicnineObveznostiList },
   MojeNepremicnineObveznostiItem: { screen: MojeNepremicnineObveznostiItem },

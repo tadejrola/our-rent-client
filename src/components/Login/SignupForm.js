@@ -8,7 +8,6 @@ import {
     Alert,
     NetInfo
 } from 'react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class SignupForm extends Component {
     constructor(props) {
@@ -16,19 +15,11 @@ export default class SignupForm extends Component {
         this.state = {
             email: null,
             password: null,
-            repeatPassword: null,
-            activityAnimating: false
+            repeatPassword: null
         }
     }
 
-    signup() {
-        this.setState({ activityAnimating: true });
-        this.register().then(() => {
-            this.setState({ activityAnimating: false });
-        });
-    }
-
-    async register() {
+    register() {
         if (!this.state.email || !this.state.password || !this.state.repeatPassword) {
             Alert.alert(
                 'Registration unsuccessful',
@@ -118,6 +109,7 @@ export default class SignupForm extends Component {
                     placeholderTextColor="#ffffff"
                     autoCapitalize="none"
                     onChangeText={(text) => this.setState({ password: text })}
+                    onSubmitEditing={() => this.repeatPassword.focus()}
                     ref={(input) => this.password = input}
                 />
                 <TextInput style={styles.inputBox}
@@ -127,12 +119,11 @@ export default class SignupForm extends Component {
                     placeholderTextColor="#ffffff"
                     autoCapitalize="none"
                     onChangeText={(text) => this.setState({ repeatPassword: text })}
-                    ref={(input) => this.password = input}
+                    ref={(input) => this.repeatPassword = input}
                 />
-                <TouchableOpacity style={styles.button} onPress={() => this.signup()}>
+                <TouchableOpacity style={styles.button} onPress={() => this.register()}>
                     <Text style={styles.buttonText}>{this.props.type}</Text>
                 </TouchableOpacity>
-                <Spinner visible={this.state.activityAnimating} />
             </View>
         )
     }

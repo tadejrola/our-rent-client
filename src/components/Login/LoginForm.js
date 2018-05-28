@@ -9,15 +9,13 @@ import {
     Alert,
     NetInfo
 } from 'react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class LoginForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
             email: null,
-            password: null,
-            activityAnimating: false
+            password: null
         }
     }
 
@@ -30,15 +28,7 @@ export default class LoginForm extends Component {
         });
     }
 
-    navigateToHomeScreen() {
-        this.setState({ activityAnimating: true });
-        this.login().then(() => {
-            this.setState({ activityAnimating: false });
-        });
-    }
-
-
-    async login() {
+    login() {
         if (!this.state.email || !this.state.password) {
             Alert.alert(
                 'Login unsuccessful',
@@ -126,10 +116,9 @@ export default class LoginForm extends Component {
                     onChangeText={(text) => this.setState({ password: text })}
                     ref={(input) => this.password = input}
                 >{this.state.password}</TextInput>
-                <TouchableOpacity style={styles.button} onPress={() => this.navigateToHomeScreen()}>
+                <TouchableOpacity style={styles.button} onPress={() => this.login()}>
                     <Text style={styles.buttonText}>{this.props.type}</Text>
                 </TouchableOpacity>
-                <Spinner visible={this.state.activityAnimating} />
             </View>
         )
     }

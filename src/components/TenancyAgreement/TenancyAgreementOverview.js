@@ -50,13 +50,13 @@ export default class TenancyAgreementOverview extends Component {
     }
 
     editAgreement() {
-        Alert.alert("EDIT aggrfghfsdr lol");
+        this.props.navigation.navigate("TenancyAgreementEditor", { tenancyAgreement: this.state.tenancyAgreement });
     }
 
     componentDidMount() {
         this.props.navigation.setParams({ handleAdd: () => this.editAgreement() });
         var data = this.props.navigation.state.params.tenancyAgreement;
-        data.paymentAmount = data.paymentAmount.toString();
+        data.paymentAmount = data.paymentAmount === null ? data.paymentAmount = null : data.paymentAmount.toString();
         this.setState({
             tenancyAgreement: data
         });

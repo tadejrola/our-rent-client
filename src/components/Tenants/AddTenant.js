@@ -7,9 +7,9 @@ import {
     ScrollView,
     AsyncStorage,
     CheckBox,
-    NetInfo,
     Alert,
-    TouchableOpacity
+    TouchableOpacity,
+    NetInfo
 } from 'react-native';
 import { Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -27,6 +27,49 @@ export default class AddTenant extends Component {
             objectAddress: null,
             email: null,
         }
+    }
+
+    postData() {
+        NetInfo.isConnected.fetch().then((value) => {
+            if (value) {
+                fetch('http://our-rent-api.herokuapp.com/api/tenancyAgreements/addObjectUser', {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        object_id: this.state.objectId,
+                        email: this.state.email,
+                    }),
+                }).then((value) => {
+                    Alert.alert(
+                        'Save successful',
+                        'Data saved!',
+                        [
+                            { text: 'OK', onPress: () => this.props.navigation.goBack() },
+                        ],
+                        { cancelable: false }
+                    );
+                }, (reason) => {
+                    Alert.alert(
+                        'Save unsuccessful',
+                        'Fetch error!'
+                    );
+                });
+            }
+            else {
+                Alert.alert(
+                    'Save unsuccessful',
+                    'No connection available!'
+                );
+            }
+        }, (reason) => {
+            Alert.alert(
+                'Update unsuccessful',
+                'NetInfo module error!'
+            );
+        });
     }
 
     componentDidMount() {
@@ -51,7 +94,7 @@ export default class AddTenant extends Component {
                         value={this.state.email}
                         onChangeText={email => this.setState({ email })}
                         placeholder="Vnesi email uporabnika"
-                        autoCapitalize="words"
+                        autoCapitalize="none"
                         keyboardType="default"
                         underlineColorAndroid='rgba(0,0,0,0)'
                     />
@@ -62,7 +105,7 @@ export default class AddTenant extends Component {
                         icon={{ name: 'plus', type: 'octicon' }}
                         buttonStyle={styles.addButton}
                         title='Shrani'
-                        onPress={() => this.saveData()} />
+                        onPress={() => this.postData()} />
                 </View>
             </View>
         )
