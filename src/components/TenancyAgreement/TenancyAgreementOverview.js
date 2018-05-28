@@ -15,20 +15,6 @@ import { Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ImageViewer from 'react-native-image-zoom-viewer';
 
-const images = [{
-    // Simplest usage.
-    url: 'https://avatars2.githubusercontent.com/u/7970947?v=3&s=460',
-    // You can pass props to <Image />.
-    props: {
-        // headers: ...
-    }
-}, {
-    props: {
-        // Or you can set source directory.
-        source: require('../../images/tenancyImg.png')
-    }
-}]
-
 export default class TenancyAgreementOverview extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params } = navigation.state;
