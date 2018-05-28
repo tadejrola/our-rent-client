@@ -23,6 +23,7 @@ import MojeNajemnineItemPogodba from './components/MojeNajemnine/MojeNajemnineIt
 import MojeNajemninePopravilaList from './components/MojeNajemnine/MojeNajemninePopravila/ItemList'
 import MojeNajemninePopravilaItem from './components/MojeNajemnine/MojeNajemninePopravila/Item'
 import MojeNajemninePopravilaEditor from './components/MojeNajemnine/MojeNajemninePopravila/PopravilaEditor'
+import MojeNajemninePopravilaAdd from './components/MojeNajemnine/MojeNajemninePopravila/PopravilaAdd'
 
 //import TenancyAgreementEditor from './components/TenancyAgreement/TenancyAgreementEditor'
 import Tenants from './components/Tenants/Tenants'
@@ -70,7 +71,8 @@ export const MojeNajemnine = StackNavigator({
   MojeNajemnineItemPogodba: { screen: MojeNajemnineItemPogodba },
   MojeNajemninePopravilaList: { screen: MojeNajemninePopravilaList },
   MojeNajemninePopravilaItem: { screen: MojeNajemninePopravilaItem },
-  MojeNajemninePopravilaEditor: { screen: MojeNajemninePopravilaEditor }
+  MojeNajemninePopravilaEditor: { screen: MojeNajemninePopravilaEditor },
+  MojeNajemninePopravilaAdd: { screen: MojeNajemninePopravilaAdd }
 
 }, {
     initialRouteName: 'MojeNajemnineList',

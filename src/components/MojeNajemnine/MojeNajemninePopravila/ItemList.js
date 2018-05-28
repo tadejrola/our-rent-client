@@ -4,9 +4,19 @@ import { List, ListItem, SearchBar } from "react-native-elements";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class ItemList extends Component {
-  static navigationOptions = {
-    title: 'Pregled popravil'
-  }
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Pregled popravil',
+      headerRight: <TouchableOpacity
+        style={styles.add}
+        onPress={() => navigation.navigate('MojeNajemninePopravilaAdd', { object_id: navigation.state.params.object_id })}>
+        <Text>
+          <Icon name="plus" size={30} color="black" />
+        </Text>
+      </TouchableOpacity>
+    }
+  };
+
   constructor(props) {
     super(props);
 
@@ -21,9 +31,9 @@ class ItemList extends Component {
   }
 
   componentDidMount() {
-    this.makeRemoteRequestBills()
+    this.makeRemoteRequestMaintenances()
   }
-  makeRemoteRequestBills = () => {
+  makeRemoteRequestMaintenances = () => {
     const url = 'http://our-rent-api.herokuapp.com/api/maintenances/objectMaintenance/' + this.props.navigation.state.params.object_id.toString();
     this.setState({ loading: true });
 
@@ -49,7 +59,7 @@ class ItemList extends Component {
         refreshing: true
       },
       () => {
-        this.makeRemoteRequestObjects();
+        this.makeRemoteRequestMaintenances();
       }
     );
   };
@@ -92,9 +102,6 @@ class ItemList extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.containerMojeNepremicnine}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('MojeNajemninePopravilaEditor', { objectID: this.props.navigation.state.params.object_id })}>
-            <Text style={styles.text}><Icon name="plus" size={24} />Dodaj</Text>
-          </TouchableOpacity>
           <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
             <FlatList
               data={this.state.dataMaintenances}
@@ -123,6 +130,9 @@ class ItemList extends Component {
 
 export default ItemList;
 const styles = StyleSheet.create({
+  add: {
+    paddingRight: 10
+  },
   container: {
     flex: 1,
     // backgroundColor: 'white',

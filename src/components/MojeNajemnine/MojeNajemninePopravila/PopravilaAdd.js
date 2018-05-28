@@ -14,52 +14,64 @@ import { Button, CheckBox } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DatePicker from 'react-native-datepicker'
 
-class PopravilaEditor extends Component {
+class PopravilaAdd extends Component {
 
   static navigationOptions = {
-    title: 'Pregled/urejanje popravila',
+    title: 'Novo popravilo',
   };
 
   constructor(props) {
     super(props)
-    let { item } = this.props.navigation.state.params;
-    if (item.fixedDate != null) {
-      item.fixedDate = item.fixedDate.substr(0, 10);
-    }
-    item.dateReported = item.dateReported.substr(0, 10);
     this.state = {
-      id: item.id,
-      description: item.description,
-      fixed: !!+item.fixed,
-      fixingCost: item.fixingCost,
-      fixedDate: item.fixedDate,
-      dateReported: new Date(item.dateReported),
-      object_id: item.object_id,
-      user_id: item.user_id,
+      dateReported: new Date(),
+      fixed: false
     }
-    console.log(this.state);
+  }
+
+  componentWillMount() {
+    AsyncStorage.getItem('@UserData:data').then((value) => {
+      var data = JSON.parse(value);
+      if (data !== null) {
+        this.setState({ user_id: data.id });
+      }
+    });
+  }
+
+  componentDidMount() {
+
+    this.setState({
+      object_id: this.props.navigation.state.params.object_id
+    });
+
   }
 
   async saveBtnClick() {
 
     var dataBody = JSON.stringify({
-      id: this.state.id,
       description: this.state.description,
       fixed: this.state.fixed,
       fixingCost: this.state.fixingCost,
       fixedDate: this.state.fixedDate,
-      dateReported: new Date(this.state.dateReported),
+      dateReported: this.state.dateReported,
       object_id: this.state.object_id,
       user_id: this.state.user_id
     });
-    var result = await fetch('http://our-rent-api.herokuapp.com/api/maintenances/' + this.state.id, {
-      method: 'PUT',
+    console.log(dataBody);
+    var result = await fetch('http://our-rent-api.herokuapp.com/api/maintenances/', {
+      method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: dataBody
     });
+    console.log(result);
+    if (result.status == 200) {
+      this.showAlert("shranjena");
+    }
+    else {
+      Alert.alert("Popravilo ni bilo shranjeno. Preveri vpisane podatke. ");
+    }
 
   }
 
@@ -155,7 +167,7 @@ class PopravilaEditor extends Component {
   }
 }
 
-export default PopravilaEditor
+export default PopravilaAdd
 
 const styles = StyleSheet.create({
   container: {
