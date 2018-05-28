@@ -4,7 +4,6 @@ import {
     Text,
     StyleSheet,
     TextInput,
-    Picker,
     ScrollView,
     AsyncStorage,
     CheckBox,
@@ -63,15 +62,7 @@ export default class UserDataEditor extends Component {
         });
     }
 
-    saveData() {
-        this.setState({ activityAnimating: true });
-        this.postData().then(() => {
-            this.setState({ activityAnimating: false });
-        });
-    }
-
-
-    async postData() {
+    postData() {
         NetInfo.isConnected.fetch().then((value) => {
             if (value) {
                 fetch('http://our-rent-api.herokuapp.com/api/users/' + this.state.id, {
@@ -196,7 +187,7 @@ export default class UserDataEditor extends Component {
                         icon={{ name: 'plus', type: 'octicon' }}
                         buttonStyle={styles.addButton}
                         title='Shrani'
-                        onPress={() => this.saveData()} />
+                        onPress={() => this.postData()} />
                 </View>
             </View >
         )

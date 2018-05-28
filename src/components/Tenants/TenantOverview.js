@@ -16,7 +16,7 @@ export default class TenantOverview extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params } = navigation.state;
         return {
-            title: params.user.firstName + " " + params.user.lastName,
+            title: "Pogodbe najemnika",
             headerRight: <TouchableOpacity
                 style={styles.add}
                 onPress={() => params.handleAdd && params.handleAdd()}>
@@ -28,12 +28,13 @@ export default class TenantOverview extends Component {
     };
 
     addAgreement() {
-        //TODO: implement
-        Alert.alert("ADD aggrfghfsdr lol");
-    }
-
-    componentWillMount() {
-        console.log(this.props.navigation.state.params);
+        this.props.navigation.navigate("TenancyAgreementEditor", {
+            tenancyAgreement: null,
+            userId: this.props.navigation.state.params.user.id,
+            objectId: this.props.navigation.state.params.objectId,
+            objectDescription: this.props.navigation.state.params.objectDescription,
+            objectAddress: this.props.navigation.state.params.objectAddress,
+        });
     }
 
     componentDidMount() {
