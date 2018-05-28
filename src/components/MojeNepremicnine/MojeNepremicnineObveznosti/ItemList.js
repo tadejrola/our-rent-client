@@ -4,9 +4,19 @@ import { List, ListItem, SearchBar } from "react-native-elements";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class ItemList extends Component {
-  static navigationOptions = {
-    title: 'Pregled obveznosti'
-  }
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Pregled obveznosti',
+      headerRight: <TouchableOpacity
+        style={styles.add}
+        onPress={() => navigation.navigate('MojeNepremicnineObveznostEditor', { objectID: navigation.state.params.object_id })}>
+        <Text>
+          <Icon name="plus" size={30} color="black" />
+        </Text>
+      </TouchableOpacity>
+    }
+  };
+
   constructor(props) {
     super(props);
 
@@ -92,9 +102,6 @@ class ItemList extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.containerMojeNepremicnine}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('MojeNepremicnineObveznostEditor', {objectID: this.props.navigation.state.params.object_id})}>
-            <Text style={styles.text}><Icon name="plus" size={24} />Dodaj</Text>
-          </TouchableOpacity>
           <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
             <FlatList
               data={this.state.dataBills}
@@ -123,6 +130,9 @@ class ItemList extends Component {
 
 export default ItemList;
 const styles = StyleSheet.create({
+  add: {
+    paddingRight: 10
+  },
   container: {
     flex: 1,
     // backgroundColor: 'white',
