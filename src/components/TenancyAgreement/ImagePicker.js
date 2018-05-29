@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import { Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import CameraRollPicker from 'react-native-camera-roll-picker';
+import CameraRollPicker from '../GalleryPicker/CameraRollPicker';
 
 export default class ImagePicker extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -28,12 +28,11 @@ export default class ImagePicker extends Component {
     }
 
     getSelectedImages(image) {
+        console.log(image);
         this.setState({ image });
     }
 
     save() {
-        console.log(this.state.image);
-
         //this.props.navigation.state.params.getSelectedImages(this.state.image);
         //this.props.navigation.goBack();
     }
