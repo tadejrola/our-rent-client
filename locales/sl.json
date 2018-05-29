@@ -1,0 +1,10 @@
+{
+    "login": {
+        "welcome": "slo",
+        "login_button": "slo",
+        "signup_button": "slo"
+    },
+    "user_profile": {
+        "title": "slo"
+    }
+}
