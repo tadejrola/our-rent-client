@@ -8,10 +8,12 @@ import {
     Image,
     TouchableOpacity
 } from 'react-native';
+
 import { DrawerItems } from 'react-navigation'
 import UserImage from '../User/UserImage';
 import CurrentUser from './CurrentUser';
 import { NavigationActions } from 'react-navigation'
+import OfflineNotice from '../InternetConnection/OfflineNotice'
 
 export default class CustomDrawer extends Component {
     constructor(props) {
@@ -49,6 +51,7 @@ export default class CustomDrawer extends Component {
     render() {
         return (
             <ScrollView>
+                <OfflineNotice style={styles.offlineNotice} />
                 <View style={styles.container}>
                     <View style={styles.userContainer}>
                         <TouchableOpacity
@@ -99,5 +102,8 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
         backgroundColor: 'rgba(111, 202, 186, 1)',
         alignItems: 'center'
+    },
+    offlineNotice: {
+        position: 'absolute'
     }
 });

@@ -65,72 +65,55 @@ export default class TenancyAgreementEditor extends Component {
     }
 
     saveData() {
+        var tempUrl = this.props.navigation.state.params.tenancyAgreement !== null ?
+            'http://our-rent-api.herokuapp.com/api/tenancyAgreements/' + this.state.tenancyAgreementId :
+            'http://our-rent-api.herokuapp.com/api/tenancyAgreements/';
+        var tempMethod = this.props.navigation.state.params.tenancyAgreement !== null ?
+            'PUT' :
+            'POST';
+        var userId = this.props.navigation.state.params.tenancyAgreement !== null ?
+            this.props.navigation.state.params.tenancyAgreement.user_id :
+            this.props.navigation.state.params.userId;
+
+        var objectId = this.props.navigation.state.params.tenancyAgreement !== null ?
+            this.props.navigation.state.params.tenancyAgreement.object_id :
+            this.props.navigation.state.params.objectId;
+
         NetInfo.isConnected.fetch().then((value) => {
             if (value) {
-                if (this.props.navigation.state.params.tenancyAgreement !== null) {
-                    fetch('http://our-rent-api.herokuapp.com/api/tenancyAgreements/' + this.state.tenancyAgreementId, {
-                        method: 'PUT',
-                        headers: {
-                            Accept: 'application/json',
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            name: this.state.name,
-                            validTo: this.state.validTo,
-                            validFrom: this.state.validFrom,
-                            paymentInterval: this.state.paymentInterval,
-                            paymentAmount: this.state.paymentAmount,
-                            currency: this.state.currency
-                        }),
-                    }).then((value) => {
-                        Alert.alert(
-                            'Update successful',
-                            'Za prikaz novih podatkov je potrebno posodobiti seznam uporabnikov!',
-                            [
-                                { text: 'OK', onPress: () => this.props.navigation.goBack() },
-                            ],
-                            { cancelable: false }
-                        );
-                    }, (reason) => {
-                        Alert.alert(
-                            'Update unsuccessful',
-                            'Fetch error!'
-                        );
-                    });
-                }
-                else {
-                    fetch('http://our-rent-api.herokuapp.com/api/tenancyAgreements/', {
-                        method: 'POST',
-                        headers: {
-                            Accept: 'application/json',
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            name: this.state.name,
-                            validTo: this.state.validTo,
-                            validFrom: this.state.validFrom,
-                            paymentInterval: this.state.paymentInterval,
-                            paymentAmount: this.state.paymentAmount,
-                            currency: this.state.currency,
-                            user_id: this.props.navigation.state.params.userId,
-                            object_id: this.props.navigation.state.params.objectId
-                        }),
-                    }).then((value) => {
-                        Alert.alert(
-                            'Post successful',
-                            'Za prikaz novih podatkov je potrebno posodobiti seznam uporabnikov!',
-                            [
-                                { text: 'OK', onPress: () => this.props.navigation.goBack() },
-                            ],
-                            { cancelable: false }
-                        );
-                    }, (reason) => {
-                        Alert.alert(
-                            'Post unsuccessful',
-                            'Fetch error!'
-                        );
-                    });
-                }
+                fetch(tempUrl, {
+                    method: tempMethod,
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: this.state.name,
+                        validTo: this.state.validTo,
+                        validFrom: this.state.validFrom,
+                        paymentInterval: this.state.paymentInterval,
+                        paymentAmount: this.state.paymentAmount,
+                        currency: this.state.currency,
+                        user_id: userId,
+                        object_id: objectId
+                    }),
+                }).then((value) => {
+                    console.log(value);
+                    Alert.alert(
+                        'Update successful',
+                        'Za prikaz novih podatkov je potrebno posodobiti seznam uporabnikov!',
+                        [
+                            { text: 'OK', onPress: () => this.props.navigation.goBack() },
+                        ],
+                        { cancelable: false }
+                    );
+                }, (reason) => {
+                    Alert.alert(
+                        'Update unsuccessful',
+                        'Fetch error!'
+                    );
+                });
+
             } else {
                 Alert.alert(
                     'Sending unsuccessful',
