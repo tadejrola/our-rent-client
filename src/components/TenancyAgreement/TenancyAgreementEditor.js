@@ -107,9 +107,8 @@ export default class TenancyAgreementEditor extends Component {
                         },
                         body: JSON.stringify({
                             name: this.state.name,
-                            //TODO: JEBENI DATUMI!
-                            //validTo: this.state.validTo,
-                            //validFrom: this.state.validFrom,
+                            validTo: this.state.validTo,
+                            validFrom: this.state.validFrom,
                             paymentInterval: this.state.paymentInterval,
                             paymentAmount: this.state.paymentAmount,
                             currency: this.state.currency,
