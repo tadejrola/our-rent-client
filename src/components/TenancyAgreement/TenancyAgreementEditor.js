@@ -36,14 +36,16 @@ export default class TenancyAgreementEditor extends Component {
             paymentInterval: null,
             paymentAmount: null,
             currency: null,
-            tenancyAgreementId: null
+            tenancyAgreementId: null,
+            image: null
         }
     }
 
     getSelectedImages(image) {
-        this.props.navigation.state.params.tenancyAgreement = { image: image[0].uri };
-        console.log(this.props.navigation.state.params.tenancyAgreement);
-        this.render();
+        this.props.navigation.state.params.tenancyAgreement = {
+            image: image[0].uri
+        }
+        this.forceUpdate();
     }
 
     changeModalState() {
@@ -245,21 +247,12 @@ export default class TenancyAgreementEditor extends Component {
                                 this.props.navigation.state.params.tenancyAgreement !== null ?
                                     (this.props.navigation.state.params.tenancyAgreement.image !== null ?
                                         [{
-                                            url: this.props.navigation.state.params.tenancyAgreement.image,
-                                            props: {
-
-                                            }
+                                            url: this.props.navigation.state.params.tenancyAgreement.image
                                         }] :
                                         [{
-                                            props:
-                                                {
-                                                    source: require('../../images/tenancyImg.png')
-                                                }
+                                            props: { source: require('../../images/tenancyImg.png') }
                                         }]) : [{
-                                            props:
-                                                {
-                                                    source: require('../../images/tenancyImg.png')
-                                                }
+                                            props: { source: require('../../images/tenancyImg.png') }
                                         }]} />
                         </Modal>
                     </View>
@@ -345,6 +338,9 @@ const styles = StyleSheet.create({
         height: 60,
         backgroundColor: 'rgba(111, 202, 186, 1)',
         borderRadius: 100,
+        marginLeft: 10,
+        marginTop: 10
+
     },
     datePicker: {
         flex: 1,
