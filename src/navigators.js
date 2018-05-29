@@ -15,6 +15,7 @@ import { DrawerNavigator, StackNavigator } from 'react-navigation'
 import CustomDrawer from './components/Drawer/CustomDrawer'
 
 // StackNavigator screens
+import ImagePicker from './components/TenancyAgreement/ImagePicker'
 import MojeNajemnineList from './components/MojeNajemnine/ItemList'
 import MojeNajemnineItem from './components/MojeNajemnine/Item'
 import MojeNajemnineZemljevid from './components/MojeNajemnine/MojeNajemnineZemljevid'
@@ -58,6 +59,7 @@ export const MojeNepremicnine = StackNavigator({
   AddTenant: { screen: AddTenant },
   TenancyAgreementOverview: { screen: TenancyAgreementOverview },
   TenancyAgreementEditor: { screen: TenancyAgreementEditor },
+  ImagePicker: { screen: ImagePicker },
   MojeNepremicnineZemljevid: { screen: MojeNepremicnineZemljevid },
   MojeNepremicnineObveznostiList: { screen: MojeNepremicnineObveznostiList },
   MojeNepremicnineObveznostiItem: { screen: MojeNepremicnineObveznostiItem },

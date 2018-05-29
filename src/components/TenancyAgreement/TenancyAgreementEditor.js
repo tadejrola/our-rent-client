@@ -40,6 +40,12 @@ export default class TenancyAgreementEditor extends Component {
         }
     }
 
+    getSelectedImages(image) {
+        this.props.navigation.state.params.tenancyAgreement = { image: image[0].uri };
+        console.log(this.props.navigation.state.params.tenancyAgreement);
+        this.render();
+    }
+
     changeModalState() {
         this.setState({ modalOpen: !this.state.modalOpen });
     }
@@ -98,7 +104,6 @@ export default class TenancyAgreementEditor extends Component {
                         object_id: objectId
                     }),
                 }).then((value) => {
-                    console.log(value);
                     Alert.alert(
                         'Update successful',
                         'Za prikaz novih podatkov je potrebno posodobiti seznam uporabnikov!',
@@ -216,7 +221,7 @@ export default class TenancyAgreementEditor extends Component {
                     <View style={styles.imageContainer}>
                         <TouchableOpacity
                             style={styles.addImageButton}
-                            onPress={() => null}>
+                            onPress={() => this.props.navigation.navigate('ImagePicker', { getSelectedImages: this.getSelectedImages.bind(this) })}>
                             <Text>
                                 <Icon name="image" size={40} color="black" />
                             </Text>
@@ -340,7 +345,6 @@ const styles = StyleSheet.create({
         height: 60,
         backgroundColor: 'rgba(111, 202, 186, 1)',
         borderRadius: 100,
-        alignSelf: 'flex-end',
     },
     datePicker: {
         flex: 1,
