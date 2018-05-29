@@ -10,6 +10,8 @@ import {
     NetInfo
 } from 'react-native';
 
+import { strings } from '../../../locales/i18n.js';
+
 export default class LoginForm extends Component {
     constructor(props) {
         super(props)
@@ -109,7 +111,7 @@ export default class LoginForm extends Component {
                 <TextInput
                     style={styles.inputBox}
                     underlineColorAndroid='rgba(0,0,0,0)'
-                    placeholder="Password"
+                    placeholder={strings('components.login.loginForm.Password')}
                     secureTextEntry={true}
                     autoCapitalize="none"
                     placeholderTextColor="#ffffff"

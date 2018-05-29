@@ -1,10 +1,56 @@
 {
-    "login": {
-        "welcome": "Welcome {{name}} to our localized app!",
-        "login_button": "Login",
-        "signup_button": "Sign Up"
+    "pages": {
+        "home": {},
+        "login": {
+            "haveAccount": "Dont have an account yet?",
+            "signUp": "Sign Up",
+            "typeLogin": "Login"
+        },
+        "signUp": {
+            "haveAccount": "Already have account?",
+            "typeSignup": "SignUp"
+        }
     },
-    "user_profile": {
-        "title": "Your Profile"
-    }
+    "components": {
+        "internetConnection": {
+            "offlineNotice": {
+                "noConnection": "No Internet Connection"
+            }
+        },
+        "login": {
+            "loginForm": {
+                "Password": "Password"
+            },
+            "logo": {
+                "welcome": "Welcome to OurRent!"
+            },
+            "signUpForm": {
+                "Password": "Password",
+                "repeatPassword": "Repeat password"
+            }
+        },
+        "mojeNajemnine": {
+            "mojeNajemninePopravila": {
+                "item": {},
+                "itemList": {},
+                "popravilaAdd": {},
+                "popravilaEditor": {}
+            },
+            "item": {
+                "searchTerm": "Enter search term...",
+                "maintenances": "Maintenances",
+                "utilityBills": "Utility bills"
+            },
+            "itemList": {
+                "seeOnMaps": "See on maps"
+            },
+            "mojeNajemineItemPogodba": {},
+            "mojeNajemnineItemZemljevid": {}
+        }
+    },
+    "mojeNepremicnine": {},
+    "obvestila": {},
+    "tenancyAgreement": {},
+    "tenants": {},
+    "user": {}
 }

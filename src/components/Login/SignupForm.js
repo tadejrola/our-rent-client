@@ -8,6 +8,7 @@ import {
     Alert,
     NetInfo
 } from 'react-native';
+import { strings } from '../../../locales/i18n.js';
 
 export default class SignupForm extends Component {
     constructor(props) {
@@ -104,7 +105,7 @@ export default class SignupForm extends Component {
                 />
                 <TextInput style={styles.inputBox}
                     underlineColorAndroid='rgba(0,0,0,0)'
-                    placeholder="Password"
+                    placeholder={strings('components.login.signUpForm.Password')}
                     secureTextEntry={true}
                     placeholderTextColor="#ffffff"
                     autoCapitalize="none"
@@ -114,7 +115,7 @@ export default class SignupForm extends Component {
                 />
                 <TextInput style={styles.inputBox}
                     underlineColorAndroid='rgba(0,0,0,0)'
-                    placeholder="Repeat password"
+                    placeholder={strings('components.login.signUpForm.repeatPassword')}
                     secureTextEntry={true}
                     placeholderTextColor="#ffffff"
                     autoCapitalize="none"

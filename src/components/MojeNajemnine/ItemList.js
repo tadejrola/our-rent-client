@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, FlatList, ActivityIndicator, StyleSheet, TouchableOpacity, Alert, AsyncStorage } from "react-native";
 import { List, ListItem, SearchBar } from "react-native-elements";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { strings } from '../../../locales/i18n.js';
 
 class ItemList extends Component {
   static navigationOptions = {
@@ -91,7 +92,7 @@ class ItemList extends Component {
   };
 
   renderHeader = () => {
-    return <SearchBar placeholder="Vnesite iskalni niz" lightTheme round />;
+    return <SearchBar placeholder={strings('components.mojeNajemnine.item.searchTerm')} lightTheme round />;
   };
 
   renderFooter = () => {
@@ -114,7 +115,6 @@ class ItemList extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.containerMojeNepremicnine}>
-          <Text style={styles.text}><Icon name="home" size={24} color="black" /> Moje najemnine</Text>
           <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
             <FlatList
               data={this.state.dataObjects}
@@ -140,7 +140,7 @@ class ItemList extends Component {
         </View>
         <View style={styles.containerPregledMape}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('MojeNajemnineZemljevid', { user_id: this.state.id })}>
-            <Text style={styles.text}><Icon name="location-arrow" size={24} color="black" /> Iskanje na zemljevidu</Text>
+            <Text style={styles.text}><Icon name="location-arrow" size={24} color="black" /> {strings('components.mojeNajemnine.itemList.seeOnMaps')}</Text>
           </TouchableOpacity>
         </View>
       </View>

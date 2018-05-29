@@ -9,6 +9,7 @@ import {
 
 import Logo from '../components/Login/Logo';
 import Form from '../components/Login/LoginForm';
+import { strings } from '../../locales/i18n.js';
 
 export default class Login extends Component {
   static navigationOptions = {
@@ -19,11 +20,11 @@ export default class Login extends Component {
     return (
       <View style={styles.container}>
         <Logo />
-        <Form type="Login" navigation={this.props.navigation} />
+        <Form type={strings('pages.login.typeLogin')} navigation={this.props.navigation} />
         <View style={styles.signupTextCont}>
-          <Text style={styles.signupText}>Don't have an account yet?</Text>
+          <Text style={styles.signupText}>{strings('pages.login.haveAccount')}</Text>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Signup')}>
-            <Text style={styles.signupButton}> Signup</Text>
+            <Text style={styles.signupButton}> {strings('pages.login.signUp')}</Text>
           </TouchableOpacity>
         </View>
       </View>

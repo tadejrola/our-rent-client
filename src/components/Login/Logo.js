@@ -5,6 +5,7 @@ import {
     View,
     Image
 } from 'react-native';
+import { strings } from '../../../locales/i18n.js';
 
 export default class Logo extends Component {
     render() {
@@ -12,7 +13,7 @@ export default class Logo extends Component {
             <View style={styles.container}>
                 <Image style={styles.image}
                     source={require('../../images/logo.png')} />
-                <Text style={styles.logoText}>Welcome to OurRent!</Text>
+                <Text style={styles.logoText}>{strings('components.login.logo.welcome')}</Text>
             </View>
         )
     }

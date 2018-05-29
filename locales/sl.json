@@ -1,10 +1,56 @@
 {
-    "login": {
-        "welcome": "slo",
-        "login_button": "slo",
-        "signup_button": "slo"
+    "pages": {
+        "home": {},
+        "login": {
+            "haveAccount": "Še nimaš računa?",
+            "signUp": "Registracija",
+            "typeLogin": "Prijava"
+        },
+        "signUp": {
+            "haveAccount": "Že imaš račun?",
+            "typeSignup": "Registracija"
+        }
     },
-    "user_profile": {
-        "title": "slo"
-    }
+    "components": {
+        "internetConnection": {
+            "offlineNotice": {
+                "noConnection": "Ni internetne povezave"
+            }
+        },
+        "login": {
+            "loginForm": {
+                "Password": "Geslo"
+            },
+            "logo": {
+                "welcome": "Dobrodošli v OurRent!"
+            },
+            "signUpForm": {
+                "Password": "Geslo",
+                "repeatPassword": "Ponovi geslo"
+            }
+        },
+        "mojeNajemnine": {
+            "mojeNajemninePopravila": {
+                "item": {},
+                "itemList": {},
+                "popravilaAdd": {},
+                "popravilaEditor": {}
+            },
+            "item": {
+                "searchTerm": "Vnesite iskalni niz...",
+                "maintenances": "Popravila",
+                "utilityBills": "Obveznosti"
+            },
+            "itemList": {
+                "seeOnMaps": "Poglej na zemljevidu"
+            },
+            "mojeNajemineItemPogodba": {},
+            "mojeNajemnineItemZemljevid": {}
+        }
+    },
+    "mojeNepremicnine": {},
+    "obvestila": {},
+    "tenancyAgreement": {},
+    "tenants": {},
+    "user": {}
 }

@@ -11,6 +11,7 @@ import {
 
 import { Button, List, ListItem } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { strings } from '../../../locales/i18n.js';
 
 class Item extends Component {
 
@@ -44,7 +45,7 @@ class Item extends Component {
   };
 
   renderHeader = () => {
-    return <SearchBar placeholder="Vnesite iskalni niz" lightTheme round />;
+    return <SearchBar placeholder={strings('components.mojeNajemnine.item.searchTerm')} lightTheme round />;
   };
 
   renderFooter = () => {
@@ -121,7 +122,7 @@ class Item extends Component {
           </View>
         </View>
         <View style={styles.containerObvestila}>
-          <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila</Text>
+          <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> {strings('components.mojeNajemnine.item.maintenances')}</Text>
           <TouchableOpacity style={styles.TouchableOpacityStyle} onPress={() => this.props.navigation.navigate('MojeNajemninePopravilaList', { object_id: this.props.navigation.state.params.id })} >
             <Text style={styles.textMore}><Icon name="ellipsis-h" size={28} color="black" /> </Text>
           </TouchableOpacity>
@@ -147,7 +148,7 @@ class Item extends Component {
           </List>
         </View>
         <View style={styles.containerObveznosti}>
-          <Text style={styles.text}><Icon name="credit-card" size={20} color="black" /> Obveznosti</Text>
+          <Text style={styles.text}><Icon name="credit-card" size={20} color="black" /> {strings('components.mojeNajemnine.item.utilityBills')}</Text>
 
           <TouchableOpacity style={styles.TouchableOpacityStyle}>
             <Text style={styles.textMore}><Icon name="ellipsis-h" size={28} color="black" /></Text>

@@ -10,7 +10,7 @@ class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>HOME ZASLON</Text>
+        <Text style={styles.text}>DOMAČI ZASLON</Text>
       </View>
     )
   }

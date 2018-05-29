@@ -7,8 +7,10 @@ import {
     TouchableOpacity
 } from 'react-native';
 
+
 import Logo from '../components/Login/Logo';
 import Form from '../components/Login/SignupForm';
+import { strings } from '../../locales/i18n.js';
 
 export default class Signup extends Component {
     static navigationOptions = {
@@ -18,10 +20,10 @@ export default class Signup extends Component {
         return (
             <View style={styles.container}>
                 <Logo />
-                <Form type="Signup" navigation={this.props.navigation} />
+                <Form type={strings('pages.signUp.typeSignup')} navigation={this.props.navigation} />
                 <View style={styles.signupTextCont}>
-                    <Text style={styles.signupText}>Already have an account?</Text>
-                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}><Text style={styles.signupButton}> Login</Text></TouchableOpacity>
+                    <Text style={styles.signupText}>{strings('pages.signUp.haveAccount')}</Text>
+                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}><Text style={styles.signupButton}> {strings('pages.login.typeLogin')}</Text></TouchableOpacity>
                 </View>
             </View>
         )
