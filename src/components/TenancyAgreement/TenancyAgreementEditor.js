@@ -212,43 +212,52 @@ export default class TenancyAgreementEditor extends Component {
                     underlineColorAndroid='rgba(0,0,0,0)'
                     ref={(input) => this.currency = input}
                 />
-                <View style={styles.imageContainer}>
-                    <TouchableOpacity
-                        onPress={() => this.changeModalState()}
-                    >
-                        <Image style={styles.image} source={
-                            this.props.navigation.state.params.tenancyAgreement !== null ?
-                                (this.props.navigation.state.params.tenancyAgreement.image !== null ?
-                                    { uri: this.props.navigation.state.params.tenancyAgreement.image } :
-                                    require('../../images/tenancyImg.png')) :
-                                require('../../images/tenancyImg.png')} />
-                    </TouchableOpacity>
-                    <Modal
-                        visible={this.state.modalOpen}
-                        transparent={true}
-                        onRequestClose={() => this.changeModalState()}
-                    >
-                        <ImageViewer imageUrls={
-                            this.props.navigation.state.params.tenancyAgreement !== null ?
-                                (this.props.navigation.state.params.tenancyAgreement.image !== null ?
-                                    [{
-                                        url: this.props.navigation.state.params.tenancyAgreement.image,
-                                        props: {
+                <View style={styles.footer}>
+                    <View style={styles.imageContainer}>
+                        <TouchableOpacity
+                            style={styles.addImageButton}
+                            onPress={() => null}>
+                            <Text>
+                                <Icon name="image" size={40} color="black" />
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => this.changeModalState()}
+                        >
+                            <Image style={styles.image} source={
+                                this.props.navigation.state.params.tenancyAgreement !== null ?
+                                    (this.props.navigation.state.params.tenancyAgreement.image !== null ?
+                                        { uri: this.props.navigation.state.params.tenancyAgreement.image } :
+                                        require('../../images/tenancyImg.png')) :
+                                    require('../../images/tenancyImg.png')} />
+                        </TouchableOpacity>
+                        <Modal
+                            visible={this.state.modalOpen}
+                            transparent={true}
+                            onRequestClose={() => this.changeModalState()}
+                        >
+                            <ImageViewer imageUrls={
+                                this.props.navigation.state.params.tenancyAgreement !== null ?
+                                    (this.props.navigation.state.params.tenancyAgreement.image !== null ?
+                                        [{
+                                            url: this.props.navigation.state.params.tenancyAgreement.image,
+                                            props: {
 
-                                        }
-                                    }] :
-                                    [{
-                                        props:
-                                            {
-                                                source: require('../../images/tenancyImg.png')
                                             }
-                                    }]) : [{
-                                        props:
-                                            {
-                                                source: require('../../images/tenancyImg.png')
-                                            }
-                                    }]} />
-                    </Modal>
+                                        }] :
+                                        [{
+                                            props:
+                                                {
+                                                    source: require('../../images/tenancyImg.png')
+                                                }
+                                        }]) : [{
+                                            props:
+                                                {
+                                                    source: require('../../images/tenancyImg.png')
+                                                }
+                                        }]} />
+                        </Modal>
+                    </View>
                 </View>
                 <View style={styles.buttonContainer}>
                     <Button
@@ -291,10 +300,13 @@ const styles = StyleSheet.create({
         height: 250,
     },
     imageContainer: {
+        width: 250,
+    },
+    footer: {
+        paddingBottom: 20,
+        paddingTop: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingBottom: 20,
-        paddingTop: 20
     },
     edit: {
         paddingRight: 10
@@ -319,6 +331,17 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(111, 202, 186, 1)',
         borderRadius: 10
     },
+    addImageButton: {
+        position: 'absolute',
+        zIndex: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 60,
+        height: 60,
+        backgroundColor: 'rgba(111, 202, 186, 1)',
+        borderRadius: 100,
+        alignSelf: 'flex-end',
+    },
     datePicker: {
         flex: 1,
     },
@@ -326,5 +349,5 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         margin: 20,
-    }
+    },
 });
