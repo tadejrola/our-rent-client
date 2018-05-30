@@ -42,10 +42,10 @@ import MojeNepremicnineObveznostEditor from './components/MojeNepremicnine/MojeN
 import ObvestilaList from './components/Obvestila/ItemList'
 import ObvestilaItem from './components/Obvestila/Item'
 
-import LoginScreen from './pages/Login'
-import SignupScreen from './pages/Signup'
+import LoginScreen from './components/Login/Login'
+import SignupScreen from './components/Login/Signup'
 
-import Home from './pages/Home'
+import Home from './components/Home/Home'
 
 import SettingsScreen from './components/User/Settings'
 import SettingsEditScreen from './components/User/SettingsEdit'

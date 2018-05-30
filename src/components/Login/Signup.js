@@ -8,9 +8,9 @@ import {
 } from 'react-native';
 
 
-import Logo from '../components/Login/Logo';
-import Form from '../components/Login/SignupForm';
-import { strings } from '../../locales/i18n.js';
+import Logo from './Logo';
+import Form from './SignupForm';
+import { strings } from '../../../locales/i18n.js';
 
 export default class Signup extends Component {
     static navigationOptions = {
