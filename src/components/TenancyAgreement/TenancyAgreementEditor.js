@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
         margin: 20,
     },
     addButton: {
-        backgroundColor: 'rgba(111, 202, 186, 1)',
+        backgroundColor: '#3399ff',
         borderRadius: 10
     },
     addImageButton: {
@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: 60,
         height: 60,
-        backgroundColor: 'rgba(111, 202, 186, 1)',
+        backgroundColor: '#3399ff',
         borderRadius: 100,
         marginLeft: 10,
         marginTop: 10

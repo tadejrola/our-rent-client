@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         margin: 20,
     },
     addButton: {
-        backgroundColor: 'rgba(111, 202, 186, 1)',
+        backgroundColor: '#3399ff',
         borderRadius: 10
     },
 });

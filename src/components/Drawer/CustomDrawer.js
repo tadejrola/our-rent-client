@@ -96,11 +96,11 @@ const styles = StyleSheet.create({
     imageContainer: {
         paddingTop: 10,
         paddingBottom: 5,
-        backgroundColor: 'rgba(111, 202, 186, 1)',
+        backgroundColor: '#3399ff',
     },
     userContainer: {
         alignSelf: 'stretch',
-        backgroundColor: 'rgba(111, 202, 186, 1)',
+        backgroundColor: '#3399ff',
         alignItems: 'center'
     }
 });

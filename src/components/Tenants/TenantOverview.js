@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     imageBox: {
-        backgroundColor: 'rgba(111, 202, 186, 1)'
+        backgroundColor: '#3399ff'
     },
     add: {
         paddingRight: 10
