@@ -4,7 +4,7 @@ import {
     Text,
     View,
     StatusBar,
-    TouchableOpacity
+    TouchableOpacity,
 } from 'react-native';
 
 

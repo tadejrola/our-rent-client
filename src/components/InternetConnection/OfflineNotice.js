@@ -3,8 +3,6 @@ import React, { PureComponent } from 'react';
 import { View, Text, NetInfo, Dimensions, StyleSheet } from 'react-native';
 import { strings } from '../../../locales/i18n.js';
 
-const { width } = Dimensions.get('window');
-
 export default class OfflineNotice extends PureComponent {
     state = {
         isConnected: true
@@ -48,7 +46,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        width,
     },
     offlineText: { color: '#fff' }
 });

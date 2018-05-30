@@ -51,7 +51,7 @@ export default class CustomDrawer extends Component {
     render() {
         return (
             <ScrollView>
-                <OfflineNotice style={styles.offlineNotice} />
+                <OfflineNotice />
                 <View style={styles.container}>
                     <View style={styles.userContainer}>
                         <TouchableOpacity
@@ -102,8 +102,5 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
         backgroundColor: 'rgba(111, 202, 186, 1)',
         alignItems: 'center'
-    },
-    offlineNotice: {
-        position: 'absolute'
     }
 });
