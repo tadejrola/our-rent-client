@@ -197,7 +197,7 @@ class Item extends Component {
               renderItem={({ item }) => (
                 <ListItem
                   key={item.id}
-                  onPress={() => this.props.navigation.navigate('MojeNepremicnineObveznostEditor', item)}
+                  onPress={() => this.props.navigation.navigate('MojeNepremicnineObveznostiItem', item)}
                   roundAvatar
                   title={`${item.name} ${item.billAmount}`}
                   subtitle={item.description}

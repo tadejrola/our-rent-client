@@ -9,7 +9,7 @@ import {
   ActivityIndicator
 } from 'react-native'
 
-import { Button, List, ListItem } from 'react-native-elements'
+import { Button, CheckBox } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Item extends Component {
@@ -26,42 +26,37 @@ class Item extends Component {
       dataMaintenances: [],
       dataBills: [],
       error: null,
-      refreshing: false
+      refreshing: false,
+      paid: false, 
     };
   }
 
-  renderSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          width: "86%",
-          backgroundColor: "#CED0CE",
-          marginLeft: "14%"
-        }}
-      />
-    );
-  };
-
-  renderHeader = () => {
-    return <SearchBar placeholder="Vnesite iskalni niz" lightTheme round />;
-  };
-
-  renderFooter = () => {
-    if (!this.state.loading) return null;
-
-    return (
-      <View
-        style={{
-          paddingVertical: 20,
-          borderTopWidth: 1,
-          borderColor: "#CED0CE"
-        }}
-      >
-        <ActivityIndicator animating size="large" />
-      </View>
-    );
-  };
+  async saveBtnClick() {
+    var result = await fetch('http://our-rent-api.herokuapp.com/api/utilityBills/paid'+this.state.objectID, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+    if (result.status == 200) {
+      this.showAlert('posodobljena');
+    }
+    else {
+      Alert.alert("Obveznost ni bila posodobljena.");
+    }
+  
+  }
+  
+  showAlert(about){
+    Alert.alert(
+      'Obveznost je bila '+about,
+      '',
+      [
+        {text: 'OK', onPress: () => this.props.navigation.navigate('MojeNepremicnineList')}
+      ],
+      { cancelable: false })
+  }
 
   componentDidMount() {
   }
@@ -71,7 +66,36 @@ class Item extends Component {
       <View style={styles.container}>
         <View style={styles.informationContainer}>
           <View style={styles.containerObveznosti}>
-            <Text>Pregled ene obveznosti</Text>
+            <Text style = {styles.title}>Pregled obveznosti</Text>
+            
+            <Text style = {styles.atributteTitle}>Naziv</Text>
+            <Text style = {styles.text}>{`${this.props.navigation.state.params.name}`}</Text>
+
+             <Text style = {styles.atributteTitle}>Opis</Text>
+            <Text style = {styles.text}>{`${this.props.navigation.state.params.description}`}</Text>
+
+             <Text style = {styles.atributteTitle}>Rok plačila</Text>
+            <Text style = {styles.text}>{`${this.props.navigation.state.params.dueDate}`}</Text>
+
+             <Text style = {styles.atributteTitle}>Znesek</Text>
+            <Text style = {styles.text}>{`${this.props.navigation.state.params.billAmount}`}</Text>
+
+             <Text style = {styles.atributteTitle}>Je obveznost bila poravnana</Text>
+            <CheckBox 
+              style = {styles.paidCheckBox}
+              center
+              checked={this.state.paid}
+              onPress={() => this.setState({paid: !this.state.paid})}
+              />
+
+             <View style={styles.buttonContainer}>
+              <Button
+                large
+                icon={{ name: 'plus', type: 'octicon' }}
+                buttonStyle={styles.addButton}
+                title='Shrani'
+                onPress={this.saveBtnClick.bind(this)} />
+            </View>
           </View>
         </View>
       </View>
@@ -86,40 +110,14 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10
   },
-  containerFilterSort: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: -25
-  },
-  containerButtonComponent: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  containerSort: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   title: {
     color: 'black',
     fontSize: 20,
-    fontWeight: 'bold'
-  },
-  topButtonContainer: {
-    flex: 1
+    fontWeight: 'bold', 
+    alignItems: 'center',
   },
   informationContainer: {
     flex: 6
-  },
-  informationTitle: {
-    fontSize: 17,
-    marginLeft: 5,
-    padding: 5,
-    color: 'black',
-    fontWeight: 'bold',
   },
   text: {
     fontSize: 15,
@@ -131,10 +129,19 @@ const styles = StyleSheet.create({
     flex: 3,
     marginBottom: 25
   },
-  containerObveznosti: {
-    flex: 3
+  atributteTitle: {
+    marginTop: 20, 
+    marginLeft: 5,
+    color: 'black',
+    fontSize: 17,
+    fontWeight: 'bold', 
+    alignItems: 'center',
   },
-  textMore: {
-    textAlign: 'right'
+  buttonContainer: {
+    margin: 20,
+  },
+  addButton: {
+    backgroundColor: 'rgba(111, 202, 186, 1)',
+    borderRadius: 10
   }
 })
