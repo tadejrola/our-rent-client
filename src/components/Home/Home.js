@@ -19,19 +19,19 @@ const initialLayout = {
   width: Dimensions.get('window').width,
 };
 
-const SecondRoute = () =>
+const SecondRoute = (navigation) =>
   <View style={styles.container} >
     <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila</Text>
-    <MaintenancesListOwner />
+    <MaintenancesListOwner navigation={navigation} />
     <Text style={styles.text}><Icon name="credit-card" size={20} color="black" /> Obveznosti</Text>
-    <UtilityBillsListOwner />
+    <UtilityBillsListOwner navigation={navigation} />
   </View>;
-const FirstRoute = () =>
+const FirstRoute = (navigation) =>
   <View style={styles.container} >
     <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila</Text>
-    <MaintenancesListTenant />
+    <MaintenancesListTenant navigation={navigation} />
     <Text style={styles.text}><Icon name="credit-card" size={20} color="black" /> Obveznosti</Text>
-    <UtilityBillsListTenant />
+    <UtilityBillsListTenant navigation={navigation} />
   </View>;
 
 export default class Home extends Component {
@@ -48,8 +48,8 @@ export default class Home extends Component {
   _renderHeader = props => <TabBar {...props} />;
 
   _renderScene = SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
+    first: FirstRoute.bind(this.props.navigation),
+    second: SecondRoute.bind(this.props.navigation),
   });
 
   getUtilityBillsForTenant = (userId) => {

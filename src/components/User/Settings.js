@@ -68,10 +68,10 @@ export default class Settings extends Component {
                     <Icon name="edit" size={40} color="black" />
                 </TouchableOpacity>
                 <View style={styles.imageBox}>
-                    <TouchableOpacity
+                    <View
                         style={styles.imageContainer}>
                         <UserImage user={{ image: this.state.image }} />
-                    </TouchableOpacity>
+                    </View>
                 </View>
                 <UserData user={{
                     firstName: this.state.firstName,
