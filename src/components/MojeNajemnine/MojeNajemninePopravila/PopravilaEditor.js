@@ -32,7 +32,7 @@ class PopravilaEditor extends Component {
       description: item.description,
       fixed: !!+item.fixed,
       fixingCost: item.fixingCost,
-      fixedDate: item.fixedDate,
+      fixedDate: new Date(item.fixedDate),
       dateReported: new Date(item.dateReported),
       object_id: item.object_id,
       user_id: item.user_id,
@@ -47,11 +47,12 @@ class PopravilaEditor extends Component {
       description: this.state.description,
       fixed: this.state.fixed,
       fixingCost: this.state.fixingCost,
-      fixedDate: this.state.fixedDate,
+      fixedDate: new Date(),
       dateReported: new Date(this.state.dateReported),
       object_id: this.state.object_id,
       user_id: this.state.user_id
     });
+    console.log(dataBody);
     var result = await fetch('http://our-rent-api.herokuapp.com/api/maintenances/' + this.state.id, {
       method: 'PUT',
       headers: {
@@ -60,6 +61,12 @@ class PopravilaEditor extends Component {
       },
       body: dataBody
     });
+    if (result.status == 200) {
+      this.showAlert("posodobljeno");
+    }
+    else {
+      Alert.alert("Popravilo ni bilo posodobljeno. Preveri vpisane podatke. ");
+    }
 
   }
 
@@ -92,7 +99,7 @@ class PopravilaEditor extends Component {
           style={styles.datePicker}
           date={this.state.dateReported}
           mode="date"
-          format="YYYY-DD-MM"
+          format="YYYY-MM-DD"
           customStyles={{
             dateIcon: {
               position: 'absolute',
@@ -113,11 +120,11 @@ class PopravilaEditor extends Component {
           checked={this.state.fixed}
           onPress={() => this.setState({ fixed: !this.state.fixed })}
         />
-        <DatePicker
+        {/* <DatePicker
           style={styles.datePicker}
           date={this.state.fixedDate}
           mode="date"
-          format="YYYY-DD-MM"
+          format="YYYY-MM-DD"
           customStyles={{
             dateIcon: {
               position: 'absolute',
@@ -130,7 +137,7 @@ class PopravilaEditor extends Component {
             }
           }}
           onDateChange={(fixedDate) => { this.setState({ fixedDate: fixedDate }) }}
-        />
+        /> */}
         <Text style={styles.text}>Vrednost popravila</Text>
         <TextInput
           style={styles.input}

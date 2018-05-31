@@ -108,9 +108,9 @@ class ItemList extends Component {
               renderItem={({ item }) => (
                 <ListItem
                   key={item.id}
-                  onPress={() => this.props.navigation.navigate('MojeNajemninePopravilaItem', { title: item.description })}
+                  onPress={() => this.props.navigation.navigate('MojeNajemninePopravilaEditor', { item: item })}
                   roundAvatar
-                  title={`${item.description} ${item.fixingCost}`}
+                  title={`${item.description} - ${item.fixingCost}`}
                   subtitle={item.dateReported}
                   containerStyle={{ borderBottomWidth: 0 }}
                 />

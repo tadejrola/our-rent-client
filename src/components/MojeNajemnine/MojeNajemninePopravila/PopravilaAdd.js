@@ -104,7 +104,7 @@ class PopravilaAdd extends Component {
           style={styles.datePicker}
           date={this.state.dateReported}
           mode="date"
-          format="YYYY-DD-MM"
+          format="YYYY-MM-DD"
           customStyles={{
             dateIcon: {
               position: 'absolute',
@@ -125,11 +125,11 @@ class PopravilaAdd extends Component {
           checked={this.state.fixed}
           onPress={() => this.setState({ fixed: !this.state.fixed })}
         />
-        <DatePicker
+        {/* <DatePicker
           style={styles.datePicker}
           date={this.state.fixedDate}
           mode="date"
-          format="YYYY-DD-MM"
+          format="YYYY-MM-DD"
           customStyles={{
             dateIcon: {
               position: 'absolute',
@@ -142,7 +142,7 @@ class PopravilaAdd extends Component {
             }
           }}
           onDateChange={(fixedDate) => { this.setState({ fixedDate: fixedDate }) }}
-        />
+        /> */}
         <Text style={styles.text}>Vrednost popravila</Text>
         <TextInput
           style={styles.input}
