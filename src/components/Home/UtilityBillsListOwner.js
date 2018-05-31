@@ -94,10 +94,11 @@ export default class MaintenancesListOwner extends Component {
                             data={this.state.dataMaintenances}
                             renderItem={({ item }) => (
                                 <ListItem
+                                    onPress={() => this.props.navigation.navigate('MojeNepremicnineObveznostiItem', item)}
                                     key={item.id}
                                     roundAvatar
-                                    title={`${item.description} ${item.fixingCost}`}
-                                    subtitle={item.dateReported}
+                                    title={`${item.description} - ${item.billAmount} EUR`}
+                                    subtitle={item.dueDate}
                                     containerStyle={{ borderBottomWidth: 0 }}
                                 />
                             )}
