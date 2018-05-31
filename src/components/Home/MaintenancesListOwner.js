@@ -24,6 +24,7 @@ export default class MaintenancesListOwner extends Component {
             }
         });
     }
+
     makeRemoteRequestMaintenances = (id) => {
         const url = 'http://our-rent-api.herokuapp.com/api/maintenances/maintenancesForOwner/' + id;
         this.setState({ loading: true });

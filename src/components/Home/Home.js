@@ -19,21 +19,6 @@ const initialLayout = {
   width: Dimensions.get('window').width,
 };
 
-const SecondRoute = (navigation) =>
-  <View style={styles.container} >
-    <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila</Text>
-    <MaintenancesListOwner navigation={navigation} />
-    <Text style={styles.text}><Icon name="credit-card" size={20} color="black" /> Obveznosti</Text>
-    <UtilityBillsListOwner navigation={navigation} />
-  </View>;
-const FirstRoute = (navigation) =>
-  <View style={styles.container} >
-    <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila</Text>
-    <MaintenancesListTenant navigation={navigation} />
-    <Text style={styles.text}><Icon name="credit-card" size={20} color="black" /> Obveznosti</Text>
-    <UtilityBillsListTenant navigation={navigation} />
-  </View>;
-
 export default class Home extends Component {
   state = {
     index: 0,
@@ -47,22 +32,26 @@ export default class Home extends Component {
 
   _renderHeader = props => <TabBar {...props} />;
 
-  _renderScene = SceneMap({
-    first: FirstRoute.bind(this.props.navigation),
-    second: SecondRoute.bind(this.props.navigation),
-  });
-
-  getUtilityBillsForTenant = (userId) => {
-    const url = 'http://our-rent-api.herokuapp.com/api/utilityBills/utilityBillsForTenant/' + userId;
-    fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        console.log(res);
-        this.setState({
-          billsForTenant: res,
-        });
-      })
-  };
+  _renderScene = ({ route }) => {
+    switch (route.key) {
+      case 'first':
+        return <View style={styles.container} >
+          <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila</Text>
+          <MaintenancesListTenant navigation={this.props.navigation} />
+          <Text style={styles.text}><Icon name="credit-card" size={20} color="black" /> Obveznosti</Text>
+          <UtilityBillsListTenant navigation={this.props.navigation} />
+        </View>;
+      case 'second':
+        return <View style={styles.container} >
+          <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila</Text>
+          <MaintenancesListOwner navigation={this.props.navigation} />
+          <Text style={styles.text}><Icon name="credit-card" size={20} color="black" /> Obveznosti</Text>
+          <UtilityBillsListOwner navigation={this.props.navigation} />
+        </View>;
+      default:
+        return null;
+    }
+  }
 
   render() {
     return (
