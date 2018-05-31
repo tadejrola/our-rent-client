@@ -22,7 +22,6 @@ import MojeNajemnineZemljevid from './components/MojeNajemnine/MojeNajemnineZeml
 import MojeNajemnineItemZemljevid from './components/MojeNajemnine/MojeNajemnineItemZemljevid'
 import MojeNajemnineItemPogodba from './components/MojeNajemnine/MojeNajemnineItemPogodba'
 import MojeNajemninePopravilaList from './components/MojeNajemnine/MojeNajemninePopravila/ItemList'
-import MojeNajemninePopravilaItem from './components/MojeNajemnine/MojeNajemninePopravila/Item'
 import MojeNajemninePopravilaEditor from './components/MojeNajemnine/MojeNajemninePopravila/PopravilaEditor'
 import MojeNajemninePopravilaAdd from './components/MojeNajemnine/MojeNajemninePopravila/PopravilaAdd'
 
@@ -38,6 +37,10 @@ import MojeNepremicnineZemljevid from './components/MojeNepremicnine/MojeNepremi
 import MojeNepremicnineObveznostiList from './components/MojeNepremicnine/MojeNepremicnineObveznosti/ItemList'
 import MojeNepremicnineObveznostiItem from './components/MojeNepremicnine/MojeNepremicnineObveznosti/Item'
 import MojeNepremicnineObveznostEditor from './components/MojeNepremicnine/MojeNepremicnineObveznosti/ObveznostiEditor'
+import MojeNepremicninePopravilaList from './components/MojeNepremicnine/MojeNepremicninePopravila/ItemList'
+import MojeNepremicninePopravilaItem from './components/MojeNepremicnine/MojeNepremicninePopravila/Item'
+
+
 
 import ObvestilaList from './components/Obvestila/ItemList'
 import ObvestilaItem from './components/Obvestila/Item'
@@ -63,7 +66,9 @@ export const MojeNepremicnine = StackNavigator({
   MojeNepremicnineZemljevid: { screen: MojeNepremicnineZemljevid },
   MojeNepremicnineObveznostiList: { screen: MojeNepremicnineObveznostiList },
   MojeNepremicnineObveznostiItem: { screen: MojeNepremicnineObveznostiItem },
-  MojeNepremicnineObveznostEditor: { screen: MojeNepremicnineObveznostEditor }
+  MojeNepremicnineObveznostEditor: { screen: MojeNepremicnineObveznostEditor },
+  MojeNepremicninePopravilaList: { screen: MojeNepremicninePopravilaList },
+  MojeNepremicninePopravilaItem: { screen: MojeNepremicninePopravilaItem }
 }, {
     initialRouteName: 'MojeNepremicnineList',
   })
@@ -75,7 +80,6 @@ export const MojeNajemnine = StackNavigator({
   MojeNajemnineItemZemljevid: { screen: MojeNajemnineItemZemljevid },
   MojeNajemnineItemPogodba: { screen: MojeNajemnineItemPogodba },
   MojeNajemninePopravilaList: { screen: MojeNajemninePopravilaList },
-  MojeNajemninePopravilaItem: { screen: MojeNajemninePopravilaItem },
   MojeNajemninePopravilaEditor: { screen: MojeNajemninePopravilaEditor },
   MojeNajemninePopravilaAdd: { screen: MojeNajemninePopravilaAdd }
 

@@ -161,7 +161,7 @@ class Item extends Component {
         </View>
         <View style={styles.containerObvestila}>
           <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila</Text>
-          <TouchableOpacity style={styles.TouchableOpacityStyle} onPress={() => this.props.navigation.navigate('MojeNajemninePopravilaList', { object_id: this.props.navigation.state.params.id })}>
+          <TouchableOpacity style={styles.TouchableOpacityStyle} onPress={() => this.props.navigation.navigate('MojeNepremicninePopravilaList', { object_id: this.props.navigation.state.params.id })}>
             <Text style={styles.textMore}><Icon name="ellipsis-h" size={28} color="black" /></Text>
           </TouchableOpacity>
           <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
@@ -170,7 +170,7 @@ class Item extends Component {
               renderItem={({ item }) => (
                 <ListItem
                   key={item.id}
-                  onPress={() => this.props.navigation.navigate('MojeNajemninePopravilaEditor', { item: item })}
+                  onPress={() => this.props.navigation.navigate('MojeNepremicninePopravilaItem', { item: item })}
                   roundAvatar
                   title={`${item.description} ${item.fixingCost}`}
                   subtitle={item.dateReported}
