@@ -15,7 +15,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 class Item extends Component {
 
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.description
+    title: "Pregled obveznosti"
   })
 
   constructor(props) {
@@ -31,32 +31,8 @@ class Item extends Component {
     };
   }
 
-  async saveBtnClick() {
-    var result = await fetch('http://our-rent-api.herokuapp.com/api/utilityBills/paid' + this.state.objectID, {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      }
-    });
-    if (result.status == 200) {
-      this.showAlert('posodobljena');
-    }
-    else {
-      Alert.alert("Obveznost ni bila posodobljena.");
-    }
 
-  }
 
-  showAlert(about) {
-    Alert.alert(
-      'Obveznost je bila ' + about,
-      '',
-      [
-        { text: 'OK', onPress: () => this.props.navigation.navigate('MojeNepremicnineList') }
-      ],
-      { cancelable: false })
-  }
 
   componentDidMount() {
   }
@@ -89,12 +65,6 @@ class Item extends Component {
             />
 
             <View style={styles.buttonContainer}>
-              <Button
-                large
-                icon={{ name: 'plus', type: 'octicon' }}
-                buttonStyle={styles.addButton}
-                title='Shrani'
-                onPress={this.saveBtnClick.bind(this)} />
             </View>
           </View>
         </View>

@@ -15,9 +15,18 @@ import { strings } from '../../../locales/i18n.js';
 
 class Item extends Component {
 
-  static navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.description
-  })
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.state.params.description,
+      headerRight: <TouchableOpacity
+        style={styles.add}
+        onPress={() => navigation.navigate('MojeNajemnineItemZemljevid', navigation.state.params)}>
+        <Text>
+          <Icon name="location-arrow" size={30} color="black" />
+        </Text>
+      </TouchableOpacity>
+    }
+  };
 
   constructor(props) {
     super(props);
@@ -116,10 +125,6 @@ class Item extends Component {
             <Text style={styles.text} onPress={() => this.props.navigation.navigate('MojeNajemnineItemPogodba', this.props.navigation.state.params)}><Icon name="search" size={30} color="black" /> Pregled pogodbe</Text>
 
           </View>
-          <View style={styles.containerLocation}>
-            <Text style={styles.text} onPress={() => this.props.navigation.navigate('MojeNajemnineItemZemljevid', this.props.navigation.state.params)}><Icon name="location-arrow" size={25} color="black" /></Text>
-
-          </View>
         </View>
         <View style={styles.containerObvestila}>
           <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> {strings('components.mojeNajemnine.item.maintenances')}</Text>
@@ -150,7 +155,7 @@ class Item extends Component {
         <View style={styles.containerObveznosti}>
           <Text style={styles.text}><Icon name="credit-card" size={20} color="black" /> {strings('components.mojeNajemnine.item.utilityBills')}</Text>
 
-          <TouchableOpacity style={styles.TouchableOpacityStyle}>
+          <TouchableOpacity style={styles.TouchableOpacityStyle} onPress={() => this.props.navigation.navigate('MojeNajemnineObveznostiList', { object_id: this.props.navigation.state.params.id })} >
             <Text style={styles.textMore}><Icon name="ellipsis-h" size={28} color="black" /></Text>
           </TouchableOpacity>
           <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
@@ -159,7 +164,7 @@ class Item extends Component {
               renderItem={({ item }) => (
                 <ListItem
                   key={item.id}
-                  onPress={() => this.props.navigation.navigate('MojeNepremicnineObvestilaItem', { title: item.description })}
+                  onPress={() => this.props.navigation.navigate('MojeNajemnineObveznostiItem', item)}
                   roundAvatar
                   title={`${item.name} ${item.billAmount}`}
                   subtitle={item.description}
@@ -182,6 +187,9 @@ class Item extends Component {
 export default Item
 
 const styles = StyleSheet.create({
+  add: {
+    paddingRight: 10
+  },
   container: {
     flex: 1,
     // backgroundColor: 'white',

@@ -24,6 +24,9 @@ import MojeNajemnineItemPogodba from './components/MojeNajemnine/MojeNajemnineIt
 import MojeNajemninePopravilaList from './components/MojeNajemnine/MojeNajemninePopravila/ItemList'
 import MojeNajemninePopravilaEditor from './components/MojeNajemnine/MojeNajemninePopravila/PopravilaEditor'
 import MojeNajemninePopravilaAdd from './components/MojeNajemnine/MojeNajemninePopravila/PopravilaAdd'
+import MojeNajemnineObveznostiList from './components/MojeNajemnine/MojeNajemnineObveznosti/ItemList'
+import MojeNajemnineObveznostiItem from './components/MojeNajemnine/MojeNajemnineObveznosti/Item'
+
 
 import TenancyAgreementEditor from './components/TenancyAgreement/TenancyAgreementEditor'
 import Tenants from './components/Tenants/Tenants'
@@ -39,11 +42,6 @@ import MojeNepremicnineObveznostiItem from './components/MojeNepremicnine/MojeNe
 import MojeNepremicnineObveznostEditor from './components/MojeNepremicnine/MojeNepremicnineObveznosti/ObveznostiEditor'
 import MojeNepremicninePopravilaList from './components/MojeNepremicnine/MojeNepremicninePopravila/ItemList'
 import MojeNepremicninePopravilaItem from './components/MojeNepremicnine/MojeNepremicninePopravila/Item'
-
-
-
-import ObvestilaList from './components/Obvestila/ItemList'
-import ObvestilaItem from './components/Obvestila/Item'
 
 import LoginScreen from './components/Login/Login'
 import SignupScreen from './components/Login/Signup'
@@ -81,17 +79,12 @@ export const MojeNajemnine = StackNavigator({
   MojeNajemnineItemPogodba: { screen: MojeNajemnineItemPogodba },
   MojeNajemninePopravilaList: { screen: MojeNajemninePopravilaList },
   MojeNajemninePopravilaEditor: { screen: MojeNajemninePopravilaEditor },
-  MojeNajemninePopravilaAdd: { screen: MojeNajemninePopravilaAdd }
+  MojeNajemninePopravilaAdd: { screen: MojeNajemninePopravilaAdd },
+  MojeNajemnineObveznostiList: { screen: MojeNajemnineObveznostiList },
+  MojeNajemnineObveznostiItem: { screen: MojeNajemnineObveznostiItem }
 
 }, {
     initialRouteName: 'MojeNajemnineList',
-  })
-
-export const Obvestila = StackNavigator({
-  ObvestilaList: { screen: ObvestilaList },
-  ObvestilaItem: { screen: ObvestilaItem },
-}, {
-    initialRouteName: 'ObvestilaList',
   })
 
 export const Login = StackNavigator({
@@ -125,12 +118,6 @@ const DrawerRoutes = {
     screen: MojeNajemnine,
     navigationOptions: {
       title: "Moje najemnine"
-    }
-  },
-  Obvestila: {
-    screen: Obvestila,
-    navigationOptions: {
-      title: "Popravila/obveznosti",
     }
   },
   Settings: {
