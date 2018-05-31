@@ -19,14 +19,14 @@ const initialLayout = {
   width: Dimensions.get('window').width,
 };
 
-const FirstRoute = () =>
+const SecondRoute = () =>
   <View style={styles.container} >
     <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila</Text>
     <MaintenancesListOwner />
     <Text style={styles.text}><Icon name="credit-card" size={20} color="black" /> Obveznosti</Text>
     <UtilityBillsListOwner />
   </View>;
-const SecondRoute = () =>
+const FirstRoute = () =>
   <View style={styles.container} >
     <Text style={styles.text}><Icon name="gavel" size={20} color="black" /> Popravila</Text>
     <MaintenancesListTenant />
