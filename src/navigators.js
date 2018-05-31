@@ -22,9 +22,11 @@ import MojeNajemnineZemljevid from './components/MojeNajemnine/MojeNajemnineZeml
 import MojeNajemnineItemZemljevid from './components/MojeNajemnine/MojeNajemnineItemZemljevid'
 import MojeNajemnineItemPogodba from './components/MojeNajemnine/MojeNajemnineItemPogodba'
 import MojeNajemninePopravilaList from './components/MojeNajemnine/MojeNajemninePopravila/ItemList'
-import MojeNajemninePopravilaItem from './components/MojeNajemnine/MojeNajemninePopravila/Item'
 import MojeNajemninePopravilaEditor from './components/MojeNajemnine/MojeNajemninePopravila/PopravilaEditor'
 import MojeNajemninePopravilaAdd from './components/MojeNajemnine/MojeNajemninePopravila/PopravilaAdd'
+import MojeNajemnineObveznostiList from './components/MojeNajemnine/MojeNajemnineObveznosti/ItemList'
+import MojeNajemnineObveznostiItem from './components/MojeNajemnine/MojeNajemnineObveznosti/Item'
+
 
 import TenancyAgreementEditor from './components/TenancyAgreement/TenancyAgreementEditor'
 import Tenants from './components/Tenants/Tenants'
@@ -38,9 +40,8 @@ import MojeNepremicnineZemljevid from './components/MojeNepremicnine/MojeNepremi
 import MojeNepremicnineObveznostiList from './components/MojeNepremicnine/MojeNepremicnineObveznosti/ItemList'
 import MojeNepremicnineObveznostiItem from './components/MojeNepremicnine/MojeNepremicnineObveznosti/Item'
 import MojeNepremicnineObveznostEditor from './components/MojeNepremicnine/MojeNepremicnineObveznosti/ObveznostiEditor'
-
-import ObvestilaList from './components/Obvestila/ItemList'
-import ObvestilaItem from './components/Obvestila/Item'
+import MojeNepremicninePopravilaList from './components/MojeNepremicnine/MojeNepremicninePopravila/ItemList'
+import MojeNepremicninePopravilaItem from './components/MojeNepremicnine/MojeNepremicninePopravila/Item'
 
 import LoginScreen from './components/Login/Login'
 import SignupScreen from './components/Login/Signup'
@@ -63,7 +64,9 @@ export const MojeNepremicnine = StackNavigator({
   MojeNepremicnineZemljevid: { screen: MojeNepremicnineZemljevid },
   MojeNepremicnineObveznostiList: { screen: MojeNepremicnineObveznostiList },
   MojeNepremicnineObveznostiItem: { screen: MojeNepremicnineObveznostiItem },
-  MojeNepremicnineObveznostEditor: { screen: MojeNepremicnineObveznostEditor }
+  MojeNepremicnineObveznostEditor: { screen: MojeNepremicnineObveznostEditor },
+  MojeNepremicninePopravilaList: { screen: MojeNepremicninePopravilaList },
+  MojeNepremicninePopravilaItem: { screen: MojeNepremicninePopravilaItem }
 }, {
     initialRouteName: 'MojeNepremicnineList',
   })
@@ -75,19 +78,13 @@ export const MojeNajemnine = StackNavigator({
   MojeNajemnineItemZemljevid: { screen: MojeNajemnineItemZemljevid },
   MojeNajemnineItemPogodba: { screen: MojeNajemnineItemPogodba },
   MojeNajemninePopravilaList: { screen: MojeNajemninePopravilaList },
-  MojeNajemninePopravilaItem: { screen: MojeNajemninePopravilaItem },
   MojeNajemninePopravilaEditor: { screen: MojeNajemninePopravilaEditor },
-  MojeNajemninePopravilaAdd: { screen: MojeNajemninePopravilaAdd }
+  MojeNajemninePopravilaAdd: { screen: MojeNajemninePopravilaAdd },
+  MojeNajemnineObveznostiList: { screen: MojeNajemnineObveznostiList },
+  MojeNajemnineObveznostiItem: { screen: MojeNajemnineObveznostiItem }
 
 }, {
     initialRouteName: 'MojeNajemnineList',
-  })
-
-export const Obvestila = StackNavigator({
-  ObvestilaList: { screen: ObvestilaList },
-  ObvestilaItem: { screen: ObvestilaItem },
-}, {
-    initialRouteName: 'ObvestilaList',
   })
 
 export const Login = StackNavigator({
@@ -121,12 +118,6 @@ const DrawerRoutes = {
     screen: MojeNajemnine,
     navigationOptions: {
       title: "Moje najemnine"
-    }
-  },
-  Obvestila: {
-    screen: Obvestila,
-    navigationOptions: {
-      title: "Popravila/obveznosti",
     }
   },
   Settings: {
