@@ -30,6 +30,10 @@ export default class CustomDrawer extends Component {
         this.update();
     }
 
+    componentDidUpdate() {
+        this.update();
+    }
+
     update() {
         AsyncStorage.getItem('@UserData:data').then((value) => {
             var data = JSON.parse(value);

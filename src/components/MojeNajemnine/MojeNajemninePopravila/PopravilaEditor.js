@@ -26,6 +26,9 @@ class PopravilaEditor extends Component {
     if (item.fixedDate != null) {
       item.fixedDate = item.fixedDate.substr(0, 10);
     }
+    else {
+      item.fixedDate = new Date();
+    }
     item.dateReported = item.dateReported.substr(0, 10);
     this.state = {
       id: item.id,
