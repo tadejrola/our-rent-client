@@ -16,7 +16,7 @@ import DatePicker from 'react-native-datepicker'
 class NepremicninaEditor extends Component {
 
   static navigationOptions = {
-    title: 'Nova nepremičnina',
+    title: 'Nova obveznost',
   };
 
   constructor(props) {
@@ -28,9 +28,9 @@ class NepremicninaEditor extends Component {
       dueDate: new Date(),
       billAmount: null,
       image: null,
-      paid: false, 
-      objectID: null, 
-      tenancyAgreement_id: 1, 
+      paid: false,
+      objectID: null,
+      tenancyAgreement_id: 1,
       isEditing: false
     }
   }
@@ -44,8 +44,8 @@ class NepremicninaEditor extends Component {
     });
   }*/
 
-  componentDidMount(){
-   if('id' in this.props.navigation.state.params){
+  componentDidMount() {
+    if ('id' in this.props.navigation.state.params) {
       this.setState({
         name: this.props.navigation.state.params.name,
         description: this.props.navigation.state.params.description,
@@ -58,14 +58,14 @@ class NepremicninaEditor extends Component {
         isEditing: true
       });
 
-      if (this.state.paid == 1){
-        this.setState({paid: true});
+      if (this.state.paid == 1) {
+        this.setState({ paid: true });
       }
       else {
-        this.setState({paid: false});
+        this.setState({ paid: false });
       }
     }
-    else{
+    else {
       this.setState({
         objectID: this.props.navigation.state.params.objectID
       });
@@ -78,17 +78,17 @@ class NepremicninaEditor extends Component {
 
     var dataBody = JSON.stringify({
       billAmount: this.state.billAmount,
-      paid: this.state.paid, 
-      object_id: this.state.objectID,  
+      paid: this.state.paid,
+      object_id: this.state.objectID,
       tenancyAgreement_id: this.state.tenancyAgreement_id,
-      name: this.state.name, 
+      name: this.state.name,
       description: this.state.description,
       dueDate: this.state.dueDate,
       image: this.state.image
     });
-  
+
     if (this.state.isEditing) {
-      var result = await fetch('http://our-rent-api.herokuapp.com/api/utilityBills/'+this.state.objectID, {
+      var result = await fetch('http://our-rent-api.herokuapp.com/api/utilityBills/' + this.state.objectID, {
         method: 'PUT',
         headers: {
           Accept: 'application/json',
@@ -121,12 +121,12 @@ class NepremicninaEditor extends Component {
     }
   }
 
-  showAlert(about){
+  showAlert(about) {
     Alert.alert(
-      'Obveznost je bila '+about,
+      'Obveznost je bila ' + about,
       '',
       [
-        {text: 'OK', onPress: () => this.props.navigation.navigate('MojeNepremicnineList')}
+        { text: 'OK', onPress: () => this.props.navigation.navigate('MojeNepremicnineList') }
       ],
       { cancelable: false })
   }
@@ -134,8 +134,8 @@ class NepremicninaEditor extends Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-         <Text style={styles.text}>Naziv</Text>
-         <TextInput
+        <Text style={styles.text}>Naziv</Text>
+        <TextInput
           style={styles.input}
           value={this.state.name}
           onChangeText={name => this.setState({ name })}
@@ -158,29 +158,29 @@ class NepremicninaEditor extends Component {
         />
         <Text style={styles.text}>Datum ...</Text>
         <DatePicker
-            style={styles.datePicker}
-            date={this.state.dueDate}
-            mode="date"
-            format="YYYY-MM-DD"
-            customStyles={{
-               dateIcon: {
-                position: 'absolute',
-                left: 0,
-                top: 4,
-                marginLeft: 0
-              },
-              dateInput: {
-                marginLeft: 36
-              }
+          style={styles.datePicker}
+          date={this.state.dueDate}
+          mode="date"
+          format="YYYY-MM-DD"
+          customStyles={{
+            dateIcon: {
+              position: 'absolute',
+              left: 0,
+              top: 4,
+              marginLeft: 0
+            },
+            dateInput: {
+              marginLeft: 36
+            }
           }}
-          onDateChange={(dueDate) => {this.setState({dueDate: dueDate})}}
-          />
+          onDateChange={(dueDate) => { this.setState({ dueDate: dueDate }) }}
+        />
         <Text style={styles.text}>Je obveznost poravnana?</Text>
-        <CheckBox 
-          style = {styles.paidCheckBox}
+        <CheckBox
+          style={styles.paidCheckBox}
           center
           checked={this.state.paid}
-          onPress={() => this.setState({paid: !this.state.paid})}
+          onPress={() => this.setState({ paid: !this.state.paid })}
         />
         <Text style={styles.text}>Vrednost</Text>
         <TextInput
@@ -246,11 +246,11 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   datePicker: {
-    flex: 1, 
+    flex: 1,
     margin: 20
-  }, 
+  },
   paidCheckBox: {
-    flex: 1, 
+    flex: 1,
     margin: 20
   }
 });

@@ -23,8 +23,8 @@ export default class Home extends Component {
   state = {
     index: 0,
     routes: [
-      { key: 'first', title: 'Najemniške obv.' },
-      { key: 'second', title: 'Lastniške obv.' },
+      { key: 'first', title: 'Najemniška obvestila' },
+      { key: 'second', title: 'Lastniška obvestila' },
     ],
   };
 
