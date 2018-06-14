@@ -15,7 +15,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 class Item extends Component {
 
   static navigationOptions = ({ navigation }) => ({
-    title: "Pregled obveznosti"
+    title: "Upravljanje nepremičnine"
   })
 
   constructor(props) {
