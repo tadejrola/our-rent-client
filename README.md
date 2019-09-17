@@ -1,9 +1,9 @@
 # OurRent (client)
-OurRent is a mobile app for the management of rental properties (management of contracts, bills, accident reports, notifications and reminders).
+OurRent is a mobile application for the management of rental properties (management of contracts, bills, accident reports, notifications and reminders).
 It serves as a communication channel between landlords and tenants.
 
 ## Dependencies and Technologies
-The app itself is built with React-Native.
+The application itself is built with React-Native.
 
 The backend is built on node.js + express.js ([GitHub repository](https://github.com/tadejrola/our-rent-api)).
 
